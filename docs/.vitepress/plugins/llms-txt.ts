@@ -1,5 +1,5 @@
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync } from 'node:fs';
-import { resolve, relative } from 'node:path';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, copyFileSync, existsSync } from 'node:fs';
+import { resolve, relative, dirname } from 'node:path';
 
 interface ParsedDoc {
   rel: string;
@@ -95,17 +95,19 @@ export function generateLlmsTxt() {
     }
 
     // --- llms.txt (index) ---
+    const siteUrl = 'https://hydro-plugin-api-reference.pages.dev';
     let index = '# Hydro API Docs\n\n';
     index += '> Hydro 在线评测系统插件开发 API 文档。\n';
+    index += `> Deployed: ${siteUrl}\n`;
     index += '> Source: https://github.com/hydro-dev/Hydro\n\n';
-    index += 'This file is an LLM-friendly index. Full content: [llms-full.txt](/llms-full.txt)\n\n';
+    index += `This file is an LLM-friendly index. Full content: [llms-full.txt](${siteUrl}/llms-full.txt)\n\n`;
 
     for (const [section, items] of grouped) {
       index += `## ${section}\n\n`;
       for (const item of items) {
         const title = item.attrs.title ?? item.rel;
         const desc = item.attrs.description ?? '';
-        index += `- [${title}](/${item.rel}.md)`;
+        index += `- [${title}](${siteUrl}/${item.rel}.md)`;
         if (desc) index += `: ${desc}`;
         index += '\n';
       }
@@ -115,6 +117,7 @@ export function generateLlmsTxt() {
     // --- llms-full.txt (full content) ---
     let full = '# Hydro API Docs — Full Reference\n\n';
     full += '> Hydro 在线评测系统插件开发 API 文档（完整版）。\n';
+    full += `> Deployed: ${siteUrl}\n`;
     full += '> Source: https://github.com/hydro-dev/Hydro\n\n';
 
     for (const [section, items] of grouped) {
@@ -134,5 +137,13 @@ export function generateLlmsTxt() {
     mkdirSync(outDir, { recursive: true });
     writeFileSync(resolve(outDir, 'llms.txt'), index, 'utf-8');
     writeFileSync(resolve(outDir, 'llms-full.txt'), full, 'utf-8');
+
+    // Copy .md source files to dist so LLMs can fetch them directly
+    for (const fp of mdFiles) {
+      const rel = relative(docsDir, fp);
+      const dest = resolve(outDir, rel);
+      mkdirSync(dirname(dest), { recursive: true });
+      copyFileSync(fp, dest);
+    }
   };
 }
