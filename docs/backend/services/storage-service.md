@@ -1,3 +1,9 @@
+---
+title: StorageService
+description: 文件存储后端服务，支持本地文件系统和 S3 兼容对象存储
+source: packages/hydrooj/src/service/storage.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/storage.ts
+---
 # StorageService
 
 文件存储后端服务，提供上传、下载、删除和签名 URL 生成。支持本地文件系统和 S3 兼容对象存储。

@@ -1,3 +1,9 @@
+---
+title: MessageModel
+description: 消息模型，用于发送、查询和删除用户消息及系统通知
+source: packages/hydrooj/src/model/message.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/message.ts
+---
 # MessageModel
 
 消息模型，用于发送、查询和删除用户消息及系统通知。

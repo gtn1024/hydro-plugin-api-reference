@@ -1,3 +1,9 @@
+---
+title: JudgeHandler
+description: 评测系统扩展接口，用于处理评测任务生命周期、结果回调和守护进程通信
+source: packages/hydrooj/src/handler/judge.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/handler/judge.ts
+---
 # JudgeHandler
 
 评测系统扩展接口，用于处理评测任务生命周期、结果回调和守护进程通信。

@@ -1,3 +1,9 @@
+---
+title: UserModel
+description: 用户管理模型，提供增删改查操作、认证辅助和用户组管理
+source: packages/hydrooj/src/model/user.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/user.ts
+---
 # UserModel
 
 用户管理模型，提供增删改查操作、认证辅助和用户组管理。

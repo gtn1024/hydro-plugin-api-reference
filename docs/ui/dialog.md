@@ -1,3 +1,9 @@
+---
+title: 对话框系统
+description: 模态覆盖层用于用户交互，从简单提示到复杂的多字段表单
+source: packages/ui-default/components/dialog/index.tsx
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/dialog/index.tsx
+---
 # 对话框系统
 
 源码: [`packages/ui-default/components/dialog/index.tsx`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/dialog/index.tsx)、[`packages/ui-default/components/dialog/DomDialog.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/dialog/DomDialog.ts)

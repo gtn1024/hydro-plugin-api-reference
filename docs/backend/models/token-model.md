@@ -1,3 +1,9 @@
+---
+title: TokenModel
+description: 令牌管理模型，用于创建、查询、更新和删除各种令牌类型
+source: packages/hydrooj/src/model/token.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/token.ts
+---
 # TokenModel
 
 令牌管理模型，用于创建、查询、更新和删除各种令牌类型（会话、注册、密码重置、OAuth 等）。

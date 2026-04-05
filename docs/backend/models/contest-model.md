@@ -1,3 +1,9 @@
+---
+title: ContestModel
+description: 比赛模型，用于管理多种评分规则的比赛、排行榜生成、气球通知和答疑
+source: packages/hydrooj/src/model/contest.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/contest.ts
+---
 # ContestModel
 
 比赛模型，用于管理多种评分规则（ACM/ICPC、OI、IOI、IOI Strict、Ledo、Assignment）的比赛、排行榜生成、气球通知、答疑和打印任务。

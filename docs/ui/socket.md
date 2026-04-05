@@ -1,3 +1,9 @@
+---
+title: Socket (Sock)
+description: 支持自动重连、心跳及可选 Shorty 压缩的 WebSocket 客户端
+source: packages/ui-default/components/socket/index.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/socket/index.ts
+---
 # Socket (Sock)
 
 源码：[`packages/ui-default/components/socket/index.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/socket/index.ts)

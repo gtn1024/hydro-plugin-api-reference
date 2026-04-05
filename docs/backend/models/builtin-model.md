@@ -1,3 +1,9 @@
+---
+title: BuiltinModel
+description: 内置常量、权限标志、特权标志、评测状态枚举和 UI 元数据
+source: packages/hydrooj/src/model/builtin.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/builtin.ts
+---
 # BuiltinModel
 
 内置常量、权限标志、特权标志、评测状态枚举和 UI 元数据，从 `@hydrooj/common` 重新导出并由 Hydro 扩展。

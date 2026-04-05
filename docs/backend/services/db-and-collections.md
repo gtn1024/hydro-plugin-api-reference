@@ -1,3 +1,9 @@
+---
+title: db (MongoService) & Collections
+description: MongoDB 数据库服务，提供集合访问、索引管理、分页和排名工具
+source: packages/hydrooj/src/service/db.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/db.ts
+---
 # db (MongoService) & Collections
 
 MongoDB 数据库服务，提供集合访问、索引管理、分页和排名工具。

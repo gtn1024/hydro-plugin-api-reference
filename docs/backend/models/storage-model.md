@@ -1,3 +1,9 @@
+---
+title: StorageModel
+description: 文件存储模型，用于管理通过对象存储后端进行的文件上传、下载和生命周期
+source: packages/hydrooj/src/model/storage.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/storage.ts
+---
 # StorageModel
 
 文件存储模型，用于管理通过对象存储后端进行的文件上传、下载和生命周期管理。

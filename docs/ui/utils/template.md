@@ -1,3 +1,9 @@
+---
+title: 模板 & 国际化工具
+description: 前端模板渲染与国际化工具集，提供 HTML 模板构建和语言翻译
+source: packages/ui-default/utils/base.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/utils/base.ts
+---
 # 模板 & 国际化工具
 
 > 源码: [`packages/ui-default/utils/base.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/utils/base.ts)

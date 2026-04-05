@@ -1,3 +1,9 @@
+---
+title: Handler, ConnectionHandler & requireSudo
+description: 服务端处理类及用于请求处理的 sudo 装饰器
+source: packages/hydrooj/src/service/server.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/server.ts
+---
 # Handler, ConnectionHandler & requireSudo
 
 服务端处理类及用于请求处理的 sudo 装饰器。

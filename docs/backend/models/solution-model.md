@@ -1,3 +1,9 @@
+---
+title: SolutionModel
+description: 题解模型，用于管理题目题解、回复和投票
+source: packages/hydrooj/src/model/solution.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/solution.ts
+---
 # SolutionModel
 
 题解模型，用于管理题目题解、回复和投票。

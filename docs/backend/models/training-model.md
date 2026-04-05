@@ -1,3 +1,9 @@
+---
+title: TrainingModel
+description: 训练计划（课程）模型，用于管理 DAG 结构的训练计划和进度跟踪
+source: packages/hydrooj/src/model/training.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/training.ts
+---
 # TrainingModel
 
 训练计划（课程）模型，用于管理 DAG 结构的训练计划、用户注册和进度跟踪。

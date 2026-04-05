@@ -1,3 +1,9 @@
+---
+title: OpcountModel
+description: 频率限制模型，用于跟踪和强制执行时间窗口内的操作计数
+source: packages/hydrooj/src/model/opcount.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/opcount.ts
+---
 # OpcountModel
 
 频率限制模型，用于跟踪和强制执行时间窗口内的操作计数。

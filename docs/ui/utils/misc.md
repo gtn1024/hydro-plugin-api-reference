@@ -1,3 +1,9 @@
+---
+title: DOM & 异步 & 其他工具函数
+description: 前端 DOM 操作、异步控制、流处理及其他零散工具集
+source: packages/ui-default/utils/base.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/utils/base.ts
+---
 # DOM & 异步 & 其他工具函数
 
 > 源码: [`packages/ui-default/utils/base.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/utils/base.ts), [`packages/ui-default/utils/index.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/utils/index.ts)

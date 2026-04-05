@@ -1,3 +1,9 @@
+---
+title: pipelineUtils
+description: 批量迭代工具，用于遍历系统中给定类型的所有文档
+source: packages/hydrooj/src/pipelineUtils.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/pipelineUtils.ts
+---
 # pipelineUtils
 
 批量迭代工具，用于遍历系统中给定类型的所有文档。适用于迁移脚本、批量数据处理和后台维护任务。

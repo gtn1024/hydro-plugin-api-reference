@@ -1,3 +1,9 @@
+---
+title: SystemModel
+description: 系统级键值设置存储，基于 MongoDB 并带有内存缓存
+source: packages/hydrooj/src/model/system.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/system.ts
+---
 # SystemModel
 
 系统级键值设置存储，基于 MongoDB 并带有内存缓存。

@@ -1,3 +1,9 @@
+---
+title: Context 与 Service
+description: 构成 Hydro 可扩展性基础的核心插件系统类
+source: packages/hydrooj/src/context.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/context.ts
+---
 # Context 与 Service
 
 构成 Hydro 可扩展性基础的核心插件系统类。

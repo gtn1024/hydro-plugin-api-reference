@@ -1,3 +1,9 @@
+---
+title: OauthModel
+description: OAuth 提供商与账号关联模型，用于注册第三方登录和管理平台到用户映射
+source: packages/hydrooj/src/model/oauth.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/oauth.ts
+---
 # OauthModel
 
 OAuth 提供商与账号关联模型，用于注册第三方登录提供商、查找关联账号以及管理平台到用户的映射。

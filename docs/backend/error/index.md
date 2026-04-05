@@ -1,3 +1,9 @@
+---
+title: 错误类 (Error Classes)
+description: Hydro 插件开发中可用的所有错误类型，包括基础错误类和自定义业务错误
+source: packages/hydrooj/src/error.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/error.ts
+---
 # 错误类 (Error Classes)
 
 Hydro 插件开发中可用的所有错误类型，包括基础错误类和 Hydro 自定义业务错误。

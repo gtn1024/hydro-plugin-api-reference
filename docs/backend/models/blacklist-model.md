@@ -1,3 +1,9 @@
+---
+title: BlackListModel
+description: 用于按 ID 封禁用户或实体的黑名单模型，支持可选过期时间
+source: packages/hydrooj/src/model/blacklist.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/blacklist.ts
+---
 # BlackListModel
 
 用于按 ID 封禁用户或实体的黑名单模型，支持可选过期时间。

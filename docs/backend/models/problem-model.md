@@ -1,3 +1,9 @@
+---
+title: ProblemModel
+description: 题目管理模型，提供增删改查操作、测试数据管理和导入导出
+source: packages/hydrooj/src/model/problem.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/problem.ts
+---
 # ProblemModel
 
 题目管理模型，提供增删改查操作、测试数据/附件管理、导入导出以及每用户状态跟踪。

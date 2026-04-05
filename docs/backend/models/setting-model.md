@@ -1,3 +1,9 @@
+---
+title: SettingModel
+description: 设置注册模型，用于声明用户级、域级和系统级设置
+source: packages/hydrooj/src/model/setting.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/setting.ts
+---
 # SettingModel
 
 设置注册模型，用于声明用户级、域级和系统级设置。

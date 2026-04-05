@@ -1,3 +1,9 @@
+---
+title: ScheduleModel
+description: 定时任务模型，用于创建、查询和删除延迟或周期性任务
+source: packages/hydrooj/src/model/schedule.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/schedule.ts
+---
 # ScheduleModel
 
 定时任务模型，用于创建、查询和删除延迟或周期性任务。

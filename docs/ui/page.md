@@ -1,3 +1,9 @@
+---
+title: 前端页面注册系统
+description: 页面注册系统，组织每个页面的初始化逻辑和生命周期回调
+source: packages/ui-default/misc/Page.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/misc/Page.ts
+---
 # 前端页面注册系统
 
 源码：[`packages/ui-default/misc/Page.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/misc/Page.ts)、[`packages/ui-default/api.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/api.ts)

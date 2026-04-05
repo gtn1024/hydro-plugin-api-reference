@@ -1,3 +1,9 @@
+---
+title: DocumentModel
+description: 通用文档存储模型，提供跨所有文档类型的类型化 CRUD 和子文档操作
+source: packages/hydrooj/src/model/document.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/document.ts
+---
 # DocumentModel
 
 通用文档存储模型，提供跨所有文档类型（题目、比赛、训练计划、讨论等）的类型化 CRUD、子文档操作和每用户状态追踪。

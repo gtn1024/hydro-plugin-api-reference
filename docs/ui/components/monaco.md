@@ -1,3 +1,9 @@
+---
+title: loadMonaco
+description: 按需加载 Monaco 编辑器，支持可选语言特性和插件扩展
+source: packages/ui-default/components/monaco/loader.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/monaco/loader.ts
+---
 # loadMonaco
 
 源码: [`packages/ui-default/components/monaco/loader.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/monaco/loader.ts)

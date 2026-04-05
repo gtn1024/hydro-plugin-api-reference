@@ -1,3 +1,9 @@
+---
+title: DomainModel
+description: 域（租户/组织）模型，提供域 CRUD、用户角色成员管理和角色权限管理
+source: packages/hydrooj/src/model/domain.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/domain.ts
+---
 # DomainModel
 
 域（租户/组织）模型，提供域 CRUD、用户角色成员管理、角色权限管理和加入设置。

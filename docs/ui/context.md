@@ -1,3 +1,9 @@
+---
+title: 前端插件系统核心
+description: 前端插件系统基于 Cordis 的核心类型和全局上下文实例
+source: packages/ui-default/context.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/context.ts
+---
 # 前端插件系统核心
 
 源码: [`packages/ui-default/context.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/context.ts)、[`packages/ui-default/api.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/api.ts)

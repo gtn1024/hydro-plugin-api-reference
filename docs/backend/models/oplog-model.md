@@ -1,3 +1,9 @@
+---
+title: OplogModel
+description: 操作日志模型，用于记录和查询审计日志条目
+source: packages/hydrooj/src/model/oplog.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/oplog.ts
+---
 # OplogModel
 
 操作日志模型，用于记录和查询审计日志条目。

@@ -1,3 +1,9 @@
+---
+title: EventMap (事件总线)
+description: Hydro 插件系统的事件总线，所有可监听事件定义在 EventMap 接口中
+source: packages/hydrooj/src/service/bus.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/bus.ts
+---
 # EventMap (事件总线)
 
 Hydro 插件系统的事件总线。所有可监听事件定义在 `EventMap` 接口中，通过 `cordis` 框架的事件机制分发。

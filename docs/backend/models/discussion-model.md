@@ -1,3 +1,9 @@
+---
+title: DiscussionModel
+description: 讨论（论坛）模型，用于管理线程化讨论、回复、表情回应和讨论节点
+source: packages/hydrooj/src/model/discussion.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/discussion.ts
+---
 # DiscussionModel
 
 讨论（论坛）模型，用于管理线程化讨论、回复、嵌套尾隔回复、表情回应、讨论节点（分类）和父实体解析。

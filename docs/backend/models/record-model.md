@@ -1,3 +1,9 @@
+---
+title: RecordModel
+description: 评测记录模型，提供提交创建、评测任务分发、结果更新和重测
+source: packages/hydrooj/src/model/record.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/record.ts
+---
 # RecordModel
 
 评测记录模型，提供提交创建、评测任务分发、结果更新、重测/重置和提交统计。

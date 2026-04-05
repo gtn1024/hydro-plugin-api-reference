@@ -1,3 +1,9 @@
+---
+title: download / ZipDownloader
+description: 流式创建并传输 ZIP 压缩包到浏览器，支持并发文件下载和重试
+source: packages/ui-default/components/zipDownloader/index.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/zipDownloader/index.ts
+---
 # download / ZipDownloader
 
 源码: [`packages/ui-default/components/zipDownloader/index.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/zipDownloader/index.ts)

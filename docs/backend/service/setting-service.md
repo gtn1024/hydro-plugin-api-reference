@@ -1,3 +1,9 @@
+---
+title: SettingService
+description: 系统配置服务，提供配置读写、基于 Schema 的校验和插件设置注册
+source: packages/hydrooj/src/settings.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/settings.ts
+---
 # SettingService
 
 系统配置服务，提供配置读写、基于 Schema 的校验，以及插件设置注册功能。
