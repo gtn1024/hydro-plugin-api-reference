@@ -3,6 +3,7 @@
 操作日志模型，用于记录和查询审计日志条目。
 
 > **源码**: [`packages/hydrooj/src/model/oplog.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/oplog.ts)
+>
 > **导出**: `import { OplogModel } from 'hydrooj';`
 
 `OplogModel` 是一个纯模块，导出函数而非类。所有方法直接调用（如 `OplogModel.log(...)`）。

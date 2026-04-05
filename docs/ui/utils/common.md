@@ -1,6 +1,7 @@
 # @hydrooj/utils/lib/common
 
 > **源码**：[`framework/utils/lib/common.ts`](https://github.com/hydro-dev/Hydro/blob/master/framework/utils/lib/common.ts)
+>
 > **导出**：通过 `packages/ui-default/api.ts:16` 重新导出
 
 所有前端插件可通过 `import { ... } from 'hydrooj'` 使用的通用工具函数。

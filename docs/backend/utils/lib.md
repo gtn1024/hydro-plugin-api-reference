@@ -3,6 +3,7 @@
 插件开发者可用的各种工具函数和重新导出的第三方模块。
 
 > **源码**：[`packages/hydrooj/src/lib/`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/) 下的多个文件以及 [`packages/hydrooj/src/service/layers/base.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/layers/base.ts)
+>
 > **导出**：`import { nanoid, moment, buildContent, ... } from 'hydrooj';`
 
 ---

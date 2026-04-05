@@ -14,6 +14,7 @@
 一段中文简要描述该模型的职责和用途。
 
 > **源码**: `packages/hydrooj/src/model/filename.ts`
+>
 > **导出**: `import { ModelName } from 'hydrooj';`
 
 `ModelName` 是纯静态类。所有方法均通过类本身调用（如 `ModelName.method(...)`）。
@@ -214,6 +215,7 @@ await UserModel.ban(uid, '违反社区规范');
 示例管理模型，提供 CRUD 操作和缓存。
 
 > **源码**: `packages/hydrooj/src/model/example.ts`
+>
 > **导出**: `import { ExampleModel } from 'hydrooj';`
 
 `ExampleModel` 是纯静态类。所有方法均通过类本身调用。

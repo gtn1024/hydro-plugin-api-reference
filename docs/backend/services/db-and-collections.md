@@ -3,6 +3,7 @@
 MongoDB 数据库服务，提供集合访问、索引管理、分页和排名工具。
 
 > **源码**: [`packages/hydrooj/src/service/db.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/db.ts)
+>
 > **导出**: `import { db, Collections } from 'hydrooj';`
 > **访问**: `ctx.db`（推荐）或 `db`（已弃用的全局代理）
 

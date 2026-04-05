@@ -3,6 +3,7 @@
 训练计划（课程）模型，用于管理 DAG 结构的训练计划、用户注册和进度跟踪。
 
 > **源码**: [`packages/hydrooj/src/model/training.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/training.ts)
+>
 > **导出**: `import { TrainingModel } from 'hydrooj';`（可通过 `ctx.model.training` 访问）
 
 与 `TaskModel` 不同，`TrainingModel` 是一个纯模块，导出函数而非类。所有函数直接调用（如 `TrainingModel.add(...)`）。

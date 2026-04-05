@@ -3,6 +3,7 @@
 通用文档存储模型，提供跨所有文档类型（题目、比赛、训练计划、讨论等）的类型化 CRUD、子文档操作和每用户状态追踪。
 
 > **源码**: [`packages/hydrooj/src/model/document.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/document.ts)
+>
 > **导出**: `import * as document from 'hydrooj';`（可通过 `ctx.model.document` 访问）
 
 DocumentModel 是导出函数的普通模块（非类）。所有函数直接调用。它是高级模型（ProblemModel、ContestModel、TrainingModel、DiscussionModel）委托的基础数据访问层。

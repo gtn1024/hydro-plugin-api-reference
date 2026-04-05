@@ -3,6 +3,7 @@
 文件存储模型，用于管理通过对象存储后端进行的文件上传、下载和生命周期管理。
 
 > **源码**: [`packages/hydrooj/src/model/storage.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/storage.ts)
+>
 > **导出**: `import { StorageModel } from 'hydrooj';`
 
 `StorageModel` 是一个纯静态类。所有方法直接在类上调用（如 `StorageModel.put(...)`）。

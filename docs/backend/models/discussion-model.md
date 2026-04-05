@@ -3,6 +3,7 @@
 讨论（论坛）模型，用于管理线程化讨论、回复、嵌套尾隔回复、表情回应、讨论节点（分类）和父实体解析。
 
 > **源码**: [`packages/hydrooj/src/model/discussion.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/discussion.ts)
+>
 > **导出**: `import { DiscussionModel } from 'hydrooj';`（可通过 `ctx.model.discussion` 访问）
 
 DiscussionModel 是导出函数的普通模块（非类）。所有函数直接调用（如 `DiscussionModel.add(...)`）。

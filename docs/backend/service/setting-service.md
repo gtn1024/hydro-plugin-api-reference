@@ -3,6 +3,7 @@
 系统配置服务，提供配置读写、基于 Schema 的校验，以及插件设置注册功能。
 
 > **源码**: [`packages/hydrooj/src/settings.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/settings.ts)
+>
 > **导出**: `import { SettingService } from 'hydrooj';`
 > **访问**: `ctx.setting`（Cordis 服务，以 `'setting'` 注入）
 

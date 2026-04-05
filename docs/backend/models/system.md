@@ -3,6 +3,7 @@
 系统级键值设置存储，基于 MongoDB 并带有内存缓存。
 
 > **源码**: [`packages/hydrooj/src/model/system.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/system.ts)
+>
 > **导出**: `import { SystemModel } from 'hydrooj';`
 
 `SystemModel` 是 `SystemModelService`（继承 `Service`）的 `serviceInstance` 代理。在启动时将所有系统设置加载到内存缓存中，并通过广播总线保持集群节点间同步。

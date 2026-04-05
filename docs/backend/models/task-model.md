@@ -3,6 +3,7 @@
 后台任务队列模型，用于入队、消费和管理异步任务。
 
 > **源码**: [`packages/hydrooj/src/model/task.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/task.ts)
+>
 > **导出**: `import { TaskModel } from 'hydrooj';`
 
 `TaskModel` 是一个纯静态类。所有方法直接在类上调用（如 `TaskModel.add(...)`）。

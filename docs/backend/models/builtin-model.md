@@ -3,6 +3,7 @@
 内置常量、权限标志、特权标志、评测状态枚举和 UI 元数据，从 `@hydrooj/common` 重新导出并由 Hydro 扩展。
 
 > **源码**: [`packages/hydrooj/src/model/builtin.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/builtin.ts)
+>
 > **导出**: `import * as BuiltinModel from 'hydrooj/dist/model/builtin';`（桶式重新导出；也支持单独的命名导入）
 
 ---

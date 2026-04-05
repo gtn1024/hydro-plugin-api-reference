@@ -3,6 +3,7 @@
 OAuth 提供商与账号关联模型，用于注册第三方登录提供商、查找关联账号以及管理平台到用户的映射。
 
 > **源码**: [`packages/hydrooj/src/model/oauth.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/oauth.ts)
+>
 > **导出**: `import { OauthModel } from 'hydrooj';`
 > **访问**: `ctx.oauth`（服务实例，非静态类）
 

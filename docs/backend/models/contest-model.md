@@ -3,6 +3,7 @@
 比赛模型，用于管理多种评分规则（ACM/ICPC、OI、IOI、IOI Strict、Ledo、Assignment）的比赛、排行榜生成、气球通知、答疑和打印任务。
 
 > **源码**: [`packages/hydrooj/src/model/contest.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/contest.ts)
+>
 > **导出**: `import * as contest from 'hydrooj/model/contest';`（可通过 `ctx.model.contest` 访问）
 
 ContestModel 是导出函数的普通模块（非类）。所有函数直接调用。它将 CRUD 和状态操作委托给共享的 `document` 模块，使用 `TYPE_CONTEST = 30`。

@@ -3,6 +3,7 @@
 令牌管理模型，用于创建、查询、更新和删除各种令牌类型（会话、注册、密码重置、OAuth 等）。
 
 > **源码**: [`packages/hydrooj/src/model/token.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/token.ts)
+>
 > **导出**: `import { TokenModel } from 'hydrooj';`
 
 `TokenModel` 是一个纯静态类。所有方法直接在类上调用（如 `TokenModel.add(...)`）。

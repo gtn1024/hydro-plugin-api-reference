@@ -3,6 +3,7 @@
 评测记录模型，提供提交创建、评测任务分发、结果更新、重测/重置和提交统计。
 
 > **源码**: [`packages/hydrooj/src/model/record.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/record.ts)
+>
 > **导出**: `import { RecordModel } from 'hydrooj';`
 
 `RecordModel` 是一个纯静态类。所有方法直接在类上调用（如 `RecordModel.get(...)`）。
