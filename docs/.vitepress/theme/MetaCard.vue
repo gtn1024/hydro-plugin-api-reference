@@ -20,6 +20,7 @@ const meta = computed(() => {
     items.push({ label: '源码', value: fm.source, href, icon: '📦' });
   }
   if (mdLink.value) items.push({ label: '文档', value: mdLink.value, href: mdLink.value, icon: '📄', md: true });
+  if (fm.import) items.push({ label: '导入', value: fm.import, icon: '📥' });
   if (fm.exports) items.push({ label: '导出', value: fm.exports, icon: '📤' });
   if (fm.category) items.push({ label: '分类', value: fm.category, icon: '🏷️' });
   if (fm.since) items.push({ label: '版本', value: `≥ ${fm.since}`, icon: '🔖' });
