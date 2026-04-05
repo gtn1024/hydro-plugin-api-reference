@@ -209,7 +209,7 @@ function avatar(src: string, size?: number, fallback?: string): string
 
 ```typescript
 function testdataConfig(
-  config: string | ProblemConfigFile,
+  config: string | ProblemConfigFile = {},
   files: string[]
 ): Promise<ProblemConfig>
 ```

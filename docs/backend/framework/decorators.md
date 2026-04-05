@@ -60,9 +60,9 @@ class MyHandler extends Handler {
 | `Types.Content` | `string` | 多行文本内容（去除首尾空格，最长 65535 字符）。 |
 | `Types.Key` | `string` | 标识符键（`/^[\w-]{1,255}$/`，SASLprep）。 |
 | `Types.Name` | `string` | 通用名称字段（1–255 字符，SASLprep）。**@deprecated** |
-| `Types.Username` | `string` | 用户名（3–31 字符或 2 个以上 CJK 字符，SASLprep）。 |
+| `Types.Username` | `string` | 用户名（3–31 字符或 2 个 CJK 字符，SASLprep）。 |
 | `Types.Password` | `string` | 密码字符串（6–255 字符）。 |
-| `Types.UidOrName` | `string` | 用户 ID（数字）或用户名（3–31 字符或 2 个以上 CJK 字符，SASLprep）。 |
+| `Types.UidOrName` | `string` | 用户 ID（数字）或用户名（3–31 字符或 2 个 CJK 字符，SASLprep）。 |
 | `Types.Email` | `string` | 邮箱地址（`user@domain.tld`，SASLprep）。 |
 | `Types.Filename` | `string` | 文件名（1–255 字符，不含 `\/?#~!|*`，SASLprep）。 |
 | `Types.DomainId` | `string` | 域标识符（字母开头，4–32 个 `\w` 字符，SASLprep）。 |

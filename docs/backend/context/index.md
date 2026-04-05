@@ -11,7 +11,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 > **源码**: [`packages/hydrooj/src/context.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/context.ts)，基类来自 `cordis`
 
 ```ts
-import { Context, Service, Fiber, FiberState, Disposable, Plugin } from 'hydrooj';
+import { Context, Service, Fiber, FiberState } from 'hydrooj';
 ```
 
 ## Context
@@ -95,11 +95,11 @@ export default class MyService extends Service {
 
 ## 类型
 
-从 `cordis` 重新导出，适配 Hydro 的 `Context`。
+`Fiber` 和 `FiberState` 从 `hydrooj` 重新导出（源自 `cordis`，适配 Hydro 的 `Context`）。`Disposable` 和 `Plugin` 为 `cordis` 内部类型，供参考。
 
 | 类型 | 说明 |
 |------|------|
 | `Fiber` | `cordis.Fiber<Context>` —— 表示插件在上下文树中的生命周期节点；追踪状态（pending、loading、active、disposed）。 |
 | `FiberState` | Fiber 生命周期状态枚举：`PENDING`、`LOADING`、`ACTIVE`、`DISPOSED` 等。 |
-| `Disposable` | `() => void` —— 由 `on()`、`effect()` 等注册方法返回的清理函数。 |
-| `Plugin` | 插件定义的类型别名 —— 可以是继承 `Service` 的类或 `(ctx, config) => void` 函数。 |
+| `Disposable` | `() => void` —— 由 `on()`、`effect()` 等注册方法返回的清理函数（`cordis` 类型，需从 `cordis` 直接导入）。 |
+| `Plugin` | 插件定义的类型别名 —— 可以是继承 `Service` 的类或 `(ctx, config) => void` 函数（`cordis` 类型，需从 `cordis` 直接导入）。 |

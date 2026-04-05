@@ -60,7 +60,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 | 属性 | 类型 | 说明 |
 |----------|------|-------------|
 | `client` | `S3Client \| null` | S3 客户端实例（本地后端为 null） |
-| `error` | `string` | 最近一次错误消息，健康时为空字符串 |
+| `error` | `string \| null` | 最近一次错误消息，健康时 S3 后端为 `null`、本地后端为空字符串 |
 
 ---
 
