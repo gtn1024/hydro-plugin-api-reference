@@ -11,6 +11,7 @@ export default defineConfig({
       { text: '指南', link: '/' },
       { text: '后端', link: '/backend/context/' },
       { text: 'UI', link: '/ui/page' },
+      { text: 'LLM & Skills', link: '/meta/llm-txt' },
     ],
     sidebar: {
       '/backend/': [
@@ -76,6 +77,15 @@ export default defineConfig({
           items: [
             { text: 'Lib', link: '/backend/utils/lib' },
             { text: 'Pipeline Utils', link: '/backend/utils/pipeline-utils' },
+          ],
+        },
+      ],
+      '/meta/': [
+        {
+          text: 'LLM & Skills',
+          items: [
+            { text: 'llms.txt', link: '/meta/llm-txt' },
+            { text: 'Skills', link: '/meta/skills' },
           ],
         },
       ],

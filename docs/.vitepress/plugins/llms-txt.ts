@@ -39,7 +39,7 @@ function collectMdFiles(dir: string): string[] {
     for (const entry of readdirSync(d)) {
       const full = resolve(d, entry);
       if (statSync(full).isDirectory()) {
-        if (entry !== '.vitepress') walk(full);
+        if (entry !== '.vitepress' && entry !== 'meta') walk(full);
       } else if (entry.endsWith('.md') && entry !== 'index.md' && entry !== 'TEMPLATE.md') {
         files.push(full);
       }
