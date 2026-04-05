@@ -77,7 +77,7 @@ MongoDB 数据库服务，提供集合访问、索引管理、分页和排名工
 | `record.stat` | `RecordStatDoc` | 聚合记录统计 |
 | `record.history` | `RecordHistoryDoc` | 记录变更历史 |
 | `document` | `any` | 通用文档（题目、比赛、训练、讨论等） |
-| `document.status` | `{ [K in keyof DocStatusType]: { docType: K } & DocStatusType[K] }[keyof DocStatusType]` | 用户级别的文档状态（按 docType 区分的判别联合类型） |
+| `document.status` | `StatusDocBase & { [K in keyof DocStatusType]: { docType: K } & DocStatusType[K] }[keyof DocStatusType]` | 用户级别的文档状态（`StatusDocBase` 与按 docType 区分的判别联合类型的交集） |
 | `discussion.history` | `DiscussionHistoryDoc` | 讨论/回复编辑历史 |
 | `user` | `Udoc` | 用户账户 |
 | `user.preference` | `UserPreferenceDoc` | 用户偏好设置 |

@@ -85,7 +85,7 @@ const path2 = await StorageModel.put(
 |------|------|--------|------|
 | `target` | `string` | — | 文件存储路径 |
 | `filename` | `string` | — | 下载时显示的文件名 |
-| `noExpire` | `boolean` | — | 禁用签名 URL 过期 |
+| `noExpire` | `boolean` | `false` | 禁用签名 URL 过期 |
 | `useAlternativeEndpointFor` | `'user' \| 'judge'` | — | 使用备用端点路由 |
 | **返回值** | `Promise<string>` | | 签名下载 URL |
 
@@ -153,7 +153,7 @@ await StorageModel.del(
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `target` | `string` | — | 路径前缀 |
-| `recursive` | `boolean` | — | 是否递归列出子目录 |
+| `recursive` | `boolean` | `true` | 是否递归列出子目录 |
 | **返回值** | `Promise<object[]>` | | 文件文档数组（含 `name` 字段） |
 
 #### `exists(path: string): Promise<boolean>`

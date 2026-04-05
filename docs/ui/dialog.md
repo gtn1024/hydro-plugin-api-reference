@@ -111,7 +111,7 @@ interface Field {
 ```ts
 interface DialogOptions {
   classes: string;
-  $body: HTMLElement | JQuery | string;
+  $body: HTMLElement | JQuery<HTMLElement> | string;
   $action: any;
   width?: string;
   height?: string;

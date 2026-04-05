@@ -519,7 +519,7 @@ ACM 风格首 A 通知的气球管理。
 | `subject` | `number` | `0` | 答疑主题 |
 | **返回值** | `Promise<ObjectId>` | | 答疑 ID |
 
-#### `addClarificationReply(domainId: string, did: ObjectId, owner: number, content: string, ip: string): Promise<void>`
+#### `addClarificationReply(domainId: string, did: ObjectId, owner: number, content: string, ip: string): Promise<[any, ObjectId]>`
 
 为已有答疑追加回复。
 
@@ -530,7 +530,7 @@ ACM 风格首 A 通知的气球管理。
 | `owner` | `number` | — | 回复者 UID |
 | `content` | `string` | — | 回复内容 |
 | `ip` | `string` | — | 回复者 IP 地址 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<[any, ObjectId]>` | | 更新后的文档与回复 ID |
 
 #### `getClarification(domainId: string, did: ObjectId): Promise<ClarificationDoc>`
 

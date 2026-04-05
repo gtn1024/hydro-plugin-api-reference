@@ -23,7 +23,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 ### `put(target: string, file: string | Buffer | Readable, meta?: Record<string, string>): Promise<void>`
 
-将文件上传到存储路径。接受文件路径、Buffer 或 Readable 流。S3 后端对大于 5MB 的文件使用分片上传。本地后端写入磁盘。路径会进行校验（不允许 `..`、`//` 等）。
+将文件上传到存储路径。接受文件路径、Buffer 或 Readable 流。S3 后端对大于 5MB 的文件使用分片上传，并支持 `meta` 元数据参数。本地后端写入磁盘，不支持 `meta` 参数（该参数被忽略）。路径会进行校验（不允许 `..`、`//` 等）。
 
 ### `get(target: string, path?: string): Promise<Readable | null>`
 

@@ -71,7 +71,7 @@ type Field = keyof DiscussionDoc
 | `ip` | `string \| null` | `null` | 创建者 IP 地址 |
 | `highlight` | `boolean` | — | 是否高亮 |
 | `pin` | `boolean` | — | 是否置顶 |
-| `hidden` | `boolean` | — | 是否隐藏 |
+| `hidden` | `boolean` | `false` | 是否隐藏 |
 | **返回值** | `Promise<ObjectId>` | | 新讨论 ID |
 
 ```typescript

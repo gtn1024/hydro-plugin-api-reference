@@ -88,6 +88,7 @@ await SystemModel.set('custom.key', data, false); // 仅本地
 | `smtp.host` | `string` |
 | `smtp.port` | `number` |
 | `smtp.secure` | `boolean` |
+| `smtp.verify` | `boolean` |
 | `installid` | `string` |
 | `server.name` | `string` |
 | `server.url` | `string` |

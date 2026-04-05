@@ -8,11 +8,64 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 插件开发者可用的各种工具函数和重新导出的第三方模块。
 
-> **源码**：[`packages/hydrooj/src/lib/`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/) 下的多个文件以及 [`packages/hydrooj/src/service/layers/base.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/layers/base.ts)
+> **源码**：[`packages/hydrooj/src/lib/`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/) 下的多个文件以及 [`packages/hydrooj/src/libs.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/libs.ts) 中的重新导出
 >
-> **导出**：`import { nanoid, moment, buildContent, ... } from 'hydrooj';`
+> **导出**：`import { nanoid, moment, buildContent, definePlugin, _, Schema, ObjectId, ... } from 'hydrooj';`
 
 ---
+
+## 核心重新导出（libs.ts）
+
+`libs.ts` 通过 `export *` 和具名导出提供了大量核心依赖的统一入口：
+
+### 传递模块导出
+
+| 模块 | 说明 |
+|------|------|
+| `./interface` | 所有接口类型定义（`export *`） |
+| `./typeutils` | 类型工具函数（`export *`） |
+| `./utils` | 通用工具函数（`export *`） |
+
+### 第三方依赖重新导出
+
+| 导出名 | 来源 | 说明 |
+|--------|------|------|
+| `_` | `lodash` | Lodash 工具库 |
+| `ObjectID` | `mongodb`（别名） | MongoDB `ObjectId` 的别名 |
+| `ObjectId` | `mongodb` | MongoDB ObjectId 类 |
+| `Filter` | `mongodb` | MongoDB 查询过滤器类型 |
+| `Schema` | `schemastery` | Schema 验证库 |
+| `superagent` | `superagent` | HTTP 请求库 |
+| `Zip` | `@zip.js/zip.js` | ZIP 文件处理库 |
+| `AdmZip` | `adm-zip` | **@deprecated** 请使用 `Zip` 代替 |
+| `WebSocket` | `@hydrooj/framework` | WebSocket 类 |
+| `WebSocketServer` | `@hydrooj/framework` | WebSocket 服务器类 |
+
+### definePlugin
+
+```typescript
+function definePlugin<T = never>(args: {
+  inject?: keyof Context[] | Record<keyof Context, any>;
+  apply: (ctx: Context, config: T) => Promise<void> | void;
+  schema?: Schema<T>;
+  name?: string;
+  Config?: Schema<T>;
+}): typeof args
+```
+
+插件定义辅助函数。接受插件配置并原样返回，用于获得类型推断支持。
+
+**参数**：
+- `inject` — 依赖注入声明，指定插件需要的服务。
+- `apply` — 插件主函数，接收 `Context` 和配置对象。
+- `schema` / `Config` — 插件配置的 Schema 验证定义（两者等效）。
+- `name` — 插件名称。
+
+---
+
+## 工具库函数
+
+以下函数来自 `packages/hydrooj/src/lib/` 目录：
 
 ## 重新导出的第三方模块
 

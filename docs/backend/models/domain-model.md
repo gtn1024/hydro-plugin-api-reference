@@ -278,7 +278,7 @@ interface DomainDoc extends Record<string, any> {
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string \| DomainDoc` | — | 域 ID 或域文档 |
-| `count` | `boolean` | — | 是否附带每角色用户计数 |
+| `count` | `boolean` | `false` | 是否附带每角色用户计数 |
 | **返回值** | `Promise<any[]>` | | |
 
 #### `setRoles(domainId: string, roles: Dictionary<bigint | string>): Promise<any>`

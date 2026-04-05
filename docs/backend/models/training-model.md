@@ -135,7 +135,7 @@ interface TrainingDoc extends Omit<Tdoc, 'docType'> {
 | `domainId` | `string` | — | 域上下文 |
 | `tid` | `ObjectId` | — | 训练计划 ID |
 | `uid` | `number` | — | 用户 UID |
-| **返回值** | `Promise<number>` | | 新的 `attend` 计数 |
+| **返回值** | `Promise<any>` | | `document.inc` 的返回值（MongoDB 更新结果） |
 
 ```typescript
 // 注册用户到训练计划

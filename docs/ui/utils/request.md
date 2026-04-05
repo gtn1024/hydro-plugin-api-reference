@@ -93,8 +93,8 @@ function postFile(url: string, form: FormData, options?: Record<string, any>): P
 function getAvailableLangs(langsList?: string[]): Record<string, any>
 ```
 
-过滤 `window.LANGS`，仅返回可用的语言条目。排除作为其他键前缀的条目（如存在 `"en.section"` 时的 `"en"`）、标记为 `hidden` 的条目（除非在 `langsList` 中显式列出）以及标记为 `disabled` 的条目。
+过滤 `window.LANGS`，仅返回可用的语言条目。排除作为其他键前缀的条目（如存在 `"en.section"` 时的 `"en"`）、标记为 `disabled` 的条目。当提供 `langsList` 时，它作为完整白名单——仅返回列表中包含的键（同时覆盖 `hidden` 检查）。
 
 | 参数 | 类型 | 说明 |
 |------|------|------|
-| `langsList` | `string[]` | 可选，要包含的语言键白名单（覆盖 `hidden` 检查） |
+| `langsList` | `string[]` | 可选，语言键白名单（提供时仅返回列表中的键，同时覆盖 `hidden` 检查） |
