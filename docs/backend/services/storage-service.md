@@ -3,15 +3,13 @@ title: StorageService
 description: 文件存储后端服务，支持本地文件系统和 S3 兼容对象存储
 source: packages/hydrooj/src/service/storage.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/storage.ts
+import: "import { StorageService } from 'hydrooj'"
 ---
 # StorageService
 
 文件存储后端服务，提供上传、下载、删除和签名 URL 生成。支持本地文件系统和 S3 兼容对象存储。
 
-> **源码**: [`packages/hydrooj/src/service/storage.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/storage.ts)
->
-> **导出**: `import * as StorageService from 'hydrooj';`
-> **访问**: `ctx.storage`（实例，服务启动后可用）
+访问：`ctx.storage`（实例，服务启动后可用）
 
 `StorageService` 是一个命名空间导出，包含两个后端类（`RemoteStorageService` 用于 S3，`LocalStorageService` 用于文件系统）以及 `Config` schema 和 `encodeRFC5987ValueChars` 工具。运行时，`ctx.storage` 返回所配置的后端实例。
 

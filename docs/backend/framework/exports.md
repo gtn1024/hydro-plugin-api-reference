@@ -8,8 +8,6 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 通过 `hydrooj` 从 `@hydrooj/framework` 重新导出的核心 Web 框架接口。
 
-> **源码**: [`packages/hydrooj/src/plugin-api.ts:8-11`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/plugin-api.ts#L8-L11)
-
 ## 概述
 
 这些符号是 Hydro 插件中定义路由、处理器和 API 操作的基础构建块。

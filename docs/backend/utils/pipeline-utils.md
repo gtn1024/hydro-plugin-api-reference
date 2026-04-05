@@ -3,14 +3,11 @@ title: pipelineUtils
 description: 批量迭代工具，用于遍历系统中给定类型的所有文档
 source: packages/hydrooj/src/pipelineUtils.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/pipelineUtils.ts
+import: "import { iterateAllDomain, iterateAllUser, ... } from 'hydrooj'"
 ---
 # pipelineUtils
 
 批量迭代工具，用于遍历系统中给定类型的所有文档。适用于迁移脚本、批量数据处理和后台维护任务。
-
-> **源码**：[`packages/hydrooj/src/pipelineUtils.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/pipelineUtils.ts)
->
-> **导出**：`import { iterateAllDomain, iterateAllUser, ... } from 'hydrooj';`
 
 所有函数**顺序**处理文档（逐个处理），完成时返回 `Promise<true>`。
 

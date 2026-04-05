@@ -3,14 +3,11 @@ title: Handler, ConnectionHandler & requireSudo
 description: 服务端处理类及用于请求处理的 sudo 装饰器
 source: packages/hydrooj/src/service/server.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/server.ts
+import: "import { Handler, ConnectionHandler, requireSudo } from 'hydrooj'"
 ---
 # Handler, ConnectionHandler & requireSudo
 
 服务端处理类及用于请求处理的 sudo 装饰器。
-
-> **源码**: [`packages/hydrooj/src/service/server.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/server.ts)
->
-> **导出**: `import { Handler, ConnectionHandler, requireSudo } from 'hydrooj';`
 
 ---
 

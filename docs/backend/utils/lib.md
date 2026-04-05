@@ -3,14 +3,11 @@ title: 工具库
 description: 插件开发者可用的各种工具函数和重新导出的第三方模块
 source: packages/hydrooj/src/lib/
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/
+import: "import { nanoid, moment, buildContent, definePlugin, _, Schema, ObjectId, ... } from 'hydrooj'"
 ---
 # 工具库
 
 插件开发者可用的各种工具函数和重新导出的第三方模块。
-
-> **源码**：[`packages/hydrooj/src/lib/`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/) 下的多个文件以及 [`packages/hydrooj/src/libs.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/libs.ts) 中的重新导出
->
-> **导出**：`import { nanoid, moment, buildContent, definePlugin, _, Schema, ObjectId, ... } from 'hydrooj';`
 
 ---
 
@@ -72,7 +69,7 @@ function definePlugin<T = never>(args: {
 ### nanoid
 
 ```typescript
-import { nanoid } from 'nanoid';
+import { nanoid } from 'hydrooj';
 ```
 
 从 [`nanoid`](https://github.com/ai/nanoid) 包重新导出。生成唯一的 URL 友好字符串 ID。内部用于生成令牌 ID、存储键和其他随机标识符。
@@ -80,7 +77,7 @@ import { nanoid } from 'nanoid';
 ### moment
 
 ```typescript
-import moment from 'moment-timezone';
+import { moment } from 'hydrooj';
 ```
 
 作为 `moment-timezone` 的默认导出重新导出。支持完整时区的日期/时间操作库。请使用此模块而非裸 `moment` 以获取时区感知的日期处理。
@@ -88,7 +85,7 @@ import moment from 'moment-timezone';
 ### isMoment
 
 ```typescript
-import { isMoment } from 'moment-timezone';
+import { isMoment } from 'hydrooj';
 ```
 
 从 `moment-timezone` 重新导出。类型守卫函数，当给定值为 Moment.js 对象时返回 `true`。
@@ -114,8 +111,6 @@ function buildContent(
 - `type` — 输出格式，默认 `'markdown'`。
 - `translate` — 可选的翻译函数，应用于节标题（如将 `"Background"` 翻译为本地化文本）。
 
-> **源码**：[`packages/hydrooj/src/lib/content.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/content.ts)
-
 ---
 
 ## MIME 类型检测
@@ -128,8 +123,6 @@ function mime(file: string): string
 
 返回给定文件名的 MIME 类型。`.in`、`.out`、`.ans` 扩展名特殊处理为 `'text/plain'`（竞赛编程中常见）。回退到 `mime-types` 查找，最后为 `'application/octet-stream'`。
 
-> **源码**：[`packages/hydrooj/src/lib/mime.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/mime.ts)
-
 ---
 
 ## 难度计算
@@ -141,8 +134,6 @@ function difficultyAlgorithm(nSubmit: number, nAccept: number): number | null
 ```
 
 根据提交数和通过数计算题目难度分数（1-10）。使用对数正态概率密度函数的数值积分，按通过率加权。当 `nSubmit` 为 0 时返回 `null`。
-
-> **源码**：[`packages/hydrooj/src/lib/difficulty.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/difficulty.ts)
 
 ---
 
@@ -171,8 +162,6 @@ interface RatingOutputUser {
 }
 ```
 
-> **源码**：[`packages/hydrooj/src/lib/rating.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/rating.ts)
-
 ---
 
 ## 头像 URL 生成
@@ -199,8 +188,6 @@ function avatar(src: string, size?: number, fallback?: string): string
 | `github`  | `github:username`   | GitHub 头像                       |
 | `url`     | `url:https://...`   | 直接 URL 透传                     |
 
-> **源码**：[`packages/hydrooj/src/lib/avatar.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/avatar.ts)
-
 ---
 
 ## 题目配置解析
@@ -217,8 +204,6 @@ function testdataConfig(
 将题目配置（YAML 字符串或预解析对象）和测试用例文件名列表解析为汇总的 `ProblemConfig` 对象。计算所有子任务的聚合时间/内存限制，统计测试点数量，并提取 `type`、`hackable`、`langs`、`redirect` 等元数据。
 
 **备注**：在 Hydro 插件 API 中以 `testdataConfig` 导出（从内部 `parseConfig` 函数名别名而来）。
-
-> **源码**：[`packages/hydrooj/src/lib/testdataConfig.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/testdataConfig.ts)
 
 ---
 
@@ -237,8 +222,6 @@ function sendMail(
 
 使用系统配置中的 SMTP 设置（`smtp.host`、`smtp.port`、`smtp.secure`、`smtp.user`、`smtp.pass`、`smtp.from`）发送邮件。内部使用 `nodemailer`。失败时抛出 `SendMailError`。
 
-> **源码**：[`packages/hydrooj/src/lib/mail.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/mail.ts)
-
 ---
 
 ## 密码哈希
@@ -250,8 +233,6 @@ function pwsh(password: string, salt: string): Promise<string>
 ```
 
 使用给定盐值对密码进行 PBKDF2 哈希（SHA-256、100,000 次迭代、64 字节密钥）。返回派生密钥的前 64 个十六进制字符。在模块加载时注册为 `global.Hydro.module.hash.hydro`。
-
-> **源码**：[`packages/hydrooj/src/lib/hash.hydro.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/lib/hash.hydro.ts)
 
 ---
 
@@ -269,5 +250,3 @@ interface UiContextBase {
 ```
 
 提供默认 CDN、URL 和 WebSocket 前缀值的常量对象。用作基础模板，在每次请求时根据特定域的覆盖（CDN URL、WebSocket 前缀、域信息）进行扩展。
-
-> **源码**：[`packages/hydrooj/src/service/layers/base.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/service/layers/base.ts)

@@ -3,14 +3,11 @@ title: JudgeHandler
 description: 评测系统扩展接口，用于处理评测任务生命周期、结果回调和守护进程通信
 source: packages/hydrooj/src/handler/judge.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/handler/judge.ts
+import: "import { JudgeHandler, JudgeResultCallbackContext, postJudge } from 'hydrooj'"
 ---
 # JudgeHandler
 
 评测系统扩展接口，用于处理评测任务生命周期、结果回调和守护进程通信。
-
-> **源码**: [`packages/hydrooj/src/handler/judge.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/handler/judge.ts)
->
-> **导出**: `import { JudgeHandler, JudgeResultCallbackContext, postJudge } from 'hydrooj';`
 
 `JudgeHandler` 是整个模块的命名空间重新导出。单独的命名导出（`JudgeResultCallbackContext`、`postJudge`）也可直接使用。
 

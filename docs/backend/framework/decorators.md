@@ -8,8 +8,6 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/framework/framework/d
 
 用于路由处理方法的参数绑定装饰器和类型验证器。
 
-> **源码**: [`framework/framework/decorators.ts`](https://github.com/hydro-dev/Hydro/blob/master/framework/framework/decorators.ts)、[`framework/framework/validator.ts`](https://github.com/hydro-dev/Hydro/blob/master/framework/framework/validator.ts) —— 通过 `hydrooj` 重新导出
-
 ```ts
 import { param, query, post, route, Types } from 'hydrooj';
 ```

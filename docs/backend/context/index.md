@@ -3,12 +3,11 @@ title: Context 与 Service
 description: 构成 Hydro 可扩展性基础的核心插件系统类
 source: packages/hydrooj/src/context.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/context.ts
+import: "import { Context, Service, Fiber, FiberState } from 'hydrooj'"
 ---
 # Context 与 Service
 
-构成 Hydro 可扩展性基础的核心插件系统类。
-
-> **源码**: [`packages/hydrooj/src/context.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/context.ts)，基类来自 `cordis`
+构成 Hydro 可扩展性基础的核心插件系统类。基类来自 `cordis`。
 
 ```ts
 import { Context, Service, Fiber, FiberState } from 'hydrooj';

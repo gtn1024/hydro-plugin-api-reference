@@ -3,15 +3,13 @@ title: SettingService
 description: 系统配置服务，提供配置读写、基于 Schema 的校验和插件设置注册
 source: packages/hydrooj/src/settings.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/settings.ts
+import: "import { SettingService } from 'hydrooj'"
 ---
 # SettingService
 
 系统配置服务，提供配置读写、基于 Schema 的校验，以及插件设置注册功能。
 
-> **源码**: [`packages/hydrooj/src/settings.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/settings.ts)
->
-> **导出**: `import { SettingService } from 'hydrooj';`
-> **访问**: `ctx.setting`（Cordis 服务，以 `'setting'` 注入）
+访问：`ctx.setting`（Cordis 服务，以 `'setting'` 注入）
 
 `SettingService` 是一个 Cordis `Service`，负责管理 Hydro 基于 YAML 的系统配置。它从 `system` MongoDB 集合加载配置，根据已注册的 Schema 进行校验，并通过基于代理的 getter 提供响应式访问。插件通过五个注册方法（PreferenceSetting、AccountSetting 等）注册设置 Schema，当插件的上下文被销毁时自动清理。
 
