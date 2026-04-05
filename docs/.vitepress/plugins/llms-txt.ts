@@ -31,7 +31,7 @@ function parseFrontmatter(content: string) {
 }
 
 /**
- * Collect all .md files recursively, excluding index.md and TEMPLATE.md.
+ * Collect all .md files recursively, excluding TEMPLATE.md.
  */
 function collectMdFiles(dir: string): string[] {
   const files: string[] = [];
@@ -40,7 +40,7 @@ function collectMdFiles(dir: string): string[] {
       const full = resolve(d, entry);
       if (statSync(full).isDirectory()) {
         if (entry !== '.vitepress' && entry !== 'meta') walk(full);
-      } else if (entry.endsWith('.md') && entry !== 'index.md' && entry !== 'TEMPLATE.md') {
+      } else if (entry.endsWith('.md') && entry !== 'TEMPLATE.md') {
         files.push(full);
       }
     }
