@@ -49,7 +49,7 @@ async function getFeatures(name: string): Promise<(string | (() => Promise<any>)
 async function loadFeatures(name: string, ...args: any[]): Promise<void>
 ```
 
-加载并应用注册在给定名称下的所有特性。幂等操作 —— 每个特性名称仅加载一次，通过 `loaded` 数组跟踪。每个特性条目根据其类型以不同方式解析：
+加载并应用注册在给定名称下的所有特性。每个特性名称仅尝试加载一次——名称在加载开始前即标记到 `loaded` 数组中，因此即使加载失败也不会重试。每个特性条目根据其类型以不同方式解析：
 
 - **函数** — 直接以 `...args` 调用。
 - **URL 字符串**（以 `http` 或 `/` 开头）— 通过 `legacyLoadExternalModule` 加载，然后调用已解析模块的 `apply` 或 `default` 函数。

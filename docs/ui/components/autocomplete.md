@@ -55,7 +55,7 @@ class AutoComplete<Options extends Record<string, any> = object, Multi extends b
 | `attach()` | 挂载 React 组件到 DOM |
 | `open()` | 打开下拉建议列表 |
 | `close()` | 关闭下拉建议列表 |
-| `value()` | 获取当前选中值（多选模式返回数组） |
+| `value()` | 获取当前选中值：单选模式返回首个选中项对象（或 `null`），多选模式返回 `(string \| number)[]` |
 | `detach()` | 卸载组件并清理 DOM |
 | `focus()` | 聚焦输入框 |
 

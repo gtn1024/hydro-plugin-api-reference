@@ -126,16 +126,16 @@ interface TrainingDoc extends Omit<Tdoc, 'docType'> {
 
 ### 注册与状态
 
-#### `enroll(domainId: string, tid: ObjectId, uid: number): Promise<number>`
+#### `enroll(domainId: string, tid: ObjectId, uid: number): Promise<any>`
 
-将用户注册到训练计划中。若已注册则抛出 `TrainingAlreadyEnrollError`。递增训练计划的 `attend` 计数器并返回新计数。
+将用户注册到训练计划中。若已注册则抛出 `TrainingAlreadyEnrollError`。递增训练计划的 `attend` 计数器。返回 `document.inc` 的结果。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `tid` | `ObjectId` | — | 训练计划 ID |
 | `uid` | `number` | — | 用户 UID |
-| **返回值** | `Promise<any>` | | `document.inc` 的返回值（MongoDB 更新结果） |
+| **返回值** | `Promise<any>` | | `document.inc` 的返回值 |
 
 ```typescript
 // 注册用户到训练计划
@@ -217,7 +217,7 @@ const newCount = await TrainingModel.enroll(
 
 #### `isProgress(node: TrainingNode, doneNids: Set<number>, donePids: Set<number>, progPids: Set<number>): boolean`
 
-若节点的要求已满足但部分父题目未完成，且至少一个父题目正在进行中，返回 `true`。
+若节点的要求已满足但部分父题目未完成，且至少一个父题目已完成或正在进行中，返回 `true`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|

@@ -73,7 +73,7 @@ interface MessageDoc {
 | `content` | `string` | — | i18n 键或消息内容 |
 | **返回值** | `Promise<void>` | | |
 
-#### `sendNotification(message: string, ...args: any[]): Promise<void[]>`
+#### `sendNotification(message: string, ...args: any[]): Promise<any[]>`
 
 向所有具有 `PRIV_VIEW_SYSTEM_NOTIFICATION` 的用户发送翻译后的通知。`message` 通过 `app.i18n` 使用每个接收者的 `viewLang` 翻译，`args` 传递给 `format()`。消息以 `FLAG_RICHTEXT` 发送。
 
@@ -81,7 +81,7 @@ interface MessageDoc {
 |------|------|--------|------|
 | `message` | `string` | — | i18n 消息键 |
 | `args` | `any[]` | — | 传递给 `format()` 的参数 |
-| **返回值** | `Promise<void[]>` | | |
+| **返回值** | `Promise<any[]>` | | 每个接收者的发送结果 |
 
 ### 查询
 

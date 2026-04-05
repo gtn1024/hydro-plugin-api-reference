@@ -54,7 +54,7 @@ interface UploadOptions {
 ```
 
 - `type` — 作为表单字段传递；用于在服务端对上传进行分类。
-- `pjax` — 为 `true` 时，所有上传完成后执行 PJAX 导航到 `endpoint`（带有可选的 `type` 和 `sidebar` 查询参数）。
+- `pjax` — 为 `true` 时，所有上传完成后执行 PJAX 导航到 `endpoint`（`type` 值作为查询参数 `d` 传递，`sidebar` 作为 `sidebar=true` 传递；使用 `push: false` 不产生历史记录）。
 - `sidebar` — 在 PJAX URL 中添加 `sidebar=true`。
 - `singleFileUploadCallback` — 每个单独文件上传成功后调用的异步回调。
 - `filenameCallback` — 覆盖发送到服务器的文件名；默认为 `file.name`。

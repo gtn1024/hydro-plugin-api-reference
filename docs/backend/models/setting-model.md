@@ -78,7 +78,7 @@ type SettingType = "text" | "yaml" | "number" | "float" | "markdown" | "password
 | `family` | `string` | — | 用于 UI 分类的组/族名（如 `"setting_basic"`） |
 | `key` | `string` | — | 唯一设置键（如 `"pagination.problem"`） |
 | `value` | `any` | `null` | 默认值 |
-| `type` | `SettingType` | `"text"` | 输入类型。对象类型渲染为 `<select>` |
+| `type` | `SettingType` | `"text"` | 输入类型。对象类型渲染为 `<select>`（内部转换为 `type: 'select'`，`range` 字段保存选项）。`type: 'yaml'` 配合非字符串 `value` 时，内部转换为 `type: 'textarea'`，`subType: 'yaml'` |
 | `name` | `string` | `""` | 显示名称 |
 | `desc` | `string` | `""` | 描述文本 |
 | `flag` | `number` | `0` | `FLAG_*` 常量的位运算组合 |

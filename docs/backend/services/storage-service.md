@@ -39,7 +39,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 ### `signDownloadLink(target: string, filename?: string, noExpire?: boolean, useAlternativeEndpointFor?: 'user' | 'judge'): Promise<string>`
 
-生成签名下载 URL。S3 后端使用预签名 URL（为兼容阿里云最长 7 天，默认 30 分钟）。本地后端通过 `/storage` 端点生成 HMAC 签名路径。支持为用户或判题机访问使用备用端点路由。
+生成签名下载 URL。S3 后端使用预签名 URL（为兼容阿里云最长 7 天，默认 30 分钟）。本地后端通过 `/storage` 端点生成 HMAC 签名路径（默认 10 分钟有效期）。支持为用户或判题机访问使用备用端点路由。
 
 ### `signUpload(target: string, size: number): Promise<{ url, fields }>`
 

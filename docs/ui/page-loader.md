@@ -23,7 +23,7 @@ async function initPageLoader(): Promise<void>
 - **页面解析** — 读取 `document.documentElement.getAttribute('data-page')` 确定当前路由名称。
 - **回调序列** — 调用 `buildSequence()` 收集具有匹配 `beforeLoading`/`afterLoading` 钩子的页面，然后按以下顺序迭代：autoload before → 命名 before → autoload after → 命名 after。
 - **嵌套加载** — 每个回调接收一个 `loadPage(depth, type)` 函数，可以按模块名递归调用另一个页面的生命周期钩子，深度上限为 32。
-- **错误处理** — 单个回调失败会被捕获并以 `Notification.warn()` 报告；继续执行剩余回调。
+- **错误处理** — 单个回调失败会被捕获，通过 `window.captureException?.(e)`（Sentry）报告，并以 `Notification.warn()` 通知；继续执行剩余回调。
 - **性能日志** — 开发模式下，耗时 >16ms 的回调会被记录；生产环境下仅记录 >256ms 的回调。
 - **加载后处理** — 所有回调完成后：隐藏 `.page-loader`，运行区块淡入动画，在 `.section` 元素上触发 `vjLayout` 事件，并在 `$(document)` 上触发 `vjPageFullyInitialized`。
 

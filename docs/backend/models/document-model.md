@@ -120,9 +120,9 @@ interface DocType {
 | `$push` | `any` | — | 要推入数组的元素 |
 | **返回值** | `Promise<Doc>` | | 更新后的文档 |
 
-#### `inc(domainId: string, docType: number, docId: ObjectId, key: string, value: number): Promise<Doc>`
+#### `inc(domainId: string, docType: number, docId: ObjectId, key: string, value: number): Promise<Doc | null>`
 
-原子性递增数值字段 `value`。返回更新后的文档。
+原子性递增数值字段 `value`。返回更新后的文档（文档不存在时返回 `null`）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -131,11 +131,11 @@ interface DocType {
 | `docId` | `ObjectId` | — | 文档 ID |
 | `key` | `string` | — | 要递增的字段名 |
 | `value` | `number` | — | 递增量 |
-| **返回值** | `Promise<Doc>` | | 更新后的文档 |
+| **返回值** | `Promise<Doc \| null>` | | 更新后的文档（文档不存在时返回 `null`） |
 
-#### `incAndSet(domainId: string, docType: number, docId: ObjectId, key: string, value: number, args: any): Promise<Doc>`
+#### `incAndSet(domainId: string, docType: number, docId: ObjectId, key: string, value: number, args: any): Promise<Doc | null>`
 
-在单次操作中原子性递增数值字段并设置附加字段。返回更新后的文档。
+在单次操作中原子性递增数值字段并设置附加字段。返回更新后的文档（文档不存在时返回 `null`）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -145,7 +145,7 @@ interface DocType {
 | `key` | `string` | — | 要递增的字段名 |
 | `value` | `number` | — | 递增量 |
 | `args` | `any` | — | 附加设置字段 |
-| **返回值** | `Promise<Doc>` | | 更新后的文档 |
+| **返回值** | `Promise<Doc \| null>` | | 更新后的文档（文档不存在时返回 `null`） |
 
 #### `count(domainId: string, docType: number, query?: Filter<Doc>): Promise<number>`
 

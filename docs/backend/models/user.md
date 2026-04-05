@@ -160,6 +160,7 @@ const adminUid = await UserModel.create(
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
 | `uname` | `string` | — | 新的显示名 |
+| **返回值** | `Promise<Udoc \| null>` | | 更新后的文档 |
 
 #### `setEmail(uid: number, mail: string): Promise<Udoc | null>`
 
@@ -169,6 +170,7 @@ const adminUid = await UserModel.create(
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
 | `mail` | `string` | — | 新的邮箱地址 |
+| **返回值** | `Promise<Udoc \| null>` | | 更新后的文档 |
 
 #### `setPassword(uid: number, password: string): Promise<Udoc>`
 

@@ -91,7 +91,7 @@ type Field = keyof ProblemDoc;
 
 ### 增删改查
 
-#### `add(domainId: string, pid?: string, title: string, content: string, owner: number, tag?: string[], meta?: ProblemCreateOptions): Promise<number>`
+#### `add(domainId: string, pid: string = '', title: string, content: string, owner: number, tag?: string[], meta?: ProblemCreateOptions): Promise<number>`
 
 创建新题目，`docId` 自动递增。触发 `problem/before-add` 和 `problem/add` 事件。
 
@@ -125,7 +125,7 @@ const hiddenDocId = await ProblemModel.add(
 );
 ```
 
-#### `addWithId(domainId: string, docId: number, pid?: string, title: string, content: string, owner: number, tag?: string[], meta?: ProblemCreateOptions): Promise<number>`
+#### `addWithId(domainId: string, docId: number, pid: string = '', title: string, content: string, owner: number, tag?: string[], meta?: ProblemCreateOptions): Promise<number>`
 
 使用指定 `docId` 创建题目。由 `add` 和导入逻辑内部使用。
 
@@ -208,9 +208,9 @@ const hiddenDocId = await ProblemModel.add(
 | `query` | `Filter<ProblemDoc>` | — | MongoDB 过滤器 |
 | **返回值** | `Promise<number>` | | |
 
-#### `copy(domainId: string, _id: number, target: string, pid?: string, hidden?: boolean): Promise<void>`
+#### `copy(domainId: string, _id: number, target: string, pid?: string, hidden?: boolean): Promise<number>`
 
-将题目复制到另一个域，创建指向原始题目的引用链接。
+将题目复制到另一个域，创建指向原始题目的引用链接。返回新题目的 `docId`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -294,7 +294,7 @@ const hiddenDocId = await ProblemModel.add(
 | `score` | `number` | — | 分数 |
 | **返回值** | `Promise<boolean>` | | 状态是否被更新 |
 
-#### `incStatus(domainId: string, pid: number, uid: number, key: string, count: number): Promise<void>`
+#### `incStatus(domainId: string, pid: number, uid: number, key: NumberKeys<ProblemStatusDoc>, count: number): Promise<void>`
 
 递增用户题目状态上的数字字段。
 
@@ -303,7 +303,7 @@ const hiddenDocId = await ProblemModel.add(
 | `domainId` | `string` | — | 域 ID |
 | `pid` | `number` | — | 题目 `docId` |
 | `uid` | `number` | — | 用户 ID |
-| `key` | `string` | — | 要递增的字段名 |
+| `key` | `NumberKeys<ProblemStatusDoc>` | — | 要递增的字段名 |
 | `count` | `number` | — | 递增量 |
 
 #### `setStar(domainId: string, pid: number, uid: number, star: boolean): Promise<void>`
