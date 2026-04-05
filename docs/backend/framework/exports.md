@@ -1,6 +1,6 @@
 ---
-title: @hydrooj/framework 重新导出
-description: 通过 hydrooj 从 @hydrooj/framework 重新导出的核心 Web 框架接口
+title: "@hydrooj/framework 重新导出"
+description: "通过 hydrooj 从 @hydrooj/framework 重新导出的核心 Web 框架接口"
 source: packages/hydrooj/src/plugin-api.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/plugin-api.ts
 ---

@@ -1,9 +1,11 @@
 import { defineConfig } from 'vitepress';
+import { generateLlmsTxt } from './plugins/llms-txt';
 
 export default defineConfig({
   title: 'Hydro API Docs',
   description: 'Hydro 在线评测系统 API 文档',
   lang: 'zh-CN',
+  buildEnd: generateLlmsTxt(),
   themeConfig: {
     nav: [
       { text: '指南', link: '/' },

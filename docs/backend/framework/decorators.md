@@ -1,5 +1,5 @@
 ---
-title: @hydrooj/framework 装饰器与验证器
+title: "@hydrooj/framework 装饰器与验证器"
 description: 用于路由处理方法的参数绑定装饰器和类型验证器
 source: framework/framework/decorators.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/framework/framework/decorators.ts
