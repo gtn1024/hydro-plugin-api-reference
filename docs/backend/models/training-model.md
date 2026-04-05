@@ -48,7 +48,7 @@ interface TrainingDoc extends Omit<Tdoc, 'docType'> {
 
 ### 增删改查
 
-#### `add(domainId: string, title: string, content: string, owner: number, dag?: TrainingNode[], description?: string, pin?: number): Promise<TrainingDoc>`
+#### `add(domainId: string, title: string, content: string, owner: number, dag?: TrainingNode[], description?: string, pin?: number): Promise<ObjectId>`
 
 创建一条新训练计划。默认值：`dag=[]`、`description=''`、`pin=0`。
 
@@ -61,9 +61,9 @@ interface TrainingDoc extends Omit<Tdoc, 'docType'> {
 | `dag` | `TrainingNode[]` | `[]` | DAG 节点数组 |
 | `description` | `string` | `''` | 描述文本 |
 | `pin` | `number` | `0` | 置顶权重 |
-| **返回值** | `Promise<TrainingDoc>` | | 新训练计划文档 |
+| **返回值** | `Promise<ObjectId>` | | 新训练计划的 ObjectId |
 
-#### `edit(domainId: string, tid: ObjectId, $set: Partial<TrainingDoc>): Promise<void>`
+#### `edit(domainId: string, tid: ObjectId, $set: Partial<TrainingDoc>): Promise<TrainingDoc>`
 
 更新匹配给定部分文档的训练计划字段。
 
@@ -72,7 +72,7 @@ interface TrainingDoc extends Omit<Tdoc, 'docType'> {
 | `domainId` | `string` | — | 域上下文 |
 | `tid` | `ObjectId` | — | 训练计划 ID |
 | `$set` | `Partial<TrainingDoc>` | — | 要更新的字段 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<TrainingDoc>` | | 更新后的训练计划文档 |
 
 #### `del(domainId: string, tid: ObjectId): Promise<[void, void]>`
 
