@@ -118,7 +118,7 @@ interface DialogOptions {
   cancelByClickingBack?: boolean;
   cancelByEsc?: boolean;
   canCancel?: boolean;
-  onDispatch?: (action: string) => boolean | void;
+  onDispatch?: (data: any) => any;
 }
 ```
 

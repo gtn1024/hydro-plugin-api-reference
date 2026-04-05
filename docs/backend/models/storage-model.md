@@ -115,7 +115,7 @@ const judgeUrl = await StorageModel.signDownloadLink(
 |------|------|--------|------|
 | `path` | `string` | — | 当前文件路径 |
 | `newPath` | `string` | — | 新文件路径 |
-| `operator` | `null \| number` | — | 执行重命名的用户 UID |
+| `operator` | `null \| number` | `1` | 执行重命名的用户 UID |
 | **返回值** | `Promise<UpdateResult>` | | |
 
 #### `move(src: string, dst: string): Promise<boolean>`
@@ -135,7 +135,7 @@ const judgeUrl = await StorageModel.signDownloadLink(
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `path` | `string[]` | — | 要删除的文件路径数组 |
-| `operator` | `number` | — | 执行删除的用户 UID |
+| `operator` | `number` | `1` | 执行删除的用户 UID |
 | **返回值** | `Promise<void>` | | |
 
 ```typescript

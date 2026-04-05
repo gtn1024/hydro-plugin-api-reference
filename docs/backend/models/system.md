@@ -47,13 +47,13 @@ const smtpPort = SystemModel.get('smtp.port');      // number
 const [name, url] = SystemModel.getMany(['server.name', 'server.url']);
 ```
 
-#### `set(key: K, value: SystemKeys[K], broadcast?: boolean): Promise<SystemKeys[K]>`
+#### `set(_id: K, value: SystemKeys[K], broadcast?: boolean): Promise<SystemKeys[K]>`
 
 将设置写入 MongoDB，更新本地缓存，并可选地广播到其他集群节点。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `key` | `K extends keyof SystemKeys` \| `string` | — | 设置键 |
+| `_id` | `K extends keyof SystemKeys` \| `string` | — | 设置键 |
 | `value` | `SystemKeys[K]` \| `any` | — | 要存储的值 |
 | `broadcast` | `boolean` | `true` | 是否在集群节点间同步 |
 | **返回值** | `Promise<SystemKeys[K]>` | | 存储的值 |

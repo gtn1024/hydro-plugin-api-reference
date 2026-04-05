@@ -203,6 +203,6 @@ ctx.broadcast('record/judge', rdoc, updated, pdoc, updater);
 Hydro 使用两种跨进程广播实现（`bus.ts` 中的 `apply` 函数）：
 
 1. **PM2 模式** — 集群部署时，通过 PM2 的 `launchBus` + BSON 序列化在进程间传递事件。
-2. **MongoDB 模式** — 单进程或无 PM2 时，`bus/broadcast` 事件直接在本进程内调用 `parallel`。
+2. **进程内直调模式** — 单进程或无 PM2 时，`bus/broadcast` 事件直接在本进程内调用 `app.parallel(event, ...payload)`。
 
 插件开发者无需关心底层实现，统一使用 `ctx.broadcast()` 即可。

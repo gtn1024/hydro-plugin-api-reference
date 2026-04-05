@@ -103,8 +103,8 @@ type RecordDoc = {
 | `coll` | `Collection<RecordDoc>` | MongoDB 集合 `record` |
 | `collStat` | `Collection<RecordStatDoc>` | MongoDB 集合 `record.stat` |
 | `collHistory` | `Collection<RecordHistoryDoc>` | MongoDB 集合 `record.history` |
-| `PROJECTION_LIST` | `(keyof RecordDoc)[]` | 列表视图中包含的字段（15 个字段） |
-| `STAT_QUERY` | `object` | 统计查询的排序方式（`time`、`memory`、`length`、`date`） |
+| `PROJECTION_LIST` | `(keyof RecordDoc)[]` | 列表视图中包含的字段（17 个字段） |
+| `STAT_QUERY` | `object` | 统计查询的排序方式，每个键映射为 `[降序排序, 升序排序]` 二元组（`time`、`memory`、`length`、`date`） |
 | `RECORD_PRETEST` | `ObjectId` | 预测试记录的哨兵 ID（`000...000`） |
 | `RECORD_GENERATE` | `ObjectId` | 生成记录的哨兵 ID（`000...001`） |
 

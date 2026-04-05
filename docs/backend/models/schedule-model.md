@@ -28,7 +28,8 @@ interface Schedule {
     type: string;
     subType?: string;
     executeAfter: Date;
-    interval?: [number, moment.UnitOfTime]; // 周期性间隔（moment 时间单位参数）
+    // interval is not explicitly declared — it is accessed at runtime via the
+    // index signature below (e.g. res.interval as [number, moment.UnitOfTime]).
     [key: string]: any;
 }
 ```

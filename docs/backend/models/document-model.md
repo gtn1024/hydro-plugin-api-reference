@@ -158,7 +158,7 @@ interface DocType {
 | `query` | `Filter<Doc>` | — | 过滤条件 |
 | **返回值** | `Promise<number>` | | 匹配的文档数量 |
 
-#### `deleteOne(domainId: string, docType: number, docId: ObjectId): Promise<void>`
+#### `deleteOne(domainId: string, docType: number, docId: ObjectId): Promise<[DeleteResult, DeleteResult]>`
 
 删除单个文档及其关联的状态记录。
 
@@ -167,9 +167,9 @@ interface DocType {
 | `domainId` | `string` | — | 域 ID |
 | `docType` | `number` | — | 文档类型常量 |
 | `docId` | `ObjectId` | — | 文档 ID |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<[DeleteResult, DeleteResult]>` | | 文档删除结果和状态删除结果 |
 
-#### `deleteMulti(domainId: string, docType: number, query?: Filter<Doc>): Promise<void>`
+#### `deleteMulti(domainId: string, docType: number, query?: Filter<Doc>): Promise<DeleteResult>`
 
 删除匹配过滤器的多个文档。
 
@@ -178,7 +178,7 @@ interface DocType {
 | `domainId` | `string` | — | 域 ID |
 | `docType` | `number` | — | 文档类型常量 |
 | `query` | `Filter<Doc>` | — | 过滤条件 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<DeleteResult>` | | |
 
 ### 子文档操作
 
@@ -480,7 +480,7 @@ const status = await document.cappedIncStatus(
 | `uid` | `number` | — | 用户 ID |
 | `key` | `string` | — | 数组字段名 |
 | `value` | `any` | — | 要推入/替换的值 |
-| `id` | `ObjectId` | — | 子元素 ID（匹配则替换） |
+| `id` | `string` | `'_id'` | 子元素 ID 字段名（匹配则替换） |
 | **返回值** | `Promise<StatusDoc>` | | |
 
 ```typescript

@@ -66,7 +66,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 | 属性 | 类型 | 说明 |
 |------|------|------|
-| `coll` | `Collection` | MongoDB `blacklist` 集合 |
+| `coll` | `Collection` | MongoDB `blacklist` 集合（模块级 `db.collection` 引用，非类属性） |
 
 ---
 

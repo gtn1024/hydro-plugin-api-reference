@@ -56,7 +56,7 @@ type Field = keyof DiscussionDoc
 
 ### 讨论 CRUD
 
-#### `add(domainId: string, parentType: number, parentId: ObjectId | number | string, owner: number, title: string, content: string, ip?: string, highlight: boolean, pin: boolean, hidden?: boolean): Promise<ObjectId>`
+#### `add(domainId: string, parentType: number, parentId: ObjectId | number | string, owner: number, title: string, content: string, ip: string | null = null, highlight: boolean, pin: boolean, hidden?: boolean): Promise<ObjectId>`
 
 在父实体（题目、比赛、训练计划或节点）下创建新讨论。触发 `discussion/before-add` 和 `discussion/add` 总线事件。返回新讨论 ID。
 
@@ -68,7 +68,7 @@ type Field = keyof DiscussionDoc
 | `owner` | `number` | — | 创建者 UID |
 | `title` | `string` | — | 讨论标题 |
 | `content` | `string` | — | 讨论内容 |
-| `ip` | `string` | — | 创建者 IP 地址 |
+| `ip` | `string \| null` | `null` | 创建者 IP 地址 |
 | `highlight` | `boolean` | — | 是否高亮 |
 | `pin` | `boolean` | — | 是否置顶 |
 | `hidden` | `boolean` | — | 是否隐藏 |
@@ -114,7 +114,7 @@ const pinnedDid = await DiscussionModel.add(
 | `projection` | `T[]` | `PROJECTION_PUBLIC` | 返回字段列表 |
 | **返回值** | `Promise<Pick<DiscussionDoc, T>>` | | |
 
-#### `edit(domainId: string, did: ObjectId, $set: Partial<DiscussionDoc>): Promise<void>`
+#### `edit(domainId: string, did: ObjectId, $set: Partial<DiscussionDoc>): Promise<DiscussionDoc>`
 
 更新讨论字段。如果 `content` 有变更，自动在 `coll` 集合中插入历史记录。
 
@@ -123,7 +123,7 @@ const pinnedDid = await DiscussionModel.add(
 | `domainId` | `string` | — | 域 ID |
 | `did` | `ObjectId` | — | 讨论 ID |
 | `$set` | `Partial<DiscussionDoc>` | — | 要更新的字段 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<DiscussionDoc>` | | |
 
 #### `del(domainId: string, did: ObjectId): Promise<void>`
 

@@ -15,7 +15,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/u
 ## api()
 
 ```ts
-function api(method: string, args: Record<string, any>, projection?: any): Promise<any>
+function api(method: string, args: Record<string, any>, projection: any): Promise<any>
 ```
 
 通过 `/d/{domainId}/api/{method}` 端点调用 Hydro 后端 API 方法。将 `args` 和可选 `projection` 作为 JSON 正文通过 POST 发送。如果响应包含 `error` 字段则抛出异常。

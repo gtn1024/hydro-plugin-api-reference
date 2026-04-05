@@ -17,7 +17,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/c
 ```ts
 async function load(features?: string[]): Promise<{
   monaco: typeof import('monaco-editor/esm/vs/editor/editor.api');
-  registerAction: (editor: monaco.editor.IStandaloneCodeEditor, model: monaco.editor.IModel, element?: HTMLElement) => Promise<any>;
+  registerAction: (editor: monaco.editor.IStandaloneCodeEditor, model: monaco.editor.IModel, element?: HTMLElement) => Promise<any> | null;
   customOptions: monaco.editor.IStandaloneDiffEditorConstructionOptions;
   renderMarkdown: typeof import('monaco-editor/esm/vs/base/browser/markdownRenderer').renderMarkdown;
 }>

@@ -394,7 +394,7 @@ const hiddenDocId = await ProblemModel.add(
 
 ### 子文档辅助
 
-#### `push(domainId: string, _id: number, key: string, value: any): Promise<void>`
+#### `push(domainId: string, _id: number, key: ArrayKeys<ProblemDoc>, value: ProblemDoc[typeof key][0]): Promise<[Doc, ObjectId]>`
 
 向数组字段（`data` 或 `additional_file`）追加元素。
 
@@ -402,10 +402,11 @@ const hiddenDocId = await ProblemModel.add(
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `_id` | `number` | — | 题目 `docId` |
-| `key` | `string` | — | 数组字段名 |
-| `value` | `any` | — | 要追加的元素 |
+| `key` | `ArrayKeys<ProblemDoc>` | — | 数组字段名 |
+| `value` | `ProblemDoc[typeof key][0]` | — | 要追加的元素 |
+| **返回值** | `Promise<[Doc, ObjectId]>` | | 更新后的文档和新元素 ID |
 
-#### `pull(domainId: string, pid: number, key: string, values: any[]): Promise<void>`
+#### `pull(domainId: string, pid: number, key: ArrayKeys<ProblemDoc>, values: ProblemDoc[typeof key][0][]): Promise<DocType[typeof key]>`
 
 按值从数组字段中移除元素。
 
@@ -413,10 +414,11 @@ const hiddenDocId = await ProblemModel.add(
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `pid` | `number` | — | 题目 `docId` |
-| `key` | `string` | — | 数组字段名 |
-| `values` | `any[]` | — | 要移除的值 |
+| `key` | `ArrayKeys<ProblemDoc>` | — | 数组字段名 |
+| `values` | `ProblemDoc[typeof key][0][]` | — | 要移除的值 |
+| **返回值** | `Promise<DocType[typeof key]>` | | 更新后的文档 |
 
-#### `inc(domainId: string, _id: number, field: string, n: number): Promise<void>`
+#### `inc(domainId: string, _id: number, field: NumberKeys<ProblemDoc> | string, n: number): Promise<ProblemDoc>`
 
 递增数字字段（如 `nSubmit`、`nAccept`）。
 
@@ -424,8 +426,9 @@ const hiddenDocId = await ProblemModel.add(
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `_id` | `number` | — | 题目 `docId` |
-| `field` | `string` | — | 要递增的字段名 |
+| `field` | `NumberKeys<ProblemDoc> \| string` | — | 要递增的字段名 |
 | `n` | `number` | — | 递增量（负数为递减） |
+| **返回值** | `Promise<ProblemDoc>` | | 更新后的文档 |
 
 ### 权限检查
 
@@ -476,15 +479,15 @@ await ProblemModel.import('system', '/data/problems/', {
 });
 ```
 
-#### `export(domainId: string, pidFilter?: string): Promise<string>`
+#### `export(domainId: string, pidFilter?: string): Promise<void>`
 
-导出所有题目（或匹配 PID 正则过滤器的题目）为 ZIP 归档，保存到临时目录。返回生成的 ZIP 文件路径。
+导出所有题目（或匹配 PID 正则过滤器的题目）为 ZIP 归档，保存到当前工作目录。输出文件路径打印到控制台。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `pidFilter` | `string` | `''` | PID 正则过滤器（留空导出全部） |
-| **返回值** | `Promise<string>` | | 生成的 ZIP 文件路径 |
+| **返回值** | `Promise<void>` | | 无返回值 |
 
 ```typescript
 // 导出域内所有题目

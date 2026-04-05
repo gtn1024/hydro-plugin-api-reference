@@ -152,7 +152,7 @@ const adminUid = await UserModel.create(
 | `$push` | `object` | — | 要追加的字段（数组追加） |
 | **返回值** | `Promise<Udoc \| null>` | | 更新后的文档（虚拟用户返回 null） |
 
-#### `setUname(uid: number, uname: string): Promise<void>`
+#### `setUname(uid: number, uname: string): Promise<Udoc | null>`
 
 更改用户的显示名。同时更新 `uname` 和 `unameLower`。
 
@@ -161,7 +161,7 @@ const adminUid = await UserModel.create(
 | `uid` | `number` | — | 用户 ID |
 | `uname` | `string` | — | 新的显示名 |
 
-#### `setEmail(uid: number, mail: string): Promise<void>`
+#### `setEmail(uid: number, mail: string): Promise<Udoc | null>`
 
 更改用户的邮箱。应用 Gmail 规范化（`handleMailLower`）。
 
@@ -170,7 +170,7 @@ const adminUid = await UserModel.create(
 | `uid` | `number` | — | 用户 ID |
 | `mail` | `string` | — | 新的邮箱地址 |
 
-#### `setPassword(uid: number, password: string): Promise<void>`
+#### `setPassword(uid: number, password: string): Promise<Udoc>`
 
 重置用户密码。生成新的盐值并使用 `hydro` 哈希类型重新哈希。
 
@@ -189,7 +189,7 @@ const adminUid = await UserModel.create(
 | `priv` | `number` | — | 权限位掩码（参见 `PRIV` 常量） |
 | **返回值** | `Promise<Udoc>` | | 更新后的文档 |
 
-#### `setSuperAdmin(uid: number): Promise<void>`
+#### `setSuperAdmin(uid: number): Promise<Udoc>`
 
 将用户提升为超级管理员（`PRIV.PRIV_ALL`）。
 
@@ -197,7 +197,7 @@ const adminUid = await UserModel.create(
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
 
-#### `setJudge(uid: number): Promise<void>`
+#### `setJudge(uid: number): Promise<Udoc>`
 
 将用户设置为评测员并赋予相应权限（`USER_PROFILE | JUDGE | VIEW_ALL_DOMAIN | READ_PROBLEM_DATA | UNLIMITED_ACCESS`）。
 
@@ -205,7 +205,7 @@ const adminUid = await UserModel.create(
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
 
-#### `ban(uid: number, reason?: string): Promise<void>`
+#### `ban(uid: number, reason?: string): Promise<[Udoc | null, any]>`
 
 封禁用户：将权限设为 `PRIV_NONE` 并撤销所有令牌。
 

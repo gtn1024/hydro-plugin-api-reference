@@ -82,7 +82,7 @@ type SettingType = "text" | "yaml" | "number" | "float" | "markdown" | "password
 | `name` | `string` | `""` | 显示名称 |
 | `desc` | `string` | `""` | 描述文本 |
 | `flag` | `number` | `0` | `FLAG_*` 常量的位运算组合 |
-| `validation` | `(val: any) => boolean` | — | 可选验证器 |
+| `validation` | `(val: any) => boolean` | _(optional)_ | 可选验证器 |
 | **返回值** | `Setting` | | 设置描述符对象 |
 
 ### 注册函数

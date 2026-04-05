@@ -22,12 +22,12 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 管理单个评测任务结果回调的生命周期。通过内部 promise 链序列化所有 `next`/`end` 操作以确保更新有序。实现了 `then` 方法，因此实例可以直接被 await（在 `end()` 被调用时 resolve）。
 
-**构造函数**: `new JudgeResultCallbackContext(ctx: Context, task: Task)`
+**构造函数**: `new JudgeResultCallbackContext(ctx: Context, task: Omit<Task, '_id'> & { type: string })`
 
 | 属性 | 类型 | 说明 |
 |------|------|------|
 | `ctx` | `Context` | 用于广播事件的 Cordis 上下文 |
-| `task` | `Task` | 正在处理的评测任务 |
+| `task` | `Omit<Task, '_id'> & { type: string }` | 正在处理的评测任务 |
 
 #### 实例方法
 
@@ -53,7 +53,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 ### `JudgeFilesDownloadHandler`（继承 `Handler`）
 
-评测文件下载（提交代码和测试数据）的 HTTP 处理器。注册在 `POST /judge/files`，需要 `PRIV_JUDGE`。
+评测文件下载（提交代码和测试数据）的 HTTP 处理器。注册在 `GET/POST /judge/files`，需要 `PRIV_JUDGE`。
 
 ### `JudgeFileUpdateHandler`（继承 `Handler`）
 

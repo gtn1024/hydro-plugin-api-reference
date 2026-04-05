@@ -21,7 +21,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/framework/utils/lib/c
 | `randomstring(digit?, dict?)` | 生成 `digit` 长度（默认 32）的随机字符串，使用 `dict` 中的字符（默认字母数字）。 |
 | `formatDate(date, fmt?)` | 使用 printf 风格占位符（`%Y`、`%m`、`%d`、`%H`、`%M`、`%S`）格式化 `Date` 对象。默认格式：`'%Y-%m-%d %H:%M:%S'`。 |
 | `formatSeconds(seconds?, showSeconds?)` | 将以秒为单位的时长格式化为 `HH:MM:SS`（当 `showSeconds` 为 false 时为 `H:MM`）。 |
-| `getAlphabeticId(i)` | 将零基索引转换为字母 ID（`A`、`B`、... `Z`、`AA`、`AB`、...）。缓存至 `AZ` 以提升性能。 |
+| `getAlphabeticId(i)` | 将零基索引转换为字母 ID（`A`、`B`、... `Z`、`AA`、`AB`、...）。缓存至 `ZZ` 以提升性能。 |
 
 ### 解析
 

@@ -200,7 +200,7 @@ interface DomainDoc extends Record<string, any> {
 | `domainId` | `string` | — | 域 ID |
 | `uid` | `MaybeArray<number>` | — | 单个或批量用户 ID |
 | `role` | `string` | — | 目标角色名 |
-| `autojoin` | `boolean` | — | 是否自动加入域 |
+| `autojoin` | `boolean` | `false` | 是否自动加入域 |
 | **返回值** | `Promise<any>` | | |
 
 #### `setJoin(domainId: string, uid: MaybeArray<number>, join: boolean): Promise<void>`
@@ -257,7 +257,7 @@ interface DomainDoc extends Record<string, any> {
 | `query` | `any` | — | 匹配条件 |
 | **返回值** | `Cursor<any>` | | |
 
-#### `incUserInDomain(domainId: string, uid: number, field: string, n?: number): Promise<any>`
+#### `incUserInDomain(domainId: string, uid: number, field: string, n: number = 1): Promise<any>`
 
 对域用户记录执行读-改-写递增数值字段；返回更新后的文档。
 
@@ -266,7 +266,7 @@ interface DomainDoc extends Record<string, any> {
 | `domainId` | `string` | — | 域 ID |
 | `uid` | `number` | — | 用户 ID |
 | `field` | `string` | — | 要递增的字段名 |
-| `n` | `number` | — | 递增量 |
+| `n` | `number` | `1` | 递增量 |
 | **返回值** | `Promise<any>` | | |
 
 ### 角色管理

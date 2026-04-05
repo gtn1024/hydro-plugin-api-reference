@@ -96,7 +96,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 |------|-----|------|
 | `PERM_ALL` | `-1n` | 所有权限（所有位设为 1） |
 | `PERM_BASIC` | 查看权限的并集 | 访客的基础查看权限 |
-| `PERM_DEFAULT` | basic + 创建/自己编辑的并集 | 注册用户的默认权限 |
+| `PERM_DEFAULT` | 查看 + 创建/自己编辑/提交/投票/回复/参加的并集 | 注册用户的默认权限 |
 | `PERM_ADMIN` | `-1n` | `PERM_ALL` 的别名 |
 
 ### PRIV —— 系统级特权位标志
@@ -204,7 +204,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 ### LEVELS
 
-`number[]` —— `[100, 90, 70, 55, 40, 30, 20, 10, 5, 2, 1]` —— 10 个用户等级的百分比阈值。排名百分位低于阈值的用户获得该等级。
+`number[]` —— `[100, 90, 70, 55, 40, 30, 20, 10, 5, 2, 1]` —— 11 个用户等级的百分比阈值。排名百分位低于阈值的用户获得该等级。
 
 ### BUILTIN_ROLES
 
