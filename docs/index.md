@@ -7,22 +7,12 @@ hero:
   tagline: Hydro 在线评测系统插件开发文档
   actions:
     - theme: brand
-      text: 数据模型
-      link: /backend/models/user
+      text: 后端
+      link: /backend/context/
     - theme: alt
-      text: UI 组件
+      text: UI
       link: /ui/page
     - theme: alt
-      text: Context & Service
-      link: /backend/context/
-
-features:
-  - title: Models
-    details: 数据库模型 — User, Problem, Contest, Record 等
-  - title: UI Components
-    details: 前端组件 — Page, Dialog, Monaco, Autocomplete 等
-  - title: Context & Service
-    details: 插件系统核心 — Context, Service, 事件总线
-  - title: Framework
-    details: 框架工具 — Decorators, Exports
+      text: LLM & Skills
+      link: /meta/llm-txt
 ---
