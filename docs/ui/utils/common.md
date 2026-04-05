@@ -27,8 +27,8 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/framework/utils/lib/c
 
 | API | 说明 |
 |-----|------|
-| `parseTimeMS(str, throwOnError?)` | 将时间字符串（如 `"1s"`、`"500ms"`、`"100us"`）解析为毫秒。纯数字原样返回。解析失败默认返回：`1000`。 |
-| `parseMemoryMB(str, throwOnError?)` | 将内存字符串（如 `"256mb"`、`"1gb"`、`"512kb"`）解析为 MiB。纯数字原样返回。解析失败默认返回：`256`。 |
+| `parseTimeMS(str, throwOnError?)` | 将时间字符串（如 `"1s"`、`"500ms"`、`"100us"`）解析为毫秒。纯数字原样返回。解析失败默认抛出异常；当 `throwOnError` 为 `false` 时返回 `1000`。 |
+| `parseMemoryMB(str, throwOnError?)` | 将内存字符串（如 `"256mb"`、`"1gb"`、`"512kb"`）解析为 MiB。纯数字原样返回。解析失败默认抛出异常；当 `throwOnError` 为 `false` 时返回 `256`。 |
 
 ### 大小写转换
 

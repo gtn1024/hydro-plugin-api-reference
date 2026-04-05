@@ -22,6 +22,8 @@ Source: `packages/ui-default/components/autocomplete/index.tsx`
 class AutoComplete<Options extends Record<string, any> = object, Multi extends boolean = boolean> extends DOMAttachedObject
 ```
 
+- `DOMAttachKey`: `ucwAutoCompleteInstance`
+
 **构造参数：**
 - `$dom` — 要绑定的 jQuery DOM 元素（通常是 `<input>`）
 - `options` — 配置选项（见 `AutoCompleteOptions`）
@@ -123,7 +125,7 @@ class UserSelectAutoComplete<Multi extends boolean> extends AutoComplete
 ```
 
 - `DOMAttachKey`: `ucwUserSelectAutoCompleteInstance`
-- `value()` 在多选模式下返回 `number[]`（用户 ID 数组），单选模式返回字符串
+- `value()` 在多选模式下返回 `number[]`（用户 ID 数组），单选模式返回首个选中用户对象（或 `null`）
 
 ### FileSelectAutoComplete
 
