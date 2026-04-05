@@ -3,6 +3,7 @@ title: 第三方库重新导出
 description: "预打包的第三方库，由 @hydrooj/ui-default 重新导出"
 source: packages/ui-default/api.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/api.ts
+import: "import { $, _, React, ReactDOM, redux, AnsiUp } from '@hydrooj/ui-default'"
 ---
 # 第三方库重新导出
 

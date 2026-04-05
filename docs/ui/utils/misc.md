@@ -3,6 +3,7 @@ title: DOM & 异步 & 其他工具函数
 description: 前端 DOM 操作、异步控制、流处理及其他零散工具集
 source: packages/ui-default/utils/base.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/utils/base.ts
+import: "import { slideDown, slideUp, mongoId, zIndexManager, delay } from '@hydrooj/ui-default'"
 ---
 # DOM & 异步 & 其他工具函数
 

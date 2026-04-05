@@ -3,6 +3,7 @@ title: 懒加载系统
 description: 前端模块懒加载系统，支持动态加载脚本和插件贡献的特性
 source: packages/ui-default/lazyload.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/lazyload.ts
+import: "import { load, getFeatures, loadFeatures, provideFeature } from '@hydrooj/ui-default'"
 ---
 # 懒加载系统
 

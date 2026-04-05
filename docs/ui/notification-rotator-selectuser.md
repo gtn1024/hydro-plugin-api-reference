@@ -3,6 +3,7 @@ title: Notification, Rotator & selectUser
 description: Toast 通知、动画数字翻转器和用户选择对话框
 source: packages/ui-default/components/notification/index.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/notification/index.ts
+import: "import { Notification, Rotator, selectUser } from '@hydrooj/ui-default'"
 ---
 # Notification, Rotator & selectUser
 

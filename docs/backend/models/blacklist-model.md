@@ -3,14 +3,11 @@ title: BlackListModel
 description: 用于按 ID 封禁用户或实体的黑名单模型，支持可选过期时间
 source: packages/hydrooj/src/model/blacklist.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/blacklist.ts
+import: "import { BlackListModel } from 'hydrooj'"
 ---
 # BlackListModel
 
 用于按 ID 封禁用户或实体的黑名单模型，支持可选过期时间。
-
-> **源码**: [`packages/hydrooj/src/model/blacklist.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/blacklist.ts)
->
-> **导出**: `import { BlackListModel } from 'hydrooj';`
 
 `BlackListModel` 是纯静态类。所有方法均通过类本身调用（如 `BlackListModel.add(...)`）。
 

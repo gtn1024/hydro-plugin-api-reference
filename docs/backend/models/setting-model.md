@@ -3,14 +3,11 @@ title: SettingModel
 description: 设置注册模型，用于声明用户级、域级和系统级设置
 source: packages/hydrooj/src/model/setting.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/setting.ts
+import: "import { SettingModel } from 'hydrooj'"
 ---
 # SettingModel
 
 设置注册模型，用于声明用户级、域级和系统级设置。
-
-> **源码**: [`packages/hydrooj/src/model/setting.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/setting.ts)
->
-> **导出**: `import { SettingModel } from 'hydrooj';`
 
 `SettingModel` 是一个纯模块，导出常量和注册函数而非类。插件使用它将自定义设置注册到相应的分类中。
 

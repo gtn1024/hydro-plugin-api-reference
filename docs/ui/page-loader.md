@@ -3,6 +3,7 @@ title: initPageLoader
 description: 前端页面加载器初始化函数
 source: packages/ui-default/hydro.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/hydro.ts
+import: "import { initPageLoader } from '@hydrooj/ui-default'"
 ---
 # initPageLoader
 

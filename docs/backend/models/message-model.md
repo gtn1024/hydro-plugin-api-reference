@@ -3,14 +3,11 @@ title: MessageModel
 description: 消息模型，用于发送、查询和删除用户消息及系统通知
 source: packages/hydrooj/src/model/message.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/message.ts
+import: "import { MessageModel } from 'hydrooj'"
 ---
 # MessageModel
 
 消息模型，用于发送、查询和删除用户消息及系统通知。
-
-> **源码**: [`packages/hydrooj/src/model/message.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/message.ts)
->
-> **导出**: `import { MessageModel } from 'hydrooj';`
 
 `MessageModel` 是纯静态类。所有方法均通过类本身调用（如 `MessageModel.send(...)`）。
 

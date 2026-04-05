@@ -3,14 +3,11 @@ title: ProblemModel
 description: 题目管理模型，提供增删改查操作、测试数据管理和导入导出
 source: packages/hydrooj/src/model/problem.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/problem.ts
+import: "import { ProblemModel } from 'hydrooj'"
 ---
 # ProblemModel
 
 题目管理模型，提供增删改查操作、测试数据/附件管理、导入导出以及每用户状态跟踪。
-
-> **源码**: [`packages/hydrooj/src/model/problem.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/problem.ts)
->
-> **导出**: `import { ProblemModel } from 'hydrooj';`
 
 `ProblemModel` 是一个纯静态类。所有方法直接在类上调用（如 `ProblemModel.get(...)`）。它封装了 `document` 子系统，文档类型为 `TYPE_PROBLEM`。
 

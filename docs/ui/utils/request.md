@@ -3,6 +3,7 @@ title: api() & request 工具
 description: 面向插件开发者的前端 HTTP 请求工具和语言辅助函数
 source: packages/ui-default/utils/index.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/utils/index.ts
+import: "import { api, request } from '@hydrooj/ui-default'"
 ---
 # api() & request 工具
 

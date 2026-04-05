@@ -3,6 +3,7 @@ title: "@hydrooj/utils/lib/common"
 description: 前端插件可用的通用工具函数
 source: framework/utils/lib/common.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/framework/utils/lib/common.ts
+import: "import { randomstring, formatDate, formatSeconds } from '@hydrooj/ui-default'"
 ---
 # @hydrooj/utils/lib/common
 

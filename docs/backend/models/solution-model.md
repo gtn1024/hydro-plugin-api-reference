@@ -3,14 +3,11 @@ title: SolutionModel
 description: 题解模型，用于管理题目题解、回复和投票
 source: packages/hydrooj/src/model/solution.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/solution.ts
+import: "import { SolutionModel } from 'hydrooj'"
 ---
 # SolutionModel
 
 题解模型，用于管理题目题解、回复和投票。
-
-> **源码**: [`packages/hydrooj/src/model/solution.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/solution.ts)
->
-> **导出**: `import { SolutionModel } from 'hydrooj';`
 
 `SolutionModel` 是一个纯静态类。所有方法直接在类上调用（如 `SolutionModel.add(...)`）。
 

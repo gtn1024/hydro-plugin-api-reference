@@ -6,26 +6,43 @@
 
 ## 文档头部
 
-每个模型文档必须以以下头部开始：
+每个模型文档必须包含以下 YAML frontmatter：
+
+```yaml
+---
+title: ModelName
+description: 一句话中文描述该模型的职责和用途
+source: packages/hydrooj/src/model/filename.ts
+source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/filename.ts
+import: "import { ModelName } from 'hydrooj'"
+---
+```
+
+**frontmatter 字段说明：**
+
+1. **title** — 模型导出名（如 `ProblemModel`）
+2. **description** — 一句话描述模型用途
+3. **source** — Hydro 仓库中的相对源码路径
+4. **source_url** — GitHub 上对应源码的完整 URL
+5. **import** — 推荐的导入语句（统一从 `'hydrooj'` 顶层导入，不使用深路径）
+
+---
+
+文档正文必须以以下头部开始：
 
 ```
 # ModelName
 
 一段中文简要描述该模型的职责和用途。
 
-> **源码**: `packages/hydrooj/src/model/filename.ts`
->
-> **导出**: `import { ModelName } from 'hydrooj';`
-
 `ModelName` 是纯静态类。所有方法均通过类本身调用（如 `ModelName.method(...)`）。
 ```
 
-**头部包含三个要素：**
+**头部包含要素：**
 
 1. **标题** — `# ModelName`（与导出名一致）
 2. **描述** — 一句话说明模型用途
-3. **源码/导出块** — blockquote 格式，标明源码路径和 import 语句
-4. **性质说明** — 简要说明类的性质（纯静态类、实例类等）及其底层集合
+3. **性质说明** — 简要说明类的性质（纯静态类、实例类等）及其底层集合
 
 ---
 
@@ -213,10 +230,6 @@ await UserModel.ban(uid, '违反社区规范');
 # ExampleModel
 
 示例管理模型，提供 CRUD 操作和缓存。
-
-> **源码**: `packages/hydrooj/src/model/example.ts`
->
-> **导出**: `import { ExampleModel } from 'hydrooj';`
 
 `ExampleModel` 是纯静态类。所有方法均通过类本身调用。
 

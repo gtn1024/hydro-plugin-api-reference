@@ -3,6 +3,7 @@ title: 对话框系统
 description: 模态覆盖层用于用户交互，从简单提示到复杂的多字段表单
 source: packages/ui-default/components/dialog/index.tsx
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/dialog/index.tsx
+import: "import { Dialog, InfoDialog, ActionDialog, ConfirmDialog, prompt, confirm, alert } from '@hydrooj/ui-default'"
 ---
 # 对话框系统
 

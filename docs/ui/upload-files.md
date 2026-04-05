@@ -3,6 +3,7 @@ title: uploadFiles
 description: 文件上传工具，带进度对话框、浏览器关闭防护和逐文件回调
 source: packages/ui-default/components/upload.tsx
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/upload.tsx
+import: "import { uploadFiles } from '@hydrooj/ui-default'"
 ---
 # uploadFiles
 

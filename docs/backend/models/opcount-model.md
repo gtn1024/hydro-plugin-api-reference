@@ -3,14 +3,11 @@ title: OpcountModel
 description: 频率限制模型，用于跟踪和强制执行时间窗口内的操作计数
 source: packages/hydrooj/src/model/opcount.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/opcount.ts
+import: "import { OpcountModel } from 'hydrooj'"
 ---
 # OpcountModel
 
 频率限制模型，用于跟踪和强制执行时间窗口内的操作计数。
-
-> **源码**: [`packages/hydrooj/src/model/opcount.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/opcount.ts)
->
-> **导出**: `import { OpcountModel } from 'hydrooj';`
 
 `OpcountModel` 是一个纯模块，导出函数而非类。所有方法直接调用（如 `OpcountModel.inc(...)`）。
 

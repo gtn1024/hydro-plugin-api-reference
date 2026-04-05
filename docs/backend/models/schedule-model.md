@@ -3,14 +3,11 @@ title: ScheduleModel
 description: 定时任务模型，用于创建、查询和删除延迟或周期性任务
 source: packages/hydrooj/src/model/schedule.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/schedule.ts
+import: "import { ScheduleModel } from 'hydrooj'"
 ---
 # ScheduleModel
 
 定时任务模型，用于创建、查询和删除延迟或周期性任务。
-
-> **源码**: [`packages/hydrooj/src/model/schedule.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/schedule.ts)
->
-> **导出**: `import { ScheduleModel } from 'hydrooj';`
 
 `ScheduleModel` 是一个纯静态类。所有方法直接在类上调用（如 `ScheduleModel.add(...)`）。
 

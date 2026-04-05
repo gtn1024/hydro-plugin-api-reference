@@ -3,14 +3,11 @@ title: UserModel
 description: 用户管理模型，提供增删改查操作、认证辅助和用户组管理
 source: packages/hydrooj/src/model/user.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/user.ts
+import: "import { UserModel } from 'hydrooj'"
 ---
 # UserModel
 
 用户管理模型，提供增删改查操作、认证辅助和用户组管理。
-
-> **源码**: [`packages/hydrooj/src/model/user.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/model/user.ts)
->
-> **导出**: `import { UserModel } from 'hydrooj';`
 
 `UserModel` 是一个纯静态类。所有方法直接在类上调用（如 `UserModel.getById(...)`）。它封装了 `user`、`vuser` 和 `user.group` MongoDB 集合，并带有 LRU 缓存。
 

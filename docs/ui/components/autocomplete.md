@@ -3,6 +3,7 @@ title: AutoComplete 组件
 description: 基于 DOM 的自动完成组件族，绑定到 input 元素并渲染下拉选择器
 source: packages/ui-default/components/autocomplete/
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/autocomplete/
+import: "import { AutoComplete } from '@hydrooj/ui-default'"
 ---
 # AutoComplete 组件
 
