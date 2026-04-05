@@ -8,13 +8,13 @@ hero:
   actions:
     - theme: brand
       text: 数据模型
-      link: /models/user
+      link: /backend/models/user
     - theme: alt
       text: UI 组件
       link: /ui/page
     - theme: alt
       text: Context & Service
-      link: /context/
+      link: /backend/context/
 
 features:
   - title: Models
