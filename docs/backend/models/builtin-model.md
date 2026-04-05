@@ -191,8 +191,8 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 | `perm_general` | `PERM_VIEW`, `PERM_VIEW_USER_PRIVATE_INFO`, `PERM_EDIT_DOMAIN`, `PERM_MOD_BADGE` |
 | `perm_problem` | `PERM_CREATE_PROBLEM`, `PERM_EDIT_PROBLEM`, `PERM_EDIT_PROBLEM_SELF`, `PERM_VIEW_PROBLEM`, `PERM_VIEW_PROBLEM_HIDDEN`, `PERM_SUBMIT_PROBLEM`, `PERM_READ_PROBLEM_DATA` |
 | `perm_record` | `PERM_VIEW_RECORD`, `PERM_READ_RECORD_CODE`, `PERM_READ_RECORD_CODE_ACCEPT`, `PERM_REJUDGE_PROBLEM`, `PERM_REJUDGE` |
-| `perm_problem_solution` | 题解 CRUD、投票和回复的 13 个权限 |
-| `perm_discussion` | 讨论 CRUD、置顶、高亮、锁定、回应和回复的 16 个权限 |
+| `perm_problem_solution` | 题解 CRUD、投票和回复的 12 个权限 |
+| `perm_discussion` | 讨论 CRUD、置顶、高亮、锁定、回应和回复的 15 个权限 |
 | `perm_contest` | `PERM_VIEW_CONTEST`, `PERM_VIEW_CONTEST_SCOREBOARD`, `PERM_VIEW_CONTEST_HIDDEN_SCOREBOARD`, `PERM_CREATE_CONTEST`, `PERM_ATTEND_CONTEST`, `PERM_EDIT_CONTEST`, `PERM_EDIT_CONTEST_SELF`, `PERM_VIEW_HIDDEN_CONTEST` |
 | `perm_homework` | `PERM_VIEW_HOMEWORK`, `PERM_VIEW_HOMEWORK_SCOREBOARD`, `PERM_VIEW_HOMEWORK_HIDDEN_SCOREBOARD`, `PERM_CREATE_HOMEWORK`, `PERM_ATTEND_HOMEWORK`, `PERM_EDIT_HOMEWORK`, `PERM_EDIT_HOMEWORK_SELF`, `PERM_VIEW_HIDDEN_HOMEWORK` |
 | `perm_training` | `PERM_VIEW_TRAINING`, `PERM_CREATE_TRAINING`, `PERM_EDIT_TRAINING`, `PERM_PIN_TRAINING`, `PERM_EDIT_TRAINING_SELF` |
@@ -234,14 +234,14 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 返回数值分数（0–100）对应的十六进制颜色字符串（`#rrggbb`），以 10 分为一档映射红到绿的渐变。非有限值返回 `#000000`。
 
-#### `Permission(family: string, key: string, desc: string): PermissionDescriptor`
+#### `Permission(family: string, key: bigint, desc: string): PermissionDescriptor`
 
 工厂函数，创建权限描述符对象 `{ family, key, desc }`。内部用于构建 `PERMS` 数组。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `family` | `string` | — | 权限所属分类 |
-| `key` | `string` | — | 权限常量名 |
+| `key` | `bigint` | — | 权限常量值（如 `PERM.PERM_VIEW`） |
 | `desc` | `string` | — | 权限描述 |
 | **返回值** | `PermissionDescriptor` | | `{ family, key, desc }` |
 

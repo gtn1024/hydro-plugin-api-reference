@@ -27,7 +27,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 ### `get(target: string, path?: string): Promise<Readable | null>`
 
-获取文件。返回 `Readable` 流。若提供 `path`，则将文件保存到该本地路径并返回 `null`。
+获取文件。默认返回 `Readable` 流。若提供 `path`，则将文件同时保存到该本地路径；此时 S3 后端返回 `null`，本地后端仍返回 `Readable` 流。
 
 ### `del(target: string | string[]): Promise<void>`
 

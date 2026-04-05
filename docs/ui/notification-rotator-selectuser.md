@@ -82,9 +82,9 @@ class Rotator extends DOMAttachedObject
 ## selectUser
 
 ```ts
-function selectUser(): Promise<string | undefined>
+function selectUser(): Promise<any>
 ```
 
-打开带用户自动补全字段的 `prompt` 对话框。返回选定的用户名/UID，对话框取消时返回 `undefined`。
+打开带用户自动补全字段的 `prompt` 对话框。返回选定的用户对象，对话框取消时返回 `undefined`。
 
 同时注册为全局变量 `window.Hydro.components.selectUser`。

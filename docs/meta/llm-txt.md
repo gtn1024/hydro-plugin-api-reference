@@ -38,7 +38,7 @@ description: 使用 LLM 友好的文档文件让 AI 编程工具直接加载 Hyd
 - 对话中通过 `@` 引用 `https://hydro-plugin-api-reference.pages.dev/llms-full.txt`
 - 或在 `.windsurfrules` 文件中添加文档链接
 
-详细了解 [Windsurf Memories](https://docs.codeium.com/windsurf/memories)
+详细了解 [Windsurf 文档](https://docs.codeium.com/windsurf)
 
 ### Claude Code
 

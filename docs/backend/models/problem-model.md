@@ -476,26 +476,24 @@ await ProblemModel.import('system', '/data/problems/', {
 });
 ```
 
-#### `export(domainId: string, pidFilter?: RegExp): Promise<Buffer>`
+#### `export(domainId: string, pidFilter?: string): Promise<string>`
 
-导出所有题目（或匹配 PID 正则过滤器的题目）为 ZIP 归档。
+导出所有题目（或匹配 PID 正则过滤器的题目）为 ZIP 归档，保存到临时目录。返回生成的 ZIP 文件路径。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
-| `pidFilter` | `RegExp` | — | PID 正则过滤器（留空导出全部） |
-| **返回值** | `Promise<Buffer>` | | ZIP 归档 Buffer |
+| `pidFilter` | `string` | `''` | PID 正则过滤器（留空导出全部） |
+| **返回值** | `Promise<string>` | | 生成的 ZIP 文件路径 |
 
 ```typescript
 // 导出域内所有题目
-const zipBuffer = await ProblemModel.export('system');
+const zipPath = await ProblemModel.export('system');
 
 // 仅导出匹配前缀的题目
-const partial = await ProblemModel.export('system', /^contest-/);
+const partialPath = await ProblemModel.export('system', '^contest-');
 
-// 保存到文件
-import { writeFile } from 'fs/promises';
-await writeFile('/tmp/export.zip', zipBuffer);
+// zipPath/partialPath 为生成的 ZIP 文件路径
 ```
 
 ---

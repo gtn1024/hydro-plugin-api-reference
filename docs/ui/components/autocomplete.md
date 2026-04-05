@@ -43,8 +43,8 @@ class AutoComplete<Options extends Record<string, any> = object, Multi extends b
 | `items` | `() => Promise<any[]>` | 异步获取候选项列表 |
 | `render` | `() => string` | 自定义候选项渲染 |
 | `text` | `() => string` | 自定义选中项文本 |
-| `component` | `React.ComponentType<any>` | 自定义 React 组件（覆盖默认） |
-| `props` | `Record<string, any>` | 传递给 React 组件的额外属性 |
+
+> **构造函数额外参数**：`component`（`React.ComponentType<any>`，自定义 React 组件覆盖默认）和 `props`（`Record<string, any>`，传递给 React 组件的额外属性）通过交叉类型传入，不属于 `AutoCompleteOptions` 接口。
 
 **实例方法：**
 
@@ -72,7 +72,7 @@ class AssignSelectAutoComplete<Multi extends boolean> extends AutoComplete
 ```
 
 - `DOMAttachKey`: `ucwAssignSelectAutoCompleteInstance`
-- 固定 `multi: true`，`value()` 返回逗号分隔的选中键字符串
+- 默认 `multi: true`，`value()` 返回逗号分隔的选中键字符串
 
 ### CustomSelectAutoComplete
 
@@ -98,7 +98,7 @@ class DomainSelectAutoComplete<Multi extends boolean> extends AutoComplete
 ```
 
 - `DOMAttachKey`: `ucwDomainSelectAutoCompleteInstance`
-- 固定高度 `34px`
+- 默认高度 `34px`
 
 ### ProblemSelectAutoComplete
 

@@ -173,7 +173,7 @@ HydroError
 | `ProblemAlreadyExistError` | `Problem {0} already exists.` |
 | `ProblemAlreadyUsedByContestError` | `Problem {0} is already used by contest {1}.` |
 | `ProblemNotAllowPretestError` | `Pretesting is not supported for {0}.` |
-| `ProblemNotAllowLanguageError` | `This language is not allowed to submit.` |
+| `ProblemNotAllowLanguageError` | `This language is not allowed to submit.` | 注意：虽然 JS 变量名为 `ProblemNotAllowLanguageError`，但通过 `CreateError` 注册的内部错误名（`.name` 属性）为 `ProblemNotAllowSubmitError` |
 | `ProblemNotAllowCopyError` | `You are not allowed to copy this problem from {0} to {1}.` |
 | `DiscussionLockedError` | `The discussion is locked, you can not reply anymore.` |
 | `RequireProError` | `RequireProError` |

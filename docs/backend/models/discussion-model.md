@@ -36,7 +36,7 @@ type Field = keyof DiscussionDoc
 
 ### `typeDisplay: Record<number, string>`
 
-将文档类型常量映射到可读名称：`{ 10: 'problem', 20: 'contest', 30: 'node', 40: 'training' }`。
+将文档类型常量映射到可读名称：`{ 10: 'problem', 20: 'node', 30: 'contest', 40: 'training' }`。
 
 ### `PROJECTION_LIST: Field[]`
 

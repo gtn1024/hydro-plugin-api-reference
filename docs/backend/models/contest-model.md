@@ -505,7 +505,7 @@ ACM 风格首 A 通知的气球管理。
 
 比赛答疑（提问/回答）管理，以 `TYPE_CONTEST_CLARIFICATION` 类型的子文档存储。
 
-#### `addClarification(domainId: string, tid: ObjectId, owner: number, content: string, ip: string, subject?: string): Promise<ObjectId>`
+#### `addClarification(domainId: string, tid: ObjectId, owner: number, content: string, ip: string, subject?: number): Promise<ObjectId>`
 
 在比赛上创建新的答疑问题。
 
@@ -516,7 +516,7 @@ ACM 风格首 A 通知的气球管理。
 | `owner` | `number` | — | 提问者 UID |
 | `content` | `string` | — | 问题内容 |
 | `ip` | `string` | — | 提问者 IP 地址 |
-| `subject` | `string` | — | 答疑主题 |
+| `subject` | `number` | `0` | 答疑主题 |
 | **返回值** | `Promise<ObjectId>` | | 答疑 ID |
 
 #### `addClarificationReply(domainId: string, did: ObjectId, owner: number, content: string, ip: string): Promise<void>`

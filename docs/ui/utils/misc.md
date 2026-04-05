@@ -135,6 +135,22 @@ function mongoId(idstring: string): {
 
 ---
 
+## slideDown() / slideUp()
+
+基于 jQuery 的滑动动画工具，用于元素的展开和收起过渡效果。
+
+```ts
+async function slideDown($element: JQuery, duration: number, fromCss?: Record<string, any>, toCss?: Record<string, any>): Promise<void>;
+async function slideUp($element: JQuery, duration: number, fromCss?: Record<string, any>, toCss?: Record<string, any>): Promise<void>;
+```
+
+- `slideDown`：将元素从高度 0 展开，使用 `easeOutCubic` 缓动
+- `slideUp`：将元素从当前高度收起至 0，完成后设置 `display: none`
+- 两个函数都会保存并恢复元素原始的 `style` 属性
+- 可通过 `fromCss` / `toCss` 自定义过渡的起始和结束 CSS 属性
+
+---
+
 ## createZipStream
 
 ZIP 流构造器，指向 `window.ZIP`（由 `streamsaver` 的 `zip-stream` polyfill 提供）。
@@ -244,3 +260,5 @@ async function loadReactRedux<S, A extends Action = UnknownAction>(
 - 开发环境下额外加载 `redux-logger`（折叠模式 + 显示耗时）
 - 使用 `applyMiddleware(thunk, promise)` 创建 store
 - 返回 `React`、`createRoot`、`Provider` 和已创建的 `store`
+
+---

@@ -32,7 +32,7 @@ source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/hydrooj/src/
 
 ### `get(key: string): any`
 
-通过点分路径键读取配置值。解析顺序：先查找域配置（`ctx.domain.config`），再查找系统配置，最后以 `global.Hydro.model.system.get` 作为兜底。未找到时返回 `null`。
+通过点分路径键读取配置值。解析顺序：先查找域配置（`ctx.domain.config`），再查找系统配置，最后以 `global.Hydro.model.system.get` 作为兜底。未找到时返回 `null` 或 `undefined`。
 
 ### `setConfig(key: string, value: any): Promise<void>`
 

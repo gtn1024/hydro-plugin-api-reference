@@ -44,7 +44,7 @@ MongoDB 数据库服务，提供集合访问、索引管理、分页和排名工
 
 在集合上创建或更新索引。仅在 `NODE_APP_INSTANCE=0` 时运行。按名称/键比较现有索引，若定义已更改则先删除再重建。文本索引有特殊处理以避免冲突。
 
-#### `clearIndexes<T>(coll: Collection<T>, dropIndex: string[]): Promise<void>`
+#### `clearIndexes<T>(coll: Collection<T>, dropIndex?: string[]): Promise<void>`
 
 删除集合中已存在的指定索引。仅在 `NODE_APP_INSTANCE=0` 时运行。
 
