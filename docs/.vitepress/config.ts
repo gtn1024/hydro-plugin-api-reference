@@ -7,35 +7,73 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '指南', link: '/' },
-      { text: 'Models', link: '/models/user' },
+      { text: '后端', link: '/backend/context/' },
       { text: 'UI', link: '/ui/page' },
     ],
     sidebar: {
-      '/models/': [
+      '/backend/': [
+        {
+          text: '核心',
+          items: [
+            { text: 'Context & Service', link: '/backend/context/' },
+            { text: 'Event Bus', link: '/backend/event/event-bus' },
+            { text: 'Error', link: '/backend/error/' },
+          ],
+        },
         {
           text: '数据模型',
+          collapsed: true,
           items: [
-            { text: 'User', link: '/models/user' },
-            { text: 'Domain', link: '/models/domain-model' },
-            { text: 'Problem', link: '/models/problem-model' },
-            { text: 'Contest', link: '/models/contest-model' },
-            { text: 'Record', link: '/models/record-model' },
-            { text: 'Document', link: '/models/document-model' },
-            { text: 'Discussion', link: '/models/discussion-model' },
-            { text: 'Solution', link: '/models/solution-model' },
-            { text: 'Message', link: '/models/message-model' },
-            { text: 'Token', link: '/models/token-model' },
-            { text: 'OAuth', link: '/models/oauth-model' },
-            { text: 'Task', link: '/models/task-model' },
-            { text: 'Schedule', link: '/models/schedule-model' },
-            { text: 'Storage', link: '/models/storage-model' },
-            { text: 'Setting', link: '/models/setting-model' },
-            { text: 'Blacklist', link: '/models/blacklist-model' },
-            { text: 'Oplog', link: '/models/oplog-model' },
-            { text: 'Opcount', link: '/models/opcount-model' },
-            { text: 'Builtin', link: '/models/builtin-model' },
-            { text: 'Training', link: '/models/training-model' },
-            { text: 'System', link: '/models/system' },
+            { text: 'User', link: '/backend/models/user' },
+            { text: 'Domain', link: '/backend/models/domain-model' },
+            { text: 'Problem', link: '/backend/models/problem-model' },
+            { text: 'Contest', link: '/backend/models/contest-model' },
+            { text: 'Record', link: '/backend/models/record-model' },
+            { text: 'Document', link: '/backend/models/document-model' },
+            { text: 'Discussion', link: '/backend/models/discussion-model' },
+            { text: 'Solution', link: '/backend/models/solution-model' },
+            { text: 'Message', link: '/backend/models/message-model' },
+            { text: 'Token', link: '/backend/models/token-model' },
+            { text: 'OAuth', link: '/backend/models/oauth-model' },
+            { text: 'Task', link: '/backend/models/task-model' },
+            { text: 'Schedule', link: '/backend/models/schedule-model' },
+            { text: 'Storage', link: '/backend/models/storage-model' },
+            { text: 'Setting', link: '/backend/models/setting-model' },
+            { text: 'Blacklist', link: '/backend/models/blacklist-model' },
+            { text: 'Oplog', link: '/backend/models/oplog-model' },
+            { text: 'Opcount', link: '/backend/models/opcount-model' },
+            { text: 'Builtin', link: '/backend/models/builtin-model' },
+            { text: 'Training', link: '/backend/models/training-model' },
+            { text: 'System', link: '/backend/models/system' },
+          ],
+        },
+        {
+          text: '服务',
+          items: [
+            { text: 'Handler', link: '/backend/service/handler' },
+            { text: 'Setting Service', link: '/backend/service/setting-service' },
+            { text: 'DB & Collections', link: '/backend/services/db-and-collections' },
+            { text: 'Storage Service', link: '/backend/services/storage-service' },
+          ],
+        },
+        {
+          text: '处理器',
+          items: [
+            { text: 'Judge', link: '/backend/handler/judge' },
+          ],
+        },
+        {
+          text: '框架',
+          items: [
+            { text: 'Decorators', link: '/backend/framework/decorators' },
+            { text: 'Exports', link: '/backend/framework/exports' },
+          ],
+        },
+        {
+          text: '工具',
+          items: [
+            { text: 'Lib', link: '/backend/utils/lib' },
+            { text: 'Pipeline Utils', link: '/backend/utils/pipeline-utils' },
           ],
         },
       ],
@@ -55,7 +93,7 @@ export default defineConfig({
           ],
         },
         {
-          text: 'UI 子组件',
+          text: '子组件',
           items: [
             { text: 'Autocomplete', link: '/ui/components/autocomplete' },
             { text: 'Monaco', link: '/ui/components/monaco' },
@@ -63,60 +101,12 @@ export default defineConfig({
           ],
         },
         {
-          text: 'UI 工具',
+          text: '工具',
           items: [
             { text: 'Common', link: '/ui/utils/common' },
             { text: 'Misc', link: '/ui/utils/misc' },
             { text: 'Request', link: '/ui/utils/request' },
             { text: 'Template', link: '/ui/utils/template' },
-          ],
-        },
-      ],
-      '/context/': [
-        { text: 'Context 与 Service', link: '/context/' },
-      ],
-      '/framework/': [
-        {
-          text: 'Framework',
-          items: [
-            { text: 'Decorators', link: '/framework/decorators' },
-            { text: 'Exports', link: '/framework/exports' },
-          ],
-        },
-      ],
-      '/service/': [
-        {
-          text: 'Service',
-          items: [
-            { text: 'Handler', link: '/service/handler' },
-            { text: 'Setting Service', link: '/service/setting-service' },
-          ],
-        },
-      ],
-      '/services/': [
-        {
-          text: 'Services',
-          items: [
-            { text: 'DB & Collections', link: '/services/db-and-collections' },
-            { text: 'Storage Service', link: '/services/storage-service' },
-          ],
-        },
-      ],
-      '/error/': [
-        { text: 'Error', link: '/error/' },
-      ],
-      '/event/': [
-        { text: 'Event Bus', link: '/event/event-bus' },
-      ],
-      '/handler/': [
-        { text: 'Judge Handler', link: '/handler/judge' },
-      ],
-      '/utils/': [
-        {
-          text: 'Utils',
-          items: [
-            { text: 'Lib', link: '/utils/lib' },
-            { text: 'Pipeline Utils', link: '/utils/pipeline-utils' },
           ],
         },
       ],
