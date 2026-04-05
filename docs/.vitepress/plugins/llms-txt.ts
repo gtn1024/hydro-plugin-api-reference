@@ -125,9 +125,13 @@ export function generateLlmsTxt() {
       for (const item of items) {
         const title = item.attrs.title ?? item.rel;
         const sourceUrl = item.attrs.source_url ?? '';
+        const importStmt = item.attrs.import ?? '';
         full += `### ${title}\n\n`;
         if (sourceUrl) {
           full += `> Source: ${sourceUrl}\n\n`;
+        }
+        if (importStmt) {
+          full += `\`\`\`ts\n${importStmt}\n\`\`\`\n\n`;
         }
         full += item.body.trim();
         full += '\n\n';
