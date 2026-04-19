@@ -28,7 +28,9 @@ onMounted(async () => {
 
     latestSha.value = latest.sha;
     latestDate.value = latest.commit?.author?.date?.slice(0, 10);
-    behindBy.value = compare.behind_by ?? compare.ahead_by ?? 0;
+    behindBy.value = compare.status === 'identical'
+      ? 0
+      : compare.ahead_by ?? compare.total_commits ?? 0;
   } catch (e) {
     error.value = e.message;
   } finally {
