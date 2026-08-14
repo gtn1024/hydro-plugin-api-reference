@@ -104,9 +104,9 @@ ctx.broadcast('record/judge', rdoc, updated, pdoc, updater);
 
 | Event | Signature | Description |
 |-------|-----------|-------------|
-| `subscription/init` | `(h: ConnectionHandler<Context>, privileged: boolean) => VoidReturn` | WebSocket 订阅初始化时触发。 |
+| `subscription/init` | `(h: ConnectionHandler, privileged: boolean) => VoidReturn` | WebSocket 订阅初始化时触发。 |
 | `subscription/subscribe` | `(channel: string, user: User, metadata: Record<string, string>) => VoidReturn` | 用户订阅某频道时触发。 |
-| `subscription/enable` | `(channel: string, h: ConnectionHandler<Context>, privileged: boolean, onDispose: (disposable: () => void) => void) => VoidReturn` | 订阅频道激活时触发；通过 `onDispose` 注册清理回调。 |
+| `subscription/enable` | `(channel: string, h: ConnectionHandler, privileged: boolean, onDispose: (disposable: () => void) => void) => VoidReturn` | 订阅频道激活时触发；通过 `onDispose` 注册清理回调。 |
 
 ## User
 
@@ -115,8 +115,15 @@ ctx.broadcast('record/judge', rdoc, updated, pdoc, updater);
 | `user/message` | `(uid: number[], mdoc: Omit<MessageDoc, 'to'>) => void` | 用户收到消息时触发。 |
 | `user/get` | `(udoc: User) => void` | 用户信息被查询时触发。 |
 | `user/delcache` | `(content: string \| true) => void` | 用户缓存失效时触发。 |
-| `user/import/parse` | `(payload: any) => VoidReturn` | 用户导入解析阶段触发。 |
+| `user/import/parse` | `(payload: any, messages: string[]) => VoidReturn` | 用户导入解析阶段触发，可通过 `messages` 追加返回给前端的消息。 |
 | `user/import/create` | `(uid: number, udoc: any) => VoidReturn` | 用户导入创建阶段触发。 |
+
+## Auth
+
+| Event | Signature | Description |
+|-------|-----------|-------------|
+| `auth/before-login` | `(ctx: Handler, udoc: User) => VoidReturn` | 用户登录认证前触发，可拦截或修改登录流程。 |
+| `auth/login` | `(ctx: Handler, udoc: User) => VoidReturn` | 用户登录成功后触发。 |
 
 ## Domain
 
@@ -194,7 +201,7 @@ ctx.broadcast('record/judge', rdoc, updated, pdoc, updater);
 
 | Event | Signature | Description |
 |-------|-----------|-------------|
-| `oplog/log` | `(type: string, handler: Handler<Context> \| ConnectionHandler<Context>, args: any, data: any) => VoidReturn` | 操作日志记录时触发。 |
+| `oplog/log` | `(type: string, handler: Handler \| ConnectionHandler, args: any, data: any) => VoidReturn` | 操作日志记录时触发。 |
 
 ---
 

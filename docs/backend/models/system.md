@@ -60,6 +60,21 @@ await SystemModel.set('server.name', 'My Judge');
 await SystemModel.set('custom.key', data, false); // 仅本地
 ```
 
+#### `del(_id: string, broadcast?: boolean): Promise<boolean>`
+
+从 MongoDB 和本地缓存中删除一个设置键，并可选地广播到其他集群节点。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `_id` | `string` | — | 设置键 |
+| `broadcast` | `boolean` | `true` | 是否在集群节点间同步 |
+| **返回值** | `Promise<boolean>` | | 是否删除了对应文档 |
+
+```typescript
+await SystemModel.del('custom.key');        // 删除并广播
+await SystemModel.del('custom.key', false); // 仅本地删除
+```
+
 ---
 
 ## 属性

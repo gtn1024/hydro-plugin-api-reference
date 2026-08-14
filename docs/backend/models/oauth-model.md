@@ -44,7 +44,7 @@ interface OAuthProvider {
 
 ```typescript
 interface OAuthUserResponse {
-    _id: string;                           // 外部用户 ID
+    _id: string | string[];                // 外部用户 ID（支持多个 ID 的数组）
     email: string;                         // 用户邮箱
     avatar?: string;                       // 头像 URL
     bio?: string;                          // 用户简介

@@ -232,7 +232,7 @@ function sendMail(
 function pwsh(password: string, salt: string): Promise<string>
 ```
 
-使用给定盐值对密码进行 PBKDF2 哈希（SHA-256、100,000 次迭代、64 字节密钥）。返回派生密钥的前 64 个十六进制字符。在模块加载时注册为 `global.Hydro.module.hash.hydro`。
+使用给定盐值对密码进行 PBKDF2 哈希（SHA-256、100,000 次迭代、64 字节密钥）。返回派生密钥的前 64 个十六进制字符。
 
 ---
 

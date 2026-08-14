@@ -46,4 +46,4 @@ import {
 |------|------|------|
 | `Router` | Class | 扩展的 Koa Router（`@koa/router`），支持 WebSocket（`ws()` 方法）和可释放的路由注册。 |
 | `httpServer` | `http.Server` | 底层 Node.js `http.Server` 实例。 |
-| `WebService` | Class | 核心 Web 服务器服务（继承 cordis `Service`）；管理路由/连接注册（`ctx.Route()`、`ctx.Connection()`）、中间件层、处理器混入和模板渲染器。 |
+| `WebService` | Class | 核心 Web 服务器服务（继承 cordis `Service`）；管理路由/连接注册（`ctx.Route()`、`ctx.Connection()`）、中间件层、处理器混入和模板渲染器。提供 `routeMap` 属性（路由名 → 路径映射，由 koa router stack 自动构建）。 |

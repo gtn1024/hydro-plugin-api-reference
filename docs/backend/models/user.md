@@ -234,14 +234,17 @@ await UserModel.ban(uid);
 
 ### 用户组
 
-#### `listGroup(domainId: string, uid?: number): Promise<any>`
+#### `listGroup(domainId: string, uid?: number, names?: string[], search?: string, limit?: number): Promise<any>`
 
-列出域中的用户组。若提供 `uid`，则仅返回包含该用户的组及隐式的自身组。
+列出域中的用户组。若提供 `uid`，则仅返回包含该用户的组及隐式的自身组。支持按名称过滤和模糊搜索。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `uid` | `number` | — | 可选，筛选包含该用户的组 |
+| `names` | `string[]` | — | 可选，仅返回名称匹配的组 |
+| `search` | `string` | — | 可选，按名称模糊搜索（不区分大小写） |
+| `limit` | `number` | — | 可选，限制返回的组数量 |
 
 #### `delGroup(domainId: string, name: string): Promise<void>`
 

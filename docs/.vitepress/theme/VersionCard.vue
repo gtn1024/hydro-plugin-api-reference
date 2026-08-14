@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const BASE_COMMIT = 'bf5533040e8a62c44cc7813ba2648e581c0c4497';
+const BASE_COMMIT = '87f64d60fd1945f69cd1a385eba9c60714232c53';
 const REPO = 'hydro-dev/Hydro';
 const API = 'https://api.github.com';
 
