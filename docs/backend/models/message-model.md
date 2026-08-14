@@ -46,9 +46,9 @@ interface MessageDoc {
 
 ### 发送
 
-#### `send(from: number, to: number | number[], content: string, flag?: number): Promise<BaseMessage>`
+#### `send(from: number, to: number | number[], content: string, flag?: number): Promise<{ from: number; to: number[]; content: string; flag: number }>`
 
-从用户 `from` 向一个或多个接收者发送消息。默认为 `FLAG_UNREAD`。广播 `user/message` 事件并递增接收者的 `unreadMsg` 计数。返回消息文档（如果 `to` 为空则不含 `_id`）。
+从用户 `from` 向一个或多个接收者发送消息。默认为 `FLAG_UNREAD`。广播 `user/message` 事件并递增接收者的 `unreadMsg` 计数。返回消息对象（`to` 已被规范为数组，类型上不含 `_id`；`MessageDoc` 接口无此字段）。
 
 **@ArgMethod**
 
@@ -58,7 +58,7 @@ interface MessageDoc {
 | `to` | `number \| number[]` | — | 接收者 UID 或 UID 数组 |
 | `content` | `string` | — | 消息内容 |
 | `flag` | `number` | `FLAG_UNREAD` | 标志位掩码 |
-| **返回值** | `Promise<BaseMessage>` | | 消息文档 |
+| **返回值** | `Promise<{ from: number; to: number[]; content: string; flag: number }>` | | 消息对象（类型上不含 `_id`） |
 
 #### `sendInfo(to: number, content: string): Promise<void>`
 
@@ -82,14 +82,14 @@ interface MessageDoc {
 
 ### 查询
 
-#### `get(_id: ObjectId): Promise<MessageDoc>`
+#### `get(_id: ObjectId): Promise<MessageDoc | null>`
 
 按 `_id` 获取单个消息。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `_id` | `ObjectId` | — | 消息 ID |
-| **返回值** | `Promise<MessageDoc>` | | |
+| **返回值** | `Promise<MessageDoc \| null>` | | |
 
 #### `getByUser(uid: number): Promise<MessageDoc[]>`
 
@@ -114,14 +114,14 @@ interface MessageDoc {
 | `limit` | `number` | — | 每页数量 |
 | **返回值** | `Promise<MessageDoc[]>` | | |
 
-#### `getMulti(uid: number): Cursor<MessageDoc>`
+#### `getMulti(uid: number): FindCursor<MessageDoc>`
 
 获取指定用户发送或接收的所有消息的 MongoDB 游标。无排序或限制 —— 调用方控制迭代。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 UID |
-| **返回值** | `Cursor<MessageDoc>` | | |
+| **返回值** | `FindCursor<MessageDoc>` | | |
 
 ### 删除
 
@@ -144,7 +144,7 @@ interface MessageDoc {
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `query` | `Filter<MessageDoc>` | — | 过滤条件 |
+| `query` | `Filter<MessageDoc>` | `{}` | 过滤条件 |
 | **返回值** | `Promise<number>` | | |
 
 ---

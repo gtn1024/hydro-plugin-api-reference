@@ -44,14 +44,14 @@ interface Task {
 | `task` | `Partial<Task> & { type: string }` | — | 任务对象，`type` 必填 |
 | **返回值** | `Promise<ObjectId>` | | 新任务 ID |
 
-#### `addMany(tasks: Task[]): Promise<ObjectId[]>`
+#### `addMany(tasks: Task[]): Promise<{ [key: number]: ObjectId }>`
 
-批量插入多条任务。返回插入的 ID 数组。
+批量插入多条任务。返回以插入顺序索引为键的 ID 映射（MongoDB `insertMany` 的 `insertedIds`）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `tasks` | `Task[]` | — | 任务数组 |
-| **返回值** | `Promise<ObjectId[]>` | | 新任务 ID 数组 |
+| **返回值** | `Promise<{ [key: number]: ObjectId }>` | | 以索引为键的任务 ID 映射 |
 
 ### 读取
 
@@ -142,7 +142,7 @@ consumer.destroy();
 |------|------|
 | `consume()` | 内部轮询循环。不应直接调用。 |
 | `destroy()` | 停止消费者并取消轮询循环。在 `app/exit` 时也会自动调用。 |
-| `setConcurrency(n: number)` | 更新并行处理任务的最大数量。 |
+| `setConcurrency(concurrency: number)` | 更新并行处理任务的最大数量。 |
 | `setQuery(query: string)` | 更新任务匹配的过滤查询。 |
 
 ---

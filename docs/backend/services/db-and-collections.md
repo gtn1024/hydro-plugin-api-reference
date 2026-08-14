@@ -34,7 +34,7 @@ MongoDB 数据库服务，提供集合访问、索引管理、分页和排名工
 
 对查找游标进行分页。返回一个元组，包含当前页文档、总页数和总文档数。`page <= 0` 时抛出 `ValidationError`。
 
-#### `ranked<T>(cursor: T[] | FindCursor<T>, equ: (a: T, b: T) => boolean): Promise<[number, T][]>`
+#### `ranked<T extends Record<string, any>>(cursor: T[] | FindCursor<T>, equ: (a: T, b: T) => boolean): Promise<[number, T][]>`
 
 为已排序的结果分配密集排名。带有 `unrank: true` 的文档排名为 `0`。并列文档（根据 `equ` 比较器判断）共享相同排名。
 

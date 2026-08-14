@@ -88,7 +88,7 @@ const did = await DiscussionModel.add(
 // 在讨论节点下创建置顶讨论
 const pinnedDid = await DiscussionModel.add(
   'system',
-  30,                                // parentType (TYPE_DISCUSSION_NODE)
+  20,                                // parentType (TYPE_DISCUSSION_NODE)
   'general',                         // parentId (节点字符串 ID)
   12345,
   '版规公告',
@@ -203,15 +203,15 @@ const pinnedDid = await DiscussionModel.add(
 | `ip` | `string` | — | 编辑者 IP 地址 |
 | **返回值** | `Promise<DiscussionReplyDoc \| null>` | | |
 
-#### `delReply(domainId: string, drid: ObjectId): Promise<void>`
+#### `delReply(domainId: string, drid: ObjectId): Promise<[[DeleteResult, DeleteResult], Doc | null, DeleteResult]>`
 
-删除回复及所有尾隔回复和历史记录。原子性递减父讨论的 `nReply`。回复不存在时抛出 `DocumentNotFoundError`。
+删除回复及所有尾隔回复和历史记录。原子性递减父讨论的 `nReply`。回复不存在时抛出 `DocumentNotFoundError`。返回 `Promise.all` 元组：回复删除结果（含状态删除）、父讨论递增结果和历史记录删除结果。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `drid` | `ObjectId` | — | 回复 ID |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<[[DeleteResult, DeleteResult], Doc \| null, DeleteResult]>` | | 回复/状态删除结果、父讨论文档与历史删除结果 |
 
 #### `getMultiReply(domainId: string, did: ObjectId): FindCursor<DiscussionReplyDoc>`
 
@@ -287,7 +287,7 @@ console.log('新尾隔回复 ID:', tailReplyId);
 | `ip` | `string` | — | 编辑者 IP 地址 |
 | **返回值** | `Promise<DiscussionTailReplyDoc>` | | |
 
-#### `delTailReply(domainId: string, drid: ObjectId, drrid: ObjectId): Promise<[void, void]>`
+#### `delTailReply(domainId: string, drid: ObjectId, drrid: ObjectId): Promise<[Doc, DeleteResult]>`
 
 删除尾隔回复及其关联的历史记录。
 
@@ -296,7 +296,7 @@ console.log('新尾隔回复 ID:', tailReplyId);
 | `domainId` | `string` | — | 域 ID |
 | `drid` | `ObjectId` | — | 父回复 ID |
 | `drrid` | `ObjectId` | — | 尾隔回复 ID |
-| **返回值** | `Promise<[void, void]>` | | |
+| **返回值** | `Promise<[Doc, DeleteResult]>` | | 更新后的父回复文档与历史删除结果 |
 
 ### 表情回应
 
@@ -363,9 +363,9 @@ await DiscussionModel.react(
 
 ### 用户状态
 
-#### `setStar(domainId: string, did: ObjectId, uid: number, star: boolean): Promise<void>`
+#### `setStar(domainId: string, did: ObjectId, uid: number, star: boolean): Promise<StatusDoc>`
 
-设置或清除用户对讨论的星标。
+设置或清除用户对讨论的星标。委托 `document.setStatus`，返回更新后的状态文档。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -373,7 +373,7 @@ await DiscussionModel.react(
 | `did` | `ObjectId` | — | 讨论 ID |
 | `uid` | `number` | — | 用户 ID |
 | `star` | `boolean` | — | `true` 星标，`false` 取消 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<StatusDoc>` | | 更新后的状态文档 |
 
 #### `getStatus(domainId: string, did: ObjectId, uid: number): Promise<any>`
 
@@ -386,9 +386,9 @@ await DiscussionModel.react(
 | `uid` | `number` | — | 用户 ID |
 | **返回值** | `Promise<any>` | | |
 
-#### `setStatus(domainId: string, did: ObjectId, uid: number, $set: any): Promise<void>`
+#### `setStatus(domainId: string, did: ObjectId, uid: number, $set: any): Promise<StatusDoc>`
 
-覆盖用户对讨论的状态字段。
+覆盖用户对讨论的状态字段。委托 `document.setStatus`，返回更新后的状态文档。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -396,7 +396,7 @@ await DiscussionModel.react(
 | `did` | `ObjectId` | — | 讨论 ID |
 | `uid` | `number` | — | 用户 ID |
 | `$set` | `any` | — | 要设置的状态字段 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<StatusDoc>` | | 更新后的状态文档 |
 
 ### 节点（分类）
 
@@ -411,7 +411,7 @@ await DiscussionModel.react(
 | `domainId` | `string` | — | 域 ID |
 | `_id` | `string` | — | 节点 ID |
 | `category` | `string` | — | 分类名称 |
-| `args` | `any` | — | 附加字段 |
+| `args` | `any` | `{}` | 附加字段 |
 | **返回值** | `Promise<any>` | | |
 
 #### `getNode(domainId: string, _id: string): Promise<any>`
@@ -448,7 +448,7 @@ await DiscussionModel.react(
 
 #### `getVnode(domainId: string, type: number, id: string, uid?: number): Promise<any>`
 
-解析讨论的父实体。处理题目（按数字 ID）、比赛/训练计划（按 ObjectId）和讨论节点（按字符串 ID）。可选地为指定用户填充 `attend` 状态。未找到时抛出 `DiscussionNodeNotFoundError`。
+解析讨论的父实体。处理题目（按数字 ID）、比赛/训练计划（按 ObjectId）和讨论节点（按字符串 ID）。可选地为指定用户填充 `attend` 状态。题目/比赛/训练计划未找到时抛出 `DiscussionNodeNotFoundError`；讨论节点分支不抛错，直接返回 `{ title: id, ...getNode(...), type, id, owner: 1 }`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -467,7 +467,7 @@ await DiscussionModel.react(
 | `domainId` | `string` | — | 域 ID |
 | `ddocs` | `any` | — | 讨论文档数组 |
 | `getHidden` | `boolean` | `false` | 是否包含隐藏节点 |
-| `assign` | `string[]` | — | 作业组限制过滤 |
+| `assign` | `string[]` | `[]` | 作业组限制过滤 |
 | **返回值** | `Promise<Record<number, Record<string, any>>>` | | |
 
 #### `checkVNodeVisibility(type: number, vnode: any, user: User): boolean`

@@ -19,6 +19,10 @@ ContestModel 是导出函数的普通模块（非类）。所有函数直接调�
 
 枚举值：`pending`、`printing`、`printed`、`failed`。用于比赛打印任务状态追踪。
 
+### `ScoreboardConfig`
+
+排行榜配置对象：`{ isExport: boolean; showDisplayName: boolean; lockAt?: Date }`。用于 `getScoreboard`。
+
 ---
 
 ## 常量
@@ -27,9 +31,11 @@ ContestModel 是导出函数的普通模块（非类）。所有函数直接调�
 
 将规则名映射到其规则定义的对象。键：`acm`、`oi`、`homework`、`ioi`、`ledo`、`strictioi`。每个规则定义评分逻辑、排行榜渲染、可见性控制和记录投影行为。
 
-### `buildContestRule<T>(def): ContestRule<T>`
+### `buildContestRule<T>(def: Optional<ContestRule<T>, 'applyProjection'>): ContestRule<T>`
 
 工厂函数，从部分定义构建新的比赛规则，继承并绑定基础规则中所有未指定的函数。内部用于创建内置规则。
+
+**重载**：`buildContestRule<T>(def: Partial<ContestRule<T>>, baseRule: ContestRule<T>): ContestRule<T>` —— 基于给定的 `baseRule` 构建，`def` 中未指定的函数从 `baseRule` 继承并绑定。
 
 ---
 
@@ -68,24 +74,24 @@ ContestModel 是导出函数的普通模块（非类）。所有函数直接调�
 | `tdoc` | `Tdoc` | — | 比赛文档 |
 | **返回值** | `boolean` | | |
 
-#### `isOngoing(tdoc: Tdoc, tsdoc?: any): boolean`
+#### `isOngoing(tdoc: Tdoc, tsdoc?: ContestStatusDoc): boolean`
 
 当前时间在 `beginAt` 和 `endAt` 之间时返回 `true`。对于限时比赛，还会检查用户的 `startAt` 未超过允许的时长。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `tdoc` | `Tdoc` | — | 比赛文档 |
-| `tsdoc` | `any` | — | 用户比赛状态文档 |
+| `tsdoc` | `ContestStatusDoc` | — | 用户比赛状态文档 |
 | **返回值** | `boolean` | | |
 
-#### `isDone(tdoc: Tdoc, tsdoc?: any): boolean`
+#### `isDone(tdoc: Tdoc, tsdoc?: ContestStatusDoc): boolean`
 
 比赛已结束时返回 `true`。对于限时比赛，还会考虑用户的 `startAt` 加上时长。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `tdoc` | `Tdoc` | — | 比赛文档 |
-| `tsdoc` | `any` | — | 用户比赛状态文档 |
+| `tsdoc` | `ContestStatusDoc` | — | 用户比赛状态文档 |
 | **返回值** | `boolean` | | |
 
 #### `isLocked(tdoc: Tdoc, time?: Date): boolean`
@@ -107,21 +113,21 @@ ContestModel 是导出函数的普通模块（非类）。所有函数直接调�
 | `tdoc` | `Tdoc` | — | 比赛文档 |
 | **返回值** | `boolean` | | |
 
-#### `statusText(tdoc: Tdoc, tsdoc?: any): string`
+#### `statusText(tdoc: Tdoc, tsdoc?: ContestStatusDoc): string`
 
 返回可读的状态字符串：`'New'`、`'Ready (☆▽☆)'`、`'Live...'` 或 `'Done'`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `tdoc` | `Tdoc` | — | 比赛文档 |
-| `tsdoc` | `any` | — | 用户比赛状态文档 |
+| `tsdoc` | `ContestStatusDoc` | — | 用户比赛状态文档 |
 | **返回值** | `string` | | |
 
 ---
 
 ### CRUD
 
-#### `add(domainId: string, title: string, content: string, owner: number, rule: string, beginAt?: Date, endAt?: Date, pids?: number[], rated?: boolean, data?: any): Promise<ObjectId>`
+#### `add(domainId: string, title: string, content: string, owner: number, rule: string, beginAt?: Date, endAt?: Date, pids?: number[], rated?: boolean, data?: Partial<Tdoc>): Promise<ObjectId>`
 
 创建新比赛。验证规则存在且 `beginAt < endAt`。触发 `contest/before-add` 和 `contest/add` 总线事件。
 
@@ -141,7 +147,7 @@ ContestModel 是导出函数的普通模块（非类）。所有函数直接调�
 
 ```typescript
 // 创建 ACM 规则的比赛
-const tid = await contest.add(
+const tid = await ContestModel.add(
   'system',
   '2024 校内选拔赛',
   '## 比赛说明\n...',
@@ -167,14 +173,14 @@ const tid = await contest.add(
 
 ```typescript
 // 延长比赛结束时间
-const updated = await contest.edit(
+const updated = await ContestModel.edit(
   'system',
   tid,
   { endAt: new Date('2024-06-01T15:00:00') },
 );
 
 // 修改比赛规则并更新题目列表
-await contest.edit('system', tid, {
+await ContestModel.edit('system', tid, {
   rule: 'oi',
   pids: [1001, 1002, 1003],
 });
@@ -200,14 +206,14 @@ await contest.edit('system', tid, {
 | `tid` | `ObjectId` | — | 比赛 ID |
 | **返回值** | `Promise<Tdoc>` | | 比赛文档 |
 
-#### `getMulti(domainId: string, query?: any): FindCursor<Tdoc>`
+#### `getMulti(domainId: string, query: Filter<DocType['30']> = {}): FindCursor<Tdoc>`
 
 返回匹配查询的比赛游标，按 `beginAt` 降序排列。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
-| `query` | `any` | — | MongoDB 查询过滤器 |
+| `query` | `Filter<DocType['30']>` | `{}` | MongoDB 查询过滤器 |
 | **返回值** | `FindCursor<Tdoc>` | | 比赛游标 |
 
 #### `getRelated(domainId: string, pid: number, rule?: string): Promise<Tdoc[]>`
@@ -267,7 +273,7 @@ await contest.edit('system', tid, {
 | `tids` | `ObjectId[]` | — | 比赛 ID 数组 |
 | **返回值** | `Promise<Record<string, Tsdoc>>` | | 以十六进制 ID 为键的状态映射 |
 
-#### `setStatus(domainId: string, tid: ObjectId, uid: number, $set: any): Promise<void>`
+#### `setStatus(domainId: string, tid: ObjectId, uid: number, $set?: any, $unset?: any): Promise<ContestStatusDoc>`
 
 覆盖用户在指定比赛上的状态字段。
 
@@ -277,7 +283,8 @@ await contest.edit('system', tid, {
 | `tid` | `ObjectId` | — | 比赛 ID |
 | `uid` | `number` | — | 用户 ID |
 | `$set` | `any` | — | 要设置的状态字段 |
-| **返回值** | `Promise<void>` | | |
+| `$unset` | `any` | — | 要移除的状态字段 |
+| **返回值** | `Promise<ContestStatusDoc>` | | 更新后的比赛状态 |
 
 #### `updateStatus(domainId: string, tid: ObjectId, uid: number, rid: ObjectId, pid: number, { status?, score?, subtasks?, lang? }?: { status?: STATUS, score?: number, subtasks?: Record<number, SubtaskResult>, lang?: string }): Promise<Tsdoc>`
 
@@ -295,7 +302,7 @@ await contest.edit('system', tid, {
 
 ```typescript
 // 提交通过后更新比赛状态
-const tsdoc = await contest.updateStatus(
+const tsdoc = await ContestModel.updateStatus(
   'system',
   tid,
   session.uid,
@@ -329,13 +336,24 @@ const tsdoc = await contest.updateStatus(
 
 ```typescript
 // 用户报名比赛
-await contest.attend('system', tid, session.uid);
+await ContestModel.attend('system', tid, session.uid);
 
 // 带附加信息报名（如队伍名）
-await contest.attend('system', tid, session.uid, {
+await ContestModel.attend('system', tid, session.uid, {
   teamName: '测试小队',
 });
 ```
+
+#### `cancelAttend(domainId: string, tid: ObjectId, uid: number): Promise<{}>`
+
+取消用户对比赛的报名。删除该用户的比赛状态记录，并将比赛的 `attend` 计数减一。用户未报名时静默成功（`deleteMultiStatus` 匹配零条）。
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `domainId` | `string` | — | 域 ID |
+| `tid` | `ObjectId` | — | 比赛 ID |
+| `uid` | `number` | — | 用户 ID |
+| **返回值** | `Promise<{}>` | | |
 
 #### `getAndListStatus(domainId: string, tid: ObjectId): Promise<[Tdoc, Tsdoc[]]>`
 
@@ -371,7 +389,7 @@ await contest.attend('system', tid, session.uid, {
 
 ### 排行榜
 
-检查用户是否可以查看某些比赛信息的函数。均使用 `this` 上下文，包含 `{ user: User }`。
+检查用户是否可以查看某些比赛信息的函数。除 `getScoreboard` 使用 `this: Handler` 外，均使用 `this` 上下文，包含 `{ user: User }`。
 
 #### `canViewHiddenScoreboard(this: { user }, tdoc: Tdoc): boolean`
 
@@ -416,7 +434,7 @@ await contest.attend('system', tid, session.uid, {
 | `allowPermOverride` | `boolean` | `true` | 是否允许权限覆盖 |
 | **返回值** | `boolean` | | |
 
-#### `getScoreboard(this: Handler, domainId: string, tid: ObjectId, config: any): Promise<[Tdoc, ScoreboardRow[], BaseUserDict, ProblemDict]>`
+#### `getScoreboard(this: Handler, domainId: string, tid: ObjectId, config: ScoreboardConfig): Promise<[Tdoc, ScoreboardRow[], BaseUserDict, ProblemDict]>`
 
 使用规则的 `scoreboard` 函数构建完整排行榜。排行榜不可见时抛出 `ContestScoreboardHiddenError`。触发 `contest/scoreboard` 总线事件。
 
@@ -425,21 +443,23 @@ await contest.attend('system', tid, session.uid, {
 | `this` | `Handler` | — | 请求处理上下文 |
 | `domainId` | `string` | — | 域 ID |
 | `tid` | `ObjectId` | — | 比赛 ID |
-| `config` | `any` | — | 排行榜配置选项 |
+| `config` | `ScoreboardConfig` | — | 排行榜配置（`{ isExport, showDisplayName, lockAt? }`） |
 | **返回值** | `Promise<[Tdoc, ScoreboardRow[], BaseUserDict, ProblemDict]>` | | 比赛文档、排行榜行、用户字典、题目字典 |
 
 ```typescript
-// 获取完整排行榜
-const [tdoc, rows, udict, pdict] = await contest.getScoreboard.call(
+// 获取完整排行榜（rows[0] 为表头行）
+const [tdoc, rows, udict, pdict] = await ContestModel.getScoreboard.call(
   handler,
   'system',
   tid,
-  { showDisplayName: true },
+  { isExport: false, showDisplayName: true },
 );
 
-// rows 为排行数据，udict 为用户信息字典，pdict 为题目信息字典
-for (const row of rows) {
-  console.log(row.rank, udict[row.uid]?.uname, row.score);
+// 每行是 ScoreboardNode 数组，udict 为用户信息字典，pdict 为题目信息字典
+for (const row of rows.slice(1)) {
+  const rank = row.find((node) => node.type === 'rank')?.value;
+  const uid = row.find((node) => node.type === 'user')?.raw;
+  console.log(rank, udict[uid]?.uname);
 }
 ```
 
@@ -462,16 +482,16 @@ ACM 风格首 A 通知的气球管理。
 | `pid` | `number` | — | 题目 ID |
 | **返回值** | `Promise<ObjectId \| null>` | | 气球 ID，非首次通过返回 `null` |
 
-#### `getBalloon(domainId: string, tid: ObjectId, _id: ObjectId): Promise<BalloonDoc>`
+#### `getBalloon(domainId: string, tid: ObjectId, _id: ObjectId): Promise<BalloonDoc | null>`
 
-按 ID 获取单个气球。
+按 ID 获取单个气球。未找到时返回 `null`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `tid` | `ObjectId` | — | 比赛 ID |
 | `_id` | `ObjectId` | — | 气球 ID |
-| **返回值** | `Promise<BalloonDoc>` | | 气球文档 |
+| **返回值** | `Promise<BalloonDoc \| null>` | | 气球文档或 `null` |
 
 #### `getMultiBalloon(domainId: string, tid: ObjectId, query?: any): FindCursor`
 
@@ -486,7 +506,7 @@ ACM 风格首 A 通知的气球管理。
 
 #### `updateBalloon(domainId: string, tid: ObjectId, _id: ObjectId, $set: any): Promise<BalloonDoc>`
 
-更新气球字段。
+更新气球字段。`findOneAndUpdate` 未指定 `returnDocument: 'after'`，驱动默认返回更新前的气球文档。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -494,7 +514,7 @@ ACM 风格首 A 通知的气球管理。
 | `tid` | `ObjectId` | — | 比赛 ID |
 | `_id` | `ObjectId` | — | 气球 ID |
 | `$set` | `any` | — | 要更新的字段 |
-| **返回值** | `Promise<BalloonDoc>` | | 更新后的气球文档 |
+| **返回值** | `Promise<BalloonDoc>` | | 更新前的气球文档 |
 
 ---
 
@@ -529,15 +549,15 @@ ACM 风格首 A 通知的气球管理。
 | `ip` | `string` | — | 回复者 IP 地址 |
 | **返回值** | `Promise<[any, ObjectId]>` | | 更新后的文档与回复 ID |
 
-#### `getClarification(domainId: string, did: ObjectId): Promise<ClarificationDoc>`
+#### `getClarification(domainId: string, did: ObjectId): Promise<ClarificationDoc | null>`
 
-按 ID 获取单个答疑。
+按 ID 获取单个答疑。未找到时返回 `null`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `did` | `ObjectId` | — | 答疑 ID |
-| **返回值** | `Promise<ClarificationDoc>` | | 答疑文档 |
+| **返回值** | `Promise<ClarificationDoc \| null>` | | 答疑文档或 `null` |
 
 #### `getMultiClarification(domainId: string, tid: ObjectId, owner?: number): Promise<ClarificationDoc[]>`
 
@@ -581,7 +601,7 @@ ACM 风格首 A 通知的气球管理。
 | `$set` | `any` | — | 要更新的字段 |
 | **返回值** | `Promise<boolean>` | | 是否修改成功 |
 
-#### `allocatePrintTask(domainId: string, tid: ObjectId): Promise<PrintDoc | null>`
+#### `allocatePrintTask(domainId: string, tid: ObjectId): Promise<ContestPrintDoc | null>`
 
 原子性地领取下一个待处理打印任务，将其状态设为 `printing`。
 
@@ -589,7 +609,7 @@ ACM 风格首 A 通知的气球管理。
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `tid` | `ObjectId` | — | 比赛 ID |
-| **返回值** | `Promise<PrintDoc \| null>` | | 打印任务文档或 `null`（无待处理任务） |
+| **返回值** | `Promise<ContestPrintDoc \| null>` | | 打印任务文档或 `null`（无待处理任务） |
 
 #### `getMultiPrintTask(domainId: string, tid: ObjectId, query?: any): FindCursor`
 

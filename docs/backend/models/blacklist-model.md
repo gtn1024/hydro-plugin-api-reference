@@ -19,18 +19,18 @@ import: "import { BlackListModel } from 'hydrooj'"
 
 ### 查找
 
-#### `get(id: string): Promise<WithId<Document> | null>`
+#### `get(id: string): Promise<WithId<BlacklistDoc> | null>`
 
 按 ID 查找黑名单条目。未找到时返回 `null`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `id` | `string` | — | 要查找的实体 ID |
-| **返回值** | `Promise<WithId<Document> \| null>` | | |
+| **返回值** | `Promise<WithId<BlacklistDoc> \| null>` | | |
 
 ### 创建与变更
 
-#### `add(id: string, expire?: Date | number): Promise<WithId<Document>>`
+#### `add(id: string, expire?: Date | number): Promise<WithId<BlacklistDoc>>`
 
 将 ID 添加到黑名单，支持可选过期时间。使用 upsert —— 如果条目已存在则更新 `expireAt`。
 
@@ -44,7 +44,7 @@ import: "import { BlackListModel } from 'hydrooj'"
 |------|------|--------|------|
 | `id` | `string` | — | 要封禁的实体 ID |
 | `expire` | `Date \| number` | `365 天` | 过期时间：Date 直接使用，number 为月数，0 为永久 |
-| **返回值** | `Promise<WithId<Document>>` | | 新建或更新后的文档 |
+| **返回值** | `Promise<WithId<BlacklistDoc>>` | | 新建或更新后的文档 |
 
 ### 删除
 

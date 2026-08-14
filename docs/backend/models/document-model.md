@@ -38,6 +38,10 @@ interface DocType {
 
 将类型常量映射到状态文档接口（如 `TYPE_PROBLEM` 对应 `ProblemStatusDoc`）。
 
+### Content
+
+`string | Record<string, string>` —— 文档内容，可为纯文本或带元数据的键值对。用于 `add`。
+
 ---
 
 ## 常量
@@ -63,14 +67,14 @@ interface DocType {
 
 ### 文档 CRUD
 
-#### `add(domainId: string, content: string, owner: number, docType: number, docId?: ObjectId, parentType?: number, parentId?: ObjectId | number | string, args?: any): Promise<ObjectId>`
+#### `add(domainId: string, content: Content, owner: number, docType: number, docId?: ObjectId, parentType?: number, parentId?: ObjectId | number | string, args?: any): Promise<ObjectId>`
 
 插入新文档。如果提供了 `docId` 则返回 `docId`，否则返回生成的 `ObjectId`。插入前触发 `document/add` 总线事件。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
-| `content` | `string` | — | 文档内容 |
+| `content` | `Content` | — | 文档内容（`string \| Record<string, string>`） |
 | `owner` | `number` | — | 所有者 UID |
 | `docType` | `number` | — | 文档类型常量 |
 | `docId` | `ObjectId` | — | 指定文档 ID（可选） |
@@ -302,7 +306,7 @@ interface DocType {
 | `args` | `any` | — | 过滤条件 |
 | **返回值** | `FindCursor<StatusDoc>` | | |
 
-#### `setStatus(domainId: string, docType: number, docId: ObjectId, uid: number, args: any, returnDocument?: 'before' | 'after'): Promise<StatusDoc>`
+#### `setStatus(domainId: string, docType: number, docId: ObjectId, uid: number, args: any, $unset?: any, returnDocument?: 'before' | 'after'): Promise<StatusDoc>`
 
 设置状态记录字段，不存在时 upsert。`returnDocument` 控制返回的文档是更新 `'before'` 还是 `'after'`（默认 `'after'`）。返回 `'before'` 时使用 `readConcern: 'majority'`。
 
@@ -313,6 +317,7 @@ interface DocType {
 | `docId` | `ObjectId` | — | 文档 ID |
 | `uid` | `number` | — | 用户 ID |
 | `args` | `any` | — | 要设置的字段 |
+| `$unset` | `any` | — | 要移除的字段 |
 | `returnDocument` | `'before' \| 'after'` | `'after'` | 返回更新前还是更新后的文档 |
 | **返回值** | `Promise<StatusDoc>` | | |
 
@@ -332,12 +337,13 @@ const before = await document.setStatus(
   document.TYPE_PROBLEM,
   problemDocId,
   12345,
-  { star: true },
+  { star: true },                    // args
+  null,                              // $unset
   'before',                          // returnDocument
 );
 ```
 
-#### `setMultiStatus(domainId: string, docType: number, query: any, args: any): Promise<void>`
+#### `setMultiStatus(domainId: string, docType: number, query: any, args: any): Promise<UpdateResult>`
 
 批量更新匹配过滤器的多个状态记录。
 
@@ -347,7 +353,7 @@ const before = await document.setStatus(
 | `docType` | `number` | — | 文档类型常量 |
 | `query` | `any` | — | 过滤条件 |
 | `args` | `any` | — | 要设置的字段 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<UpdateResult>` | | 批量更新结果 |
 
 #### `countStatus(domainId: string, docType: number, query?: any): Promise<number>`
 
@@ -360,7 +366,7 @@ const before = await document.setStatus(
 | `query` | `any` | — | 过滤条件 |
 | **返回值** | `Promise<number>` | | |
 
-#### `deleteMultiStatus(domainId: string, docType: number, query?: any): Promise<void>`
+#### `deleteMultiStatus(domainId: string, docType: number, query?: any): Promise<DeleteResult>`
 
 删除匹配过滤器的状态记录。
 
@@ -369,7 +375,7 @@ const before = await document.setStatus(
 | `domainId` | `string` | — | 域 ID |
 | `docType` | `number` | — | 文档类型常量 |
 | `query` | `any` | — | 过滤条件 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<DeleteResult>` | | 删除结果 |
 
 #### `incStatus(domainId: string, docType: number, docId: ObjectId, uid: number, key: string, value: number): Promise<StatusDoc>`
 
@@ -419,7 +425,7 @@ const before = await document.setStatus(
 
 #### `cappedIncStatus(domainId: string, docType: number, docId: ObjectId, uid: number, key: string, value: number, minValue?: number, maxValue?: number, setPayload?: any): Promise<StatusDoc>`
 
-原子性递增数值字段但限制在 `[minValue, maxValue]` 范围内（默认 `[-1, 1]`）。字段将超出上限时递增被静默跳过。可选择在同一操作中设置附加字段。
+原子性递增数值字段但限制在 `[minValue, maxValue]` 范围内（默认 `[-1, 1]`）。查询过滤条件带 `$not`（`value > 0` 时为 `{ $gte: maxValue }`，否则为 `{ $lte: minValue }`）：字段已达上限时过滤不匹配，更新不会发生；但因启用了 `upsert`，此时会尝试插入新文档，与 `collStatus` 的唯一索引冲突并抛出 E11000 重复键错误（`contest.attend` 正是通过捕获该错误转换为 `ContestAlreadyAttendedError`）。可选择在同一操作中设置附加字段。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -465,7 +471,7 @@ const status = await document.cappedIncStatus(
 | `uid` | `number` | — | 用户 ID |
 | **返回值** | `Promise<StatusDoc>` | | |
 
-#### `revPushStatus(domainId: string, docType: number, docId: ObjectId, uid: number, key: string, value: any, id?: ObjectId): Promise<StatusDoc>`
+#### `revPushStatus(domainId: string, docType: number, docId: ObjectId, uid: number, key: string, value: any, id?: string): Promise<StatusDoc>`
 
 将值推入带修订追踪的状态数组字段。如果已存在匹配 `id` 的元素，则替换而非推入。两种情况均递增 `rev`。
 
@@ -489,7 +495,7 @@ const status = await document.revPushStatus(
   12345,                             // uid
   'detail',                          // key
   { pid: problemId, score: 100 },    // value
-  detailId,                          // id（如果匹配则替换，否则推入）
+  'pid',                             // id（子元素字段名，匹配则替换）
 );
 ```
 

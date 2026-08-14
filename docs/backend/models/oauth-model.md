@@ -154,4 +154,4 @@ await ctx.oauth.unbind('github', uid);
 
 ## 备注
 
-- **索引**：在启动时通过 `[Context.init]` 创建——`{ platform: 1, id: 1 }`（唯一索引，每个 platform+openId 仅一条映射）、`{ uid: 1, platform: 1 }`（列出用户的关联账号）。
+- **索引**：在启动时通过 `[Service.init]` 创建——`{ platform: 1, id: 1 }`（唯一索引，每个 platform+openId 仅一条映射）、`{ uid: 1, platform: 1 }`（列出用户的关联账号）。

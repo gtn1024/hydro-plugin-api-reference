@@ -25,7 +25,7 @@ class Dialog
 
 **方法:**
 - `open()` — 显示对话框；返回 `Promise<string>`，在操作名称（如 `"ok"`、`"cancel"`）上 resolve。
-- `close()` — 隐藏对话框。
+- `close()` — 隐藏对话框；返回 `boolean`（未显示或动画中返回 `false`，成功隐藏返回 `true`）。
 
 ### InfoDialog
 
@@ -63,6 +63,8 @@ async function prompt<T extends string, R extends Record<T, Field>>(
 
 显示包含给定字段的模态表单。返回将字段名映射到值的类型化对象，取消时返回 `null`。接受前会校验 `required` 字段。
 
+> 注：源码中的类型声明为 `Promise<Result<T, R>>`，但运行时在取消（未选择 "ok" 操作）时实际返回 `null`，本文按实际行为写作 `Promise<Result<T, R> | null>`。
+
 ### confirm
 
 ```ts
@@ -85,7 +87,7 @@ async function alert(text: string): Promise<string>
 
 ```ts
 interface Field {
-  type: 'text' | 'checkbox' | 'user' | 'userId' | 'username' | 'domain';
+  type: 'text' | 'textarea' | 'checkbox' | 'user' | 'userId' | 'username' | 'domain';
   options?: string[] | Record<string, string>;
   placeholder?: string;
   label?: string;
@@ -93,6 +95,8 @@ interface Field {
   required?: boolean;
   default?: string;
   columns?: number;  // 网格列宽；负值触发换行
+  rows?: number;  // 多行文本区域行数，默认为 6（仅 'textarea'）
+  multi?: boolean;  // 用户自动补全是否支持多选（仅 'user'/'userId'/'username'）
 }
 ```
 
@@ -101,6 +105,7 @@ interface Field {
 | type | 控件 | 结果类型 |
 |------|--------|-------------|
 | `'text'` | 文本输入 / 下拉选择（有 `options` 时） | `string` |
+| `'textarea'` | 多行文本输入 | `string` |
 | `'checkbox'` | 复选框 | `boolean` |
 | `'user'` | 用户自动补全 | `any`（用户对象） |
 | `'userId'` | 用户自动补全 | `number` |

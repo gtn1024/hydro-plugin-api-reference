@@ -41,8 +41,10 @@ class MyHandler extends Handler {
 ### 签名
 
 ```ts
+(name: string, type: Type) => MethodDecorator
 (name: string, type: Type, validate?: Validator | null, convert?: Converter) => MethodDecorator
 (name: string, type?: Type, isOptional?: boolean, validate?: Validator, convert?: Converter) => MethodDecorator
+(name: string, ...args: Array<Type | boolean | Validator | Converter>) => MethodDecorator
 ```
 
 `Type` 可以是 Schemastery schema 或元组 `[convert, validate?, isOptional?]`。
@@ -66,7 +68,7 @@ class MyHandler extends Handler {
 | `Types.DomainId` | `string` | 域标识符（字母开头，4–32 个 `\w` 字符，SASLprep）。 |
 | `Types.ProblemId` | `string \| number` | 题目 ID —— 数字字符串自动转换为 `number`。 |
 | `Types.Role` | `string` | 角色名（1–31 个 `\w` 或 CJK 字符，SASLprep）。 |
-| `Types.Title` | `string` | 短标题（1–64 字符，去除首尾空格）。 |
+| `Types.Title` | `string` | 短标题（1–64 字符，拒绝纯空白）。 |
 | `Types.ShortString` | `string` | 短字符串（1–255 字符）。 |
 | `Types.String` | `string` | 任意非空字符串。 |
 | `Types.Emoji` | `string` | 单个 emoji 字符。 |
@@ -94,7 +96,7 @@ class MyHandler extends Handler {
 | 名称 | 输出 | 说明 |
 |------|------|------|
 | `Types.Range(arr \| obj)` | `T` | 接受给定数组或对象键中的任意值；数字字符串自动转换为 `number`。 |
-| `Types.NumericArray` | `number[]` | 有限数字数组（逗号分隔字符串或 JSON 数组）。 |
+| `Types.NumericArray` | `number[]` | 有限数字数组（逗号分隔字符串或数组）。 |
 | `Types.CommaSeperatedArray` | `string[]` | 以逗号分隔的字符串数组。 |
 | `Types.Set` | `Set<any>` | 将数组或单个值转换为 `Set`。 |
 | `Types.Any` | `any` | 透传，不做验证。 |

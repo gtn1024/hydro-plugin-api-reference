@@ -160,11 +160,11 @@ new NamedPage('problem_edit', async (pagename, loadPage) => {
 import { NamedPage } from '@hydrooj/ui-default';
 
 export default new NamedPage('user_detail', async (pagename, loadPage) => {
-  // beforeLoading — 准备数据
-  console.log('Loading user page...');
-}, async (pagename, loadPage) => {
   // afterLoading — 绑定 DOM
   document.querySelector('.avatar')?.addEventListener('click', handleAvatarClick);
+}, async (pagename, loadPage) => {
+  // beforeLoading — 准备数据
+  console.log('Loading user page...');
 });
 ```
 
@@ -172,9 +172,9 @@ export default new NamedPage('user_detail', async (pagename, loadPage) => {
 
 ```ts
 new NamedPage(['contest_detail', 'contest_scoreboard'], () => {
-  // contest_detail 和 contest_scoreboard 页面的 beforeLoading
+  // contest_detail 和 contest_scoreboard 页面的 afterLoading
 }, () => {
-  // 两个页面的 afterLoading
+  // 两个页面的 beforeLoading
 });
 ```
 
@@ -184,9 +184,9 @@ new NamedPage(['contest_detail', 'contest_scoreboard'], () => {
 import { AutoloadPage } from '@hydrooj/ui-default';
 
 export default new AutoloadPage('tooltips', () => {
-  // 在每个页面上运行 — 初始化提示框库
+  // afterLoading — DOM 就绪后绑定提示框元素
 }, () => {
-  // DOM 就绪后绑定提示框元素
+  // beforeLoading — DOM 处理前初始化提示框库
 });
 ```
 
@@ -196,9 +196,9 @@ export default new AutoloadPage('tooltips', () => {
 import { addPage, AutoloadPage } from '@hydrooj/ui-default';
 
 addPage(new AutoloadPage('my-plugin-init', () => {
-  // beforeLoading — 在每个页面上运行
-}, () => {
   // afterLoading — 在每个页面上运行
+}, () => {
+  // beforeLoading — 在每个页面上运行
 }));
 
 // 或者注册一个纯初始化函数

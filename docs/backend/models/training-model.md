@@ -71,7 +71,7 @@ interface TrainingDoc extends Omit<Tdoc, 'docType'> {
 | `$set` | `Partial<TrainingDoc>` | — | 要更新的字段 |
 | **返回值** | `Promise<TrainingDoc>` | | 更新后的训练计划文档 |
 
-#### `del(domainId: string, tid: ObjectId): Promise<[void, void]>`
+#### `del(domainId: string, tid: ObjectId): Promise<[[DeleteResult, DeleteResult], DeleteResult]>`
 
 删除训练计划及其所有关联的用户状态。
 
@@ -79,7 +79,7 @@ interface TrainingDoc extends Omit<Tdoc, 'docType'> {
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `tid` | `ObjectId` | — | 训练计划 ID |
-| **返回值** | `Promise<[void, void]>` | | |
+| **返回值** | `Promise<[[DeleteResult, DeleteResult], DeleteResult]>` | | 依次为 `document.deleteOne`（删除文档及状态，返回 `[DeleteResult, DeleteResult]`）与 `document.deleteMultiStatus`（删除状态，返回 `DeleteResult`）的结果 |
 
 #### `get(domainId: string, tid: ObjectId): Promise<TrainingDoc>`
 
@@ -98,7 +98,7 @@ interface TrainingDoc extends Omit<Tdoc, 'docType'> {
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
-| `query` | `Filter<TrainingDoc>` | — | 查询条件 |
+| `query` | `Filter<TrainingDoc>` | `{}` | 查询条件 |
 | **返回值** | `FindCursor<TrainingDoc>` | | |
 
 #### `getList(domainId: string, tids: ObjectId[]): Promise<Record<string, TrainingDoc>>`
@@ -155,19 +155,19 @@ const newCount = await TrainingModel.enroll(
 | `uid` | `number` | — | 用户 UID |
 | **返回值** | `Promise<TrainingStatusDoc \| null>` | | |
 
-#### `getMultiStatus(domainId: string, query: Filter<TrainingDoc>): FindCursor<TrainingStatusDoc>`
+#### `getMultiStatus(domainId: string, query: Filter<TrainingStatusDoc>): FindCursor<TrainingStatusDoc>`
 
 返回匹配给定查询的训练计划状态游标。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
-| `query` | `Filter<TrainingDoc>` | — | 查询条件 |
+| `query` | `Filter<TrainingStatusDoc>` | — | 查询条件 |
 | **返回值** | `FindCursor<TrainingStatusDoc>` | | |
 
 #### `getListStatus(domainId: string, uid: number, tids: ObjectId[]): Promise<Record<string, TrainingStatusDoc>>`
 
-获取指定用户在多条训练计划中的状态，返回以 `docId` 为键的映射。
+获取指定用户在多条训练计划中的状态，返回以 `docId` 的十六进制字符串为键的映射。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -176,7 +176,7 @@ const newCount = await TrainingModel.enroll(
 | `tids` | `ObjectId[]` | — | 训练计划 ID 数组 |
 | **返回值** | `Promise<Record<string, TrainingStatusDoc>>` | | |
 
-#### `setStatus(domainId: string, tid: ObjectId, uid: number, $set: any): Promise<void>`
+#### `setStatus(domainId: string, tid: ObjectId, uid: number, $set: Partial<TrainingStatusDoc>): Promise<TrainingStatusDoc>`
 
 设置（覆盖）用户在特定训练计划中的状态字段。
 
@@ -185,8 +185,8 @@ const newCount = await TrainingModel.enroll(
 | `domainId` | `string` | — | 域上下文 |
 | `tid` | `ObjectId` | — | 训练计划 ID |
 | `uid` | `number` | — | 用户 UID |
-| `$set` | `any` | — | 要设置的状态字段 |
-| **返回值** | `Promise<void>` | | |
+| `$set` | `Partial<TrainingStatusDoc>` | — | 要设置的状态字段 |
+| **返回值** | `Promise<TrainingStatusDoc>` | | 更新后的状态文档 |
 
 ### DAG 辅助函数
 

@@ -34,7 +34,7 @@ import: "import { ProblemModel } from 'hydrooj'"
 | `stats` | `any?` | 统计对象 |
 | `difficulty` | `number?` | 难度等级 |
 | `sort` | `string?` | 用于排序的排序键 |
-| `config` | `string?` | 评测配置（YAML 字符串） |
+| `config` | `string \| ProblemConfig` | 评测配置（YAML 字符串或解析后的配置对象） |
 | `reference` | `{ domainId: string, pid: number }?` | 源题目引用（用于复制的题目） |
 
 ### `ProblemDict`
@@ -124,7 +124,7 @@ const hiddenDocId = await ProblemModel.add(
 
 #### `addWithId(domainId: string, docId: number, pid: string = '', title: string, content: string, owner: number, tag?: string[], meta?: ProblemCreateOptions): Promise<number>`
 
-使用指定 `docId` 创建题目。由 `add` 和导入逻辑内部使用。
+使用指定 `docId` 创建题目。由 `add` 内部使用。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -150,7 +150,7 @@ const hiddenDocId = await ProblemModel.add(
 | `rawConfig` | `boolean` | `false` | 跳过配置解析 |
 | **返回值** | `Promise<ProblemDoc \| null>` | | |
 
-#### `getMulti(domainId: string, query: Filter<ProblemDoc>, projection?: Field[]): MongoDB.Cursor<ProblemDoc>`
+#### `getMulti(domainId: string, query: Filter<ProblemDoc>, projection?: Field[]): FindCursor<ProblemDoc>`
 
 获取查询多个题目的 MongoDB 游标，按 `sort` 字段排序。
 
@@ -159,11 +159,11 @@ const hiddenDocId = await ProblemModel.add(
 | `domainId` | `string` | — | 域 ID |
 | `query` | `Filter<ProblemDoc>` | — | MongoDB 过滤器 |
 | `projection` | `Field[]` | `PROJECTION_LIST` | 要返回的字段 |
-| **返回值** | `MongoDB.Cursor<ProblemDoc>` | | |
+| **返回值** | `FindCursor<ProblemDoc>` | | |
 
 #### `list(domainId: string, query: Filter<ProblemDoc>, page: number, pageSize: number, projection?: Field[]): Promise<[ProblemDoc[], number, number]>` *(已弃用)*
 
-分页题目列表。返回 `[docs, count, page]`。
+分页题目列表。返回 `[docs, numPages, count]`（题目数组、总页数、总数）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -172,7 +172,7 @@ const hiddenDocId = await ProblemModel.add(
 | `page` | `number` | — | 页码 |
 | `pageSize` | `number` | — | 每页数量 |
 | `projection` | `Field[]` | `PROJECTION_LIST` | 要返回的字段 |
-| **返回值** | `Promise<[ProblemDoc[], number, number]>` | | `[docs, count, page]` |
+| **返回值** | `Promise<[ProblemDoc[], number, number]>` | | `[docs, numPages, count]`（题目数组、总页数、总数） |
 
 #### `edit(domainId: string, _id: number, $set: Partial<ProblemDoc>): Promise<ProblemDoc>`
 
@@ -216,6 +216,7 @@ const hiddenDocId = await ProblemModel.add(
 | `target` | `string` | — | 目标域 ID |
 | `pid` | `string` | — | 目标域中的题目 PID |
 | `hidden` | `boolean` | — | 是否在目标域中隐藏 |
+| **返回值** | `Promise<number>` | | 新题目的 `docId` |
 
 #### `random(domainId: string, query: Filter<ProblemDoc>): Promise<string | number | null>`
 
@@ -256,7 +257,7 @@ const hiddenDocId = await ProblemModel.add(
 | `uid` | `number` | — | 用户 ID |
 | **返回值** | `Promise<ProblemStatusDoc \| null>` | | |
 
-#### `getMultiStatus(domainId: string, query: Filter<ProblemStatusDoc>): MongoDB.Cursor<ProblemStatusDoc>`
+#### `getMultiStatus(domainId: string, query: Filter<ProblemStatusDoc>): FindCursor<ProblemStatusDoc>`
 
 获取查询题目状态文档的游标。
 
@@ -264,7 +265,7 @@ const hiddenDocId = await ProblemModel.add(
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `query` | `Filter<ProblemStatusDoc>` | — | MongoDB 过滤器 |
-| **返回值** | `MongoDB.Cursor<ProblemStatusDoc>` | | |
+| **返回值** | `FindCursor<ProblemStatusDoc>` | | |
 
 #### `getListStatus(domainId: string, uid: number, pids: number[]): Promise<NumericDictionary<ProblemStatusDoc>>`
 
@@ -291,7 +292,7 @@ const hiddenDocId = await ProblemModel.add(
 | `score` | `number` | — | 分数 |
 | **返回值** | `Promise<boolean>` | | 状态是否被更新 |
 
-#### `incStatus(domainId: string, pid: number, uid: number, key: NumberKeys<ProblemStatusDoc>, count: number): Promise<void>`
+#### `incStatus(domainId: string, pid: number, uid: number, key: NumberKeys<ProblemStatusDoc>, count: number): Promise<ProblemStatusDoc>`
 
 递增用户题目状态上的数字字段。
 
@@ -302,8 +303,9 @@ const hiddenDocId = await ProblemModel.add(
 | `uid` | `number` | — | 用户 ID |
 | `key` | `NumberKeys<ProblemStatusDoc>` | — | 要递增的字段名 |
 | `count` | `number` | — | 递增量 |
+| **返回值** | `Promise<ProblemStatusDoc>` | | 更新后的状态文档 |
 
-#### `setStar(domainId: string, pid: number, uid: number, star: boolean): Promise<void>`
+#### `setStar(domainId: string, pid: number, uid: number, star: boolean): Promise<ProblemStatusDoc>`
 
 设置或取消用户题目状态上的收藏标记。
 
@@ -313,6 +315,7 @@ const hiddenDocId = await ProblemModel.add(
 | `pid` | `number` | — | 题目 `docId` |
 | `uid` | `number` | — | 用户 ID |
 | `star` | `boolean` | — | `true` 收藏，`false` 取消收藏 |
+| **返回值** | `Promise<ProblemStatusDoc>` | | 更新后的状态文档 |
 
 ### 测试数据管理
 
@@ -391,7 +394,7 @@ const hiddenDocId = await ProblemModel.add(
 
 ### 子文档辅助
 
-#### `push(domainId: string, _id: number, key: ArrayKeys<ProblemDoc>, value: ProblemDoc[typeof key][0]): Promise<[Doc, ObjectId]>`
+#### `push(domainId: string, _id: number, key: ArrayKeys<ProblemDoc>, value: ProblemDoc[typeof key][0]): Promise<[ProblemDoc, ObjectId]>`
 
 向数组字段（`data` 或 `additional_file`）追加元素。
 
@@ -401,9 +404,9 @@ const hiddenDocId = await ProblemModel.add(
 | `_id` | `number` | — | 题目 `docId` |
 | `key` | `ArrayKeys<ProblemDoc>` | — | 数组字段名 |
 | `value` | `ProblemDoc[typeof key][0]` | — | 要追加的元素 |
-| **返回值** | `Promise<[Doc, ObjectId]>` | | 更新后的文档和新元素 ID |
+| **返回值** | `Promise<[ProblemDoc, ObjectId]>` | | 更新后的文档和新元素 ID |
 
-#### `pull(domainId: string, pid: number, key: ArrayKeys<ProblemDoc>, values: ProblemDoc[typeof key][0][]): Promise<DocType[typeof key]>`
+#### `pull(domainId: string, pid: number, key: ArrayKeys<ProblemDoc>, values: ProblemDoc[typeof key][0][]): Promise<ProblemDoc>`
 
 按值从数组字段中移除元素。
 
@@ -413,7 +416,7 @@ const hiddenDocId = await ProblemModel.add(
 | `pid` | `number` | — | 题目 `docId` |
 | `key` | `ArrayKeys<ProblemDoc>` | — | 数组字段名 |
 | `values` | `ProblemDoc[typeof key][0][]` | — | 要移除的值 |
-| **返回值** | `Promise<DocType[typeof key]>` | | 更新后的文档 |
+| **返回值** | `Promise<ProblemDoc>` | | 更新后的文档 |
 
 #### `inc(domainId: string, _id: number, field: NumberKeys<ProblemDoc> | string, n: number): Promise<ProblemDoc>`
 
@@ -487,13 +490,11 @@ await ProblemModel.import('system', '/data/problems/', {
 | **返回值** | `Promise<void>` | | 无返回值 |
 
 ```typescript
-// 导出域内所有题目
-const zipPath = await ProblemModel.export('system');
+// 导出域内所有题目（无返回值，ZIP 输出到当前工作目录，路径打印到控制台）
+await ProblemModel.export('system');
 
 // 仅导出匹配前缀的题目
-const partialPath = await ProblemModel.export('system', '^contest-');
-
-// zipPath/partialPath 为生成的 ZIP 文件路径
+await ProblemModel.export('system', '^contest-');
 ```
 
 ---
@@ -513,15 +514,15 @@ const partialPath = await ProblemModel.export('system', '^contest-');
 
 | 事件 | 参数 | 触发时机 |
 |------|------|----------|
-| `problem/before-add` | `domainId, content, owner, docId, args` | 创建题目前 |
-| `problem/add` | `args, result` | 创建题目后 |
-| `problem/before-edit` | `$set, $unset` | 编辑题目前 |
-| `problem/edit` | `result` | 编辑题目后 |
+| `problem/before-add` | `domainId, content, owner, docId, doc` | 创建题目前 |
+| `problem/add` | `doc, docId` | 创建题目后 |
+| `problem/before-edit` | `doc, $unset` | 编辑题目前 |
+| `problem/edit` | `doc` | 编辑题目后 |
 | `problem/before-del` | `domainId, docId` | 删除题目前 |
 | `problem/delete` | `domainId, docId` | 删除题目后 |
-| `problem/addTestdata` | `domainId, pid, name, payload` | 添加测试数据后 |
-| `problem/renameTestdata` | `domainId, pid, file, newName` | 重命名测试数据后 |
-| `problem/delTestdata` | `domainId, pid, names` | 删除测试数据后 |
-| `problem/addAdditionalFile` | `domainId, pid, name, payload` | 添加附加文件后 |
-| `problem/renameAdditionalFile` | `domainId, pid, file, newName` | 重命名附加文件后 |
-| `problem/delAdditionalFile` | `domainId, pid, names` | 删除附加文件后 |
+| `problem/addTestdata` | `domainId, docId, name, payload` | 添加测试数据后 |
+| `problem/renameTestdata` | `domainId, docId, name, newName` | 重命名测试数据后 |
+| `problem/delTestdata` | `domainId, docId, name` | 删除测试数据后 |
+| `problem/addAdditionalFile` | `domainId, docId, name, payload` | 添加附加文件后 |
+| `problem/renameAdditionalFile` | `domainId, docId, name, newName` | 重命名附加文件后 |
+| `problem/delAdditionalFile` | `domainId, docId, name` | 删除附加文件后 |

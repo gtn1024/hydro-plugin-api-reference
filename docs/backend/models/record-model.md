@@ -130,7 +130,7 @@ type RecordDoc = {
 | `_id` | `ObjectId` | — | 记录 ID |
 | **返回值** | `Promise<RecordDoc \| null>` | | |
 
-#### `getMulti(domainId: string, query: any, options?: FindOptions): Cursor<RecordDoc>`
+#### `getMulti(domainId: string, query: any, options?: FindOptions): FindCursor<RecordDoc>`
 
 查询多条记录。自动按 `domainId` 限定范围。返回 MongoDB 游标。
 
@@ -139,9 +139,9 @@ type RecordDoc = {
 | `domainId` | `string` | — | 域 ID |
 | `query` | `any` | — | MongoDB 查询过滤器 |
 | `options` | `FindOptions` | — | 查询选项（排序、投影等） |
-| **返回值** | `Cursor<RecordDoc>` | | 记录游标 |
+| **返回值** | `FindCursor<RecordDoc>` | | 记录游标 |
 
-#### `getMultiStat(domainId: string, query: any, sortBy?: any): Cursor<RecordStatDoc>`
+#### `getMultiStat(domainId: string, query: any, sortBy?: any): FindCursor<RecordStatDoc>`
 
 查询多条统计文档。默认按 `_id` 降序排序。
 
@@ -149,8 +149,8 @@ type RecordDoc = {
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `query` | `any` | — | MongoDB 查询过滤器 |
-| `sortBy` | `any` | — | 排序方式 |
-| **返回值** | `Cursor<RecordStatDoc>` | | 统计文档游标 |
+| `sortBy` | `any` | `{ _id: -1 }` | 排序方式 |
+| **返回值** | `FindCursor<RecordStatDoc>` | | 统计文档游标 |
 
 #### `getList(domainId: string, rids: ObjectId[], fields?: (keyof RecordDoc)[]): Promise<Record<string, Partial<RecordDoc>>>`
 
@@ -257,7 +257,7 @@ const hackRid = await RecordModel.add(
 | `priority` | `number` | `0` | 任务优先级 |
 | `config` | `ProblemConfigFile` | `{}` | 覆盖评测配置 |
 | `meta` | `Partial<JudgeMeta>` | `{}` | 评测元数据 |
-| **返回值** | `Promise<any>` | | |
+| **返回值** | `Promise<any>` | | 任务的插入结果（`insertedIds` 映射）；`rids` 为空或无匹配记录时返回 `null` |
 
 ```typescript
 // 提交单条记录评测
@@ -277,7 +277,7 @@ await RecordModel.judge(
   'system',
   rid,
   0,
-  { timeLimit: 5000, memoryLimit: 512 },
+  { time: '5000ms', memory: '512m' },
   { type: 'rejudge' },
 );
 ```
@@ -289,7 +289,7 @@ await RecordModel.judge(
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
-| `base` | `number` | — | 基础优先级 |
+| `base` | `number` | `0` | 基础优先级 |
 | **返回值** | `Promise<number>` | | 计算后的优先级 |
 
 ---
@@ -352,5 +352,5 @@ await RecordModel.judge('system', rids);
 
 | 事件 | 参数 | 说明 |
 |------|------|------|
-| `record/change` | `RecordDoc` | 创建新记录时广播（通过 `add()`） |
-| `record/judge` | `rdoc: RecordDoc, updated: boolean` | 评测完成时触发；对通过的提交更新 `record.stat` 并发送通知 |
+| `record/change` | `rdoc: RecordDoc, $set?: any, $push?: any, body?: any` | 创建新记录时广播（通过 `add()`） |
+| `record/judge` | `rdoc: RecordDoc, updated: boolean, pdoc?: ProblemDoc, updater?: any` | 评测完成时触发；对通过的提交更新 `record.stat` 并发送通知 |

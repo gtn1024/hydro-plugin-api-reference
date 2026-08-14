@@ -29,8 +29,7 @@ function tpl(pieces: TemplateStringsArray, ...substitutions: Substitution[]): st
 **React 节点渲染** — 将 React 元素渲染为 HTML 字符串（默认）或挂载到 DOM 节点：
 
 ```ts
-function tpl(node: React.ReactNode, reactive?: true): HTMLDivElement;
-function tpl(node: React.ReactNode, reactive?: false): string;
+function tpl<T extends boolean = false>(node: React.ReactNode, reactive?: T): T extends true ? HTMLDivElement : string;
 ```
 
 - `reactive = false`（默认）：调用 `ReactDOMServer.renderToStaticMarkup()` 返回 HTML 字符串

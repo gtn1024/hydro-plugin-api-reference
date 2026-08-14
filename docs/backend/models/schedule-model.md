@@ -70,7 +70,7 @@ interface Schedule {
 
 #### `getFirst(query: Filter<Schedule>): Promise<Schedule | null>`
 
-原子性地查找并删除匹配过滤条件中最早到期的任务（`executeAfter < now`）。若任务设有 `interval`，则自动重新调度——将 `executeAfter` 推进一个间隔周期。若无到期任务（或在 CI 环境中运行）则返回 `null`。
+原子性地查找并删除一条已到期任务（`executeAfter < now`）。若任务设有 `interval`，则自动重新调度——将 `executeAfter` 推进一个间隔周期。若无到期任务（或在 CI 环境中运行）则返回 `null`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|

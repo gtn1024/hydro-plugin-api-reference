@@ -11,7 +11,7 @@ import: "import { StorageService } from 'hydrooj'"
 
 访问：`ctx.storage`（实例，服务启动后可用）
 
-`StorageService` 是一个命名空间导出，包含两个后端类（`RemoteStorageService` 用于 S3，`LocalStorageService` 用于文件系统）以及 `Config` schema 和 `encodeRFC5987ValueChars` 工具。运行时，`ctx.storage` 返回所配置的后端实例。
+`StorageService` 是一个命名空间导出，仅包含 `Config` schema、`encodeRFC5987ValueChars` 工具和 `apply` 函数。两个后端类（`RemoteStorageService` 用于 S3，`LocalStorageService` 用于文件系统）不对外导出，仅内部使用。运行时，`ctx.storage` 返回所配置的后端实例，其类型为二者的联合 `RemoteStorageService | LocalStorageService`。
 
 两个后端共享相同的公开 API 接口：
 
@@ -37,7 +37,7 @@ import: "import { StorageService } from 'hydrooj'"
 
 ### `signDownloadLink(target: string, filename?: string, noExpire?: boolean, useAlternativeEndpointFor?: 'user' | 'judge'): Promise<string>`
 
-生成签名下载 URL。S3 后端使用预签名 URL（为兼容阿里云最长 7 天，默认 30 分钟）。本地后端通过 `/storage` 端点生成 HMAC 签名路径（默认 10 分钟有效期）。支持为用户或判题机访问使用备用端点路由。
+生成签名下载 URL。S3 后端使用预签名 URL（为兼容阿里云最长 7 天，默认 30 分钟）。本地后端通过 `/storage` 端点生成基于密钥的 MD5 签名路径（默认 10 分钟有效期）。支持为用户或判题机访问使用备用端点路由。
 
 ### `signUpload(target: string, size: number): Promise<{ url, fields }>`
 
@@ -45,7 +45,7 @@ import: "import { StorageService } from 'hydrooj'"
 
 ### `isLinkValid(link: string): Promise<boolean>`
 
-验证签名链接的 HMAC 签名。仅在本地后端有效（S3 后端返回 `false`）。
+验证签名链接的 MD5 密钥哈希。仅在本地后端有效（S3 后端返回 `false`）。
 
 ### `status(): Promise<{ type, status, error, ... }>`
 
@@ -58,7 +58,7 @@ import: "import { StorageService } from 'hydrooj'"
 | 属性 | 类型 | 说明 |
 |----------|------|-------------|
 | `client` | `S3Client \| null` | S3 客户端实例（本地后端为 null） |
-| `error` | `string \| null` | 最近一次错误消息，健康时 S3 后端为 `null`、本地后端为空字符串 |
+| `error` | `string` | 最近一次错误消息，健康时 S3 后端为 `null`、本地后端为空字符串 |
 
 ---
 
@@ -87,7 +87,7 @@ import: "import { StorageService } from 'hydrooj'"
 | 字段 | 默认值 | 说明 |
 |-------|---------|-------------|
 | `path` | `/data/file/hydro` | 本地存储目录 |
-| `secret` | `nanoid()` | 签名链接的 HMAC 密钥 |
+| `secret` | `nanoid()` | 签名链接的 MD5 密钥 |
 
 **S3 模式（`type: 's3'`）**：
 

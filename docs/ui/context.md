@@ -16,12 +16,10 @@ import: "import { Context, ctx, Service } from '@hydrooj/ui-default'"
 ### Context
 
 ```ts
-class Context extends cordis.Context { }
+export { Context } from 'cordis'
 ```
 
-核心插件上下文。前端插件接收一个 `Context` 实例用于注册生命周期钩子、服务和事件监听器。继承自 `cordis.Context`，未添加额外方法 —— 所有功能来自 Cordis 基类。
-
-上下文有一个 `broadcast` 属性别名指向 `emit`，为广播事件到所有监听器提供了语义化的简写。
+核心插件上下文。前端插件接收一个 `Context` 实例用于注册生命周期钩子、服务和事件监听器。`Context` 即 `cordis.Context` 本体 —— `context.ts` 直接 re-export，未添加额外方法，所有功能来自 Cordis 基类。
 
 ### ctx
 
@@ -41,10 +39,10 @@ ctx.on('some-event', (payload) => { /* handle */ });
 ### Service
 
 ```ts
-class Service<C extends Context = Context> extends cordis.Service<C> { }
+abstract class Service<out T = never, out C extends Context = Context>
 ```
 
-前端服务的基类。继承自 `cordis.Service`，未添加额外方法。插件通过子类化 `Service` 来提供可通过 Cordis 依赖注入使用的可复用功能。
+前端服务的基类，从 `cordis` 直接 re-export，未添加额外方法。插件通过继承 `Service` 来提供可通过 Cordis 依赖注入使用的可复用功能。泛型参数 `T` 为服务的配置类型（默认 `never`），`C` 为上下文类型（默认 `Context`）。
 
 ### EventMap
 
@@ -65,18 +63,22 @@ declare module '@hydrooj/ui-default' {
 ### Events
 
 ```ts
-interface Events<C extends Context = Context> extends cordis.Events<C>, EventMap { }
+declare module 'cordis' {
+  export interface Events extends EventMap { }
+}
 ```
 
-组合事件接口，合并了 Cordis 内置事件与 Hydro 前端 `EventMap`。可通过 `Context[Context.events]` 访问。
+`Events` 并非 `@hydrooj/ui-default` 的导出，而是 `context.ts` 中通过 `declare module 'cordis'` 声明合并将前端 `EventMap` 并入 Cordis 的 `Events` 接口（无泛型参数）。合并后，Cordis 内置事件与前端插件通过 `EventMap` 添加的自定义事件在事件系统中共用同一类型，可通过 `Context[typeof Context.events]` 访问。
 
 ### Fiber
 
 ```ts
-type Fiber = cordis.Fiber<Context>
+class Fiber<out C extends Context = Context>
 ```
 
-以 Hydro 的 `Context` 参数化的 Cordis Fiber 类型别名。表示插件在上下文树中的生命周期作用域。
+从 `cordis` 直接 re-export 的泛型类。表示插件在上下文树中的生命周期作用域，泛型参数 `C` 为上下文类型（默认 `Context`）。
+
+> 注：`Fiber` 未从 `@hydrooj/ui-default` 顶层导出，需从 `@hydrooj/ui-default/context` 内部路径或 `cordis` 直接导入。
 
 ### Disposable
 
@@ -86,13 +88,19 @@ type Disposable = cordis.Disposable
 
 从 Cordis 重新导出。由注册方法（如 `ctx.on()`、`ctx.effect()`）返回的清理函数。调用它可移除已注册的资源。
 
+> 注：`Disposable` 未从 `@hydrooj/ui-default` 顶层导出，需从 `@hydrooj/ui-default/context` 内部路径或 `cordis` 直接导入。
+
 ### FiberState
 
 ```ts
-type FiberState = cordis.FiberState
+const enum FiberState {
+  PENDING, LOADING, ACTIVE, FAILED, DISPOSED, UNLOADING
+}
 ```
 
-从 Cordis 重新导出。表示 Fiber 的生命周期状态（如 `active`、`disposed`）。
+从 `cordis` 直接 re-export 的 `const enum`。表示 Fiber 的生命周期状态，成员为 `PENDING`、`LOADING`、`ACTIVE`、`FAILED`、`DISPOSED`、`UNLOADING`。
+
+> 注：`FiberState` 未从 `@hydrooj/ui-default` 顶层导出，需从 `@hydrooj/ui-default/context` 内部路径或 `cordis` 直接导入。
 
 ### Plugin
 
@@ -102,9 +110,11 @@ type Plugin = cordis.Plugin
 
 从 Cordis 重新导出。使用 `ctx.plugin()` 定义和注册插件时的插件描述符类型。
 
+> 注：`Plugin` 未从 `@hydrooj/ui-default` 顶层导出，需从 `@hydrooj/ui-default/context` 内部路径或 `cordis` 直接导入。
+
 ## 架构说明
 
-- `context.ts` 定义了 Cordis 基础原语的 Hydro 特定子类/包装器，而所有实际的插件功能（生命周期钩子、依赖注入、事件系统）来自 Cordis 基类。
+- `context.ts` 直接 re-export cordis 的 `Context`/`Service`/`Fiber`/`FiberState`/`Disposable`/`Plugin`，声明 `Events` 合并，并创建 `ctx` 单例。所有实际的插件功能（生命周期钩子、依赖注入、事件系统）来自 Cordis 基类。
 - `api.ts` 从 `context.ts` 重新导出 `Context`、`ctx` 和 `Service`，使其作为 `@hydrooj/ui-default` 公开 API 的一部分可用。
 - `EventMap` 在 `api.ts` 中声明为空，设计为通过 TypeScript 声明合并由插件扩展。
 - 前端 `Context` 与后端 `Context` 是独立的实例 —— 它们共享相同的 Cordis 架构，但运行在不同环境中（浏览器 vs Node.js）。

@@ -89,14 +89,14 @@ interface DomainDoc extends Record<string, any> {
 | `host` | `string` | — | 自定义 host 头值 |
 | **返回值** | `Promise<DomainDoc \| null>` | | |
 
-#### `getMulti(query?: Filter<DomainDoc>): Cursor<DomainDoc>`
+#### `getMulti(query?: Filter<DomainDoc>): FindCursor<DomainDoc>`
 
 获取匹配过滤器的域游标。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `query` | `Filter<DomainDoc>` | — | MongoDB 过滤条件 |
-| **返回值** | `Cursor<DomainDoc>` | | |
+| `query` | `Filter<DomainDoc>` | `{}` | MongoDB 过滤条件 |
+| **返回值** | `FindCursor<DomainDoc>` | | |
 
 #### `getList(domainIds: string[]): Promise<Record<string, DomainDoc | null>>`
 
@@ -109,7 +109,7 @@ interface DomainDoc extends Record<string, any> {
 
 #### `edit(domainId: string, $set: Partial<DomainDoc>): Promise<DomainDoc | null>`
 
-按 ID 更新城字段；广播缓存失效。
+按 ID 更新域字段；广播缓存失效。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -169,7 +169,7 @@ interface DomainDoc extends Record<string, any> {
 | `udoc` | `{ _id: number, priv: number }` | — | 用户文档（至少含 `_id` 和 `priv`） |
 | **返回值** | `Promise<any>` | | |
 
-#### `getDomainUserMulti(domainId: string, uids: number[]): Cursor<any>`
+#### `getDomainUserMulti(domainId: string, uids: number[]): FindCursor<any>`
 
 按 UID 获取多个域用户记录的游标。
 
@@ -177,7 +177,7 @@ interface DomainDoc extends Record<string, any> {
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
 | `uids` | `number[]` | — | 用户 ID 数组 |
-| **返回值** | `Cursor<any>` | | |
+| **返回值** | `FindCursor<any>` | | |
 
 #### `getDictUserByDomainId(uid: number): Promise<Record<string, any>>`
 
@@ -244,15 +244,15 @@ interface DomainDoc extends Record<string, any> {
 | `params` | `any` | — | 要设置的字段 |
 | **返回值** | `Promise<any>` | | |
 
-#### `getMultiUserInDomain(domainId: string, query?: any): Cursor<any>`
+#### `getMultiUserInDomain(domainId: string, query?: any): FindCursor<any>`
 
 获取匹配查询的域用户游标。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域 ID |
-| `query` | `any` | — | 匹配条件 |
-| **返回值** | `Cursor<any>` | | |
+| `query` | `any` | `{}` | 匹配条件 |
+| **返回值** | `FindCursor<any>` | | |
 
 #### `incUserInDomain(domainId: string, uid: number, field: string, n: number = 1): Promise<any>`
 

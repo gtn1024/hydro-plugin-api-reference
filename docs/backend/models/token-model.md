@@ -88,7 +88,7 @@ const [tokenId, tokenDoc] = await TokenModel.add(
 | `tokenType` | `number` | — | 令牌类型常量 |
 | **返回值** | `Promise<TokenDoc \| null>` | | |
 
-#### `getMulti(tokenType: number, query?: Filter<TokenDoc>): Cursor<TokenDoc>`
+#### `getMulti(tokenType: number, query?: Filter<TokenDoc>): FindCursor<TokenDoc>`
 
 按类型查找多条令牌，可附加 MongoDB 过滤条件。返回游标（非数组），使用 `.toArray()` 获取完整数据。
 
@@ -96,7 +96,7 @@ const [tokenId, tokenDoc] = await TokenModel.add(
 |------|------|--------|------|
 | `tokenType` | `number` | — | 令牌类型常量 |
 | `query` | `Filter<TokenDoc>` | `{}` | 附加过滤条件 |
-| **返回值** | `Cursor<TokenDoc>` | | |
+| **返回值** | `FindCursor<TokenDoc>` | | |
 
 #### `update(tokenId: string, tokenType: number, expireSeconds: number, data: object): Promise<TokenDoc | null>`
 
@@ -154,14 +154,15 @@ const [tokenId, tokenDoc] = await TokenModel.add(
 
 ### 批量操作
 
-#### `delByUid(uid: number): Promise<any>`
+#### `delByUid(uid: number, tokenType?: number): Promise<DeleteResult>`
 
-删除用户的所有令牌（所有类型）。用于用户封禁/登出流程，一次性撤销所有会话和待处理令牌。`@ArgMethod`
+删除用户的所有令牌（所有类型）；若传入 `tokenType`，则仅删除该类型的令牌。用于用户封禁/登出流程，一次性撤销所有会话和待处理令牌。`@ArgMethod`
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
-| **返回值** | `Promise<any>` | | |
+| `tokenType` | `number` | — | 可选，仅删除该类型的令牌 |
+| **返回值** | `Promise<DeleteResult>` | | MongoDB 删除结果 |
 
 ---
 

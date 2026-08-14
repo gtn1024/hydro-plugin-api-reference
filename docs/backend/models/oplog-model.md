@@ -46,7 +46,7 @@ import: "import { OplogModel } from 'hydrooj'"
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `id` | `ObjectId` | — | 日志条目 `_id` |
-| **返回值** | `Promise<OplogDoc> \| null` | | |
+| **返回值** | `Promise<OplogDoc \| null>` | | |
 
 ---
 

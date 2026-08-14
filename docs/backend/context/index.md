@@ -80,7 +80,7 @@ import { Context, Service, Fiber, FiberState } from 'hydrooj';
 import { Service } from 'hydrooj';
 
 export default class MyService extends Service {
-    static inject = ['database'];  // 声明依赖
+    static inject = ['db'];  // 声明依赖
 
     constructor(ctx: Context) {
         super(ctx, 'myService');

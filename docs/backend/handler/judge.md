@@ -72,6 +72,7 @@ import: "import { JudgeHandler, JudgeResultCallbackContext, postJudge } from 'hy
 
 | 导出 | 替代方案 | 说明 |
 |------|----------|------|
+| `JudgeHandler`（命名空间） | 使用具名导出 `JudgeResultCallbackContext`、`postJudge` | 整个命名空间已废弃（`/** @deprecated */ export * as JudgeHandler`），仅保留这两个具名导出 |
 | `postJudge(rdoc: RecordDoc)` | `JudgeResultCallbackContext.postJudge(rdoc)` | 作为独立函数的评测后处理 |
 | `next(payload: any)` | `JudgeResultCallbackContext.next(...)` | 使用 payload 对象的静态式 next 回调 |
 | `end(payload: any)` | `JudgeResultCallbackContext.end(...)` | 使用 payload 对象的静态式 end 回调 |

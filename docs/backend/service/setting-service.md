@@ -52,25 +52,25 @@ import: "import { SettingService } from 'hydrooj'"
 
 ## 注册方法
 
-这些方法封装了 `SettingModel` 中对应的函数（参见 [SettingModel 文档](../models/setting-model.md)），并添加了基于上下文的自动清理。每个方法返回 `void`，注册的设置与插件上下文生命周期绑定。
+这些方法封装了 `SettingModel` 中对应的函数（参见 [SettingModel 文档](../models/setting-model.md)），并添加了基于上下文的自动清理。每个方法返回 `Disposable`（上下文销毁时自动清理），注册的设置与插件上下文生命周期绑定。
 
-### `PreferenceSetting(...args): void`
+### `PreferenceSetting(...args): Disposable`
 
 注册偏好级设置（用户级别，跨域）。委托给 `SettingModel.PreferenceSetting`。上下文结束时自动清理。
 
-### `AccountSetting(...args): void`
+### `AccountSetting(...args): Disposable`
 
 注册账户级设置（用户级别的认证/安全设置）。委托给 `SettingModel.AccountSetting`。上下文结束时自动清理。
 
-### `DomainSetting(...args): void`
+### `DomainSetting(...args): Disposable`
 
 注册域级设置（域级别配置）。委托给 `SettingModel.DomainSetting`。上下文结束时自动清理。
 
-### `DomainUserSetting(...args): void`
+### `DomainUserSetting(...args): Disposable`
 
 注册域用户级设置（作用域限定在特定域的用户偏好）。委托给 `SettingModel.DomainUserSetting`。上下文结束时自动清理。
 
-### `SystemSetting(...args): void`
+### `SystemSetting(...args): Disposable`
 
 注册系统级设置（对所有域可见的全局配置）。委托给 `SettingModel.SystemSetting`。上下文结束时自动清理。
 
@@ -84,6 +84,6 @@ import: "import { SettingService } from 'hydrooj'"
 |--------|-------------|
 | `_applySchema()` | 根据所有已注册的 Schema 校验 `systemConfig`，将结果存储在 `applied` 中 |
 | `_get(key: string)` | 按点分路径遍历已校验的 `applied` 配置；拒绝黑名单路径段 |
-| `applyDelta(source, key, value)` | 返回 `source` 的深拷贝，其中指定键设为 `value` |
+| `applyDelta(source, key, value)` | 返回 `source` 的深拷贝，其中指定键设为 `value`；若路径含黑名单段（`__proto__`/`prototype`/`constructor`）则返回 `false` |
 | `isPatchValid(key, value)` | 测试应用增量后是否能通过 Schema 校验 |
 | `_tryMigrateConfig(schema)` | 将旧格式设置（每个键一个文档）迁移到统一 YAML 配置（排队执行） |

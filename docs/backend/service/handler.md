@@ -15,7 +15,7 @@ import: "import { Handler, ConnectionHandler, requireSudo } from 'hydrooj'"
 
 ### `Handler`
 
-HTTP 请求处理类，继承自 `@hydrooj/framework` 的 `HandlerOriginal`。新增 `domain` 属性，并继承框架的全部 handler 工具方法（`request`、`response`、`args`、`user`、`checkPerm`、`checkPriv`、`url`、`renderHTML` 等）。这是所有 Hydro HTTP 路由处理器的基类。
+HTTP 请求处理类，继承自 `@hydrooj/framework` 的 `Handler`（源码中作 `HandlerOriginal` 引入）。新增 `domain` 属性，并继承框架的全部 handler 工具方法（`request`、`response`、`args`、`user`、`checkPerm`、`checkPriv`、`url`、`renderHTML` 等）。这是所有 Hydro HTTP 路由处理器的基类。
 
 | 属性 | 类型 | 说明 |
 |----------|------|-------------|
@@ -34,7 +34,7 @@ class MyHandler extends Handler {
 
 ### `ConnectionHandler`
 
-WebSocket 连接处理类，继承自 `@hydrooj/framework` 的 `ConnectionHandlerOriginal`。新增 `domain` 属性，并继承框架的 WebSocket 工具方法（`send`、`close` 等）。这是所有 Hydro WebSocket 连接处理器的基类。
+WebSocket 连接处理类，继承自 `@hydrooj/framework` 的 `ConnectionHandler`（源码中作 `ConnectionHandlerOriginal` 引入）。新增 `domain` 属性，并继承框架的 WebSocket 工具方法（`send`、`close` 等）。这是所有 Hydro WebSocket 连接处理器的基类。
 
 | 属性 | 类型 | 说明 |
 |----------|------|-------------|
@@ -79,6 +79,6 @@ class AdminHandler extends Handler {
 
 ## 备注
 
-- `Handler` 和 `ConnectionHandler` 均为框架类的重新导出，新增了 `domain` 属性。`domain` 通过 `handler/create` 生命周期钩子注入。
+- `Handler` 和 `ConnectionHandler` 均为框架对应类的子类，新增了 `domain` 属性。`domain` 通过 `handler/create` 生命周期钩子注入。
 - 额外的 handler 混入方法（`paginate`、`limitRate`、`checkPerm`、`checkPriv`、`progress`、`renderTitle`、`url`、`translate`）在服务启动时通过 `server.handlerMixin()` 注册 —— 参见 `@hydrooj/framework` 的 `HandlerCommon` 基础接口。
 - `requireSudo` 专为安全敏感操作设计，防止在共享计算机上利用记住的密码进行误操作。

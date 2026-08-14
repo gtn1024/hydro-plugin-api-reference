@@ -30,8 +30,7 @@ import {
 function CreateError(
     name: string,
     Base: typeof UserFacingError,
-    message: string | ((this: HydroError) => string),
-    httpStatus?: number
+    ...info: Array<(() => string) | string | number>
 ): typeof UserFacingError;
 ```
 
@@ -41,8 +40,7 @@ function CreateError(
 |------|------|------|
 | `name` | `string` | 错误类名称，同时作为错误 `name` 属性 |
 | `Base` | `typeof UserFacingError` | 父错误类，决定 HTTP 状态码默认值 |
-| `message` | `string \| (this: HydroError) => string` | 错误消息模板，支持 `{0}` `{1}` `{2}` 占位符；或返回消息的函数 |
-| `httpStatus` | `number` | 可选，覆盖 HTTP 状态码 |
+| `...info` | `Array<(() => string) \| string \| number>` | 变长参数，顺序和个数任意：字符串或函数作为错误消息模板（支持 `{0}` `{1}` `{2}` 占位符，或返回消息的函数，可省略）；数字项作为 HTTP 状态码（可省略，用于覆盖父类默认状态码，位置任意） |
 
 ### 用法示例
 
@@ -72,19 +70,31 @@ throw new MyError('detail info');
 | 类名 | HTTP 状态码 | 说明 |
 |------|------------|------|
 | `HydroError` | — | 所有 Hydro 错误的基类。持有 `name`、`params`、`message` 属性 |
-| `UserFacingError` | 500 | 面向用户的错误基类，继承 `HydroError`。带 HTTP 状态码 |
+| `SystemError` | 500 | 服务端内部错误基类，继承 `HydroError`。不面向用户展示（渲染 bsod 页面） |
+| `UserFacingError` | 400 | 面向用户的错误基类，继承 `HydroError`。带 HTTP 状态码 |
 | `BadRequestError` | 400 | 请求参数或业务逻辑无效，继承 `UserFacingError` |
 | `ForbiddenError` | 403 | 权限不足或操作被拒绝，继承 `UserFacingError` |
 | `NotFoundError` | 404 | 资源不存在，继承 `UserFacingError` |
+| `MethodNotAllowedError` | 405 | 请求方法不被允许，继承 `UserFacingError` |
+| `ValidationError` | 403 | 字段校验失败，继承 `ForbiddenError` |
+| `CsrfTokenError` | 403 | CSRF 校验失败，继承 `ForbiddenError` |
+| `InvalidOperationError` | 405 | 无效操作，继承 `MethodNotAllowedError` |
+| `FileTooLargeError` | 403 | 上传文件过大，继承 `ValidationError` |
 
 继承关系：
 
 ```
 HydroError
-└── UserFacingError (500)
+├── SystemError (500)
+└── UserFacingError (400)
     ├── BadRequestError (400)
     ├── ForbiddenError (403)
-    └── NotFoundError (404)
+    │   ├── ValidationError (403)
+    │   │   └── FileTooLargeError (403)
+    │   └── CsrfTokenError (403)
+    ├── NotFoundError (404)
+    └── MethodNotAllowedError (405)
+        └── InvalidOperationError (405)
 ```
 
 ---
@@ -121,7 +131,7 @@ HydroError
 
 > `PermissionError`：若 `params[0]` 为 `bigint` 权限标志，自动替换为对应的权限描述文本。
 >
-> `PrivilegeError`：若缺少 `PRIV_USER_PROFILE`，消息变为 `"You're not logged in."`。
+> `PrivilegeError`：若 `params` 中包含 `PRIV_USER_PROFILE`（即因缺少该特权而被拒），消息变为 `"You're not logged in."`。
 
 ### User / Domain Errors (403)
 
@@ -146,6 +156,7 @@ HydroError
 | `ContestNotAttendedError` | `You haven't attended this contest yet.` |
 | `ContestAlreadyAttendedError` | `You've already attended this contest.` |
 | `ContestNotLiveError` | `This contest is not live.` |
+| `ContestAlreadyStartedError` | `This contest has already started.` |
 | `ContestNotEndedError` | `This contest is not ended.` |
 | `ContestScoreboardHiddenError` | `Contest scoreboard is not visible.` |
 | `HomeworkNotLiveError` | `This homework is not open.` |

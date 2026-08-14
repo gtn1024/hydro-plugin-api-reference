@@ -11,9 +11,10 @@ Hydro 插件系统的事件总线。所有可监听事件定义在 `EventMap` �
 > **Source**: `packages/hydrooj/src/service/bus.ts`
 >
 > ```ts
-> import { Events } from 'hydrooj'; // re-exported as Events
-> import type { EventMap } from 'hydrooj'; // original type name
+> import type { EventMap } from 'hydrooj';
 > ```
+>
+> 注：`Events` 是 `EventMap` 的类型别名（`context.ts` 中 `export { EventMap as Events }`），并未从 `hydrooj` 导出，仅通过 `declare module 'cordis'` 的声明合并作为 `cordis` 的类型可用（如 `import type { Events } from 'cordis'`）。
 
 ---
 
@@ -49,7 +50,7 @@ await ctx.parallel('app/ready');
 
 ### ctx.broadcast() — 跨进程广播
 
-跨集群广播事件（PM2 或 MongoDB 总线）。每个节点收到后以 `parallel` 方式执行。
+跨集群广播事件（PM2 或 MongoDB 总线；单节点时进程内直调）。每个节点收到后以 `parallel` 方式执行。
 
 ```ts
 ctx.broadcast('record/judge', rdoc, updated, pdoc, updater);
@@ -98,7 +99,7 @@ ctx.broadcast('record/judge', rdoc, updated, pdoc, updater);
 | Event | Signature | Description |
 |-------|-----------|-------------|
 | `task/daily` | `() => void` | 每日定时任务触发。 |
-| `task/daily/finish` | `(pref: Record<string, number>) => void` | 每日任务完成后触发，传入执行偏好统计。 |
+| `task/daily/finish` | `(pref: Record<string, number>) => void` | 每日任务完成后触发，传入本次执行各步骤的计时统计。 |
 
 ## Subscription (WebSocket)
 
@@ -129,7 +130,7 @@ ctx.broadcast('record/judge', rdoc, updated, pdoc, updater);
 
 | Event | Signature | Description |
 |-------|-----------|-------------|
-| `domain/create` | `(ddoc: DomainDoc) => VoidReturn` | 域创建后触发。 |
+| `domain/create` | `(ddoc: DomainDoc) => VoidReturn` | 域创建时触发（DB 插入前）。 |
 | `domain/before-get` | `(query: Filter<DomainDoc>) => VoidReturn` | 域查询前触发，可修改查询条件。 |
 | `domain/get` | `(ddoc: DomainDoc) => VoidReturn` | 域查询后触发。 |
 | `domain/before-update` | `(domainId: string, $set: Partial<DomainDoc>) => VoidReturn` | 域更新前触发，可拦截或修改更新内容。 |
@@ -207,9 +208,10 @@ ctx.broadcast('record/judge', rdoc, updated, pdoc, updater);
 
 ## 内部广播机制
 
-Hydro 使用两种跨进程广播实现（`bus.ts` 中的 `apply` 函数）：
+Hydro 使用三种广播路径（`bus.ts` 中的 `apply` 函数 + `task.ts` 中的事件转发）：
 
-1. **PM2 模式** — 集群部署时，通过 PM2 的 `launchBus` + BSON 序列化在进程间传递事件。
-2. **进程内直调模式** — 单进程或无 PM2 时，`bus/broadcast` 事件直接在本进程内调用 `app.parallel(event, ...payload)`。
+1. **PM2 模式** — 集群部署时，通过 PM2 的 `launchBus` + BSON 序列化在进程间传递事件（`bus.ts:106-118`）。
+2. **MongoDB 总线** — 广播事件写入 `event` 集合（带 ack 去重与 expire 过期），实例 0 通过 `collEvent.watch()` 变更流转发，无副本集时退化为轮询兜底（`task.ts:142-190`）。
+3. **单进程本地直调** — 非集群模式下，`bus/broadcast` 事件直接在本进程内调用 `app.parallel(event, ...payload)`，仅本进程生效（`bus.ts:119-122`）。
 
 插件开发者无需关心底层实现，统一使用 `ctx.broadcast()` 即可。

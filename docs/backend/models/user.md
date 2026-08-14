@@ -24,7 +24,7 @@ import: "import { UserModel } from 'hydrooj'"
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
-| `_id` | `number` | — | 用户 ID（负数 ID 查找虚拟用户） |
+| `_id` | `number` | — | 用户 ID（`_id < -999` 时查找虚拟用户） |
 | `scope` | `bigint \| string` | `PERM.PERM_ALL` | 权限范围掩码 |
 | **返回值** | `Promise<User \| null>` | | |
 
@@ -69,19 +69,21 @@ import: "import { UserModel } from 'hydrooj'"
 | `limit` | `number` | `50` | 最大结果数 |
 | **返回值** | `Promise<User[]>` | | |
 
-#### `getMulti(params?: Filter<Udoc>, projection?: (keyof Udoc)[]): MongoDB.Cursor<Udoc>`
+#### `getMulti(params?: Filter<Udoc>, projection?: (keyof Udoc)[]): FindCursor<Udoc>`
 
 获取用于查询用户的 MongoDB 游标，支持可选过滤和字段投影。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `params` | `Filter<Udoc>` | — | MongoDB 查询过滤器 |
+| `params` | `Filter<Udoc>` | `{}` | MongoDB 查询过滤器 |
 | `projection` | `(keyof Udoc)[]` | — | 要包含的字段 |
-| **返回值** | `MongoDB.Cursor<Udoc>` | | |
+| **返回值** | `FindCursor<Udoc>` | | |
 
-#### `getListForRender(domainId: string, uids: number[], showPrivateInfo?: boolean, extraFields?: string[]): Promise<BaseUserDict>`
+#### `getListForRender(domainId: string, uids: number[], showPrivateInfo: boolean, extraFields?: string[]): Promise<BaseUserDict>`
 
-获取为前端渲染优化的用户信息字典。合并用户文档、虚拟用户文档和域用户文档。
+#### `getListForRender(domainId: string, uids: number[], extraFields?: string[]): Promise<BaseUserDict>`
+
+获取为前端渲染优化的用户信息字典。合并用户文档、虚拟用户文档和域用户文档。`showPrivateInfo` 可省略，直接传入 `extraFields`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -137,7 +139,7 @@ const adminUid = await UserModel.create(
 
 ### 变更
 
-#### `setById(uid: number, $set?: Partial<Udoc>, $unset?: Partial<Udoc>, $push?: object): Promise<Udoc | null>`
+#### `setById(uid: number, $set?: Partial<Udoc>, $unset?: Value<Partial<Udoc>, ''>, $push?: any): Promise<Udoc | null>`
 
 使用 MongoDB 更新操作符更新用户文档。自动使缓存失效。
 
@@ -145,8 +147,8 @@ const adminUid = await UserModel.create(
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
 | `$set` | `Partial<Udoc>` | — | 要设置的字段 |
-| `$unset` | `Partial<Udoc>` | — | 要取消设置的字段 |
-| `$push` | `object` | — | 要追加的字段（数组追加） |
+| `$unset` | `Value<Partial<Udoc>, ''>` | — | 要取消设置的字段（`Value` 类型定义于 `packages/hydrooj/src/typeutils.ts`，将每个键映射为 `''`） |
+| `$push` | `any` | — | 要追加的字段（数组追加） |
 | **返回值** | `Promise<Udoc \| null>` | | 更新后的文档（虚拟用户返回 null） |
 
 #### `setUname(uid: number, uname: string): Promise<Udoc | null>`
@@ -177,6 +179,7 @@ const adminUid = await UserModel.create(
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
 | `password` | `string` | — | 新的明文密码 |
+| **返回值** | `Promise<Udoc>` | | 更新后的文档 |
 
 #### `setPriv(uid: number, priv: number): Promise<Udoc>`
 
@@ -195,6 +198,7 @@ const adminUid = await UserModel.create(
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
+| **返回值** | `Promise<Udoc>` | | 更新后的文档 |
 
 #### `setJudge(uid: number): Promise<Udoc>`
 
@@ -203,8 +207,9 @@ const adminUid = await UserModel.create(
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
+| **返回值** | `Promise<Udoc>` | | 更新后的文档 |
 
-#### `ban(uid: number, reason?: string): Promise<[Udoc | null, any]>`
+#### `ban(uid: number, reason?: string): Promise<[Udoc | null, DeleteResult]>`
 
 封禁用户：将权限设为 `PRIV_NONE` 并撤销所有令牌。
 
@@ -212,6 +217,7 @@ const adminUid = await UserModel.create(
 |------|------|--------|------|
 | `uid` | `number` | — | 用户 ID |
 | `reason` | `string` | `''` | 封禁原因，存储在 `banReason` 中 |
+| **返回值** | `Promise<[Udoc \| null, DeleteResult]>` | | `[更新后的用户文档, 令牌删除结果]` 元组 |
 
 ```typescript
 // 封禁用户并记录原因
@@ -245,8 +251,9 @@ await UserModel.ban(uid);
 | `names` | `string[]` | — | 可选，仅返回名称匹配的组 |
 | `search` | `string` | — | 可选，按名称模糊搜索（不区分大小写） |
 | `limit` | `number` | — | 可选，限制返回的组数量 |
+| **返回值** | `Promise<any>` | | 用户组文档数组（`GDoc[]`）；若提供 `uid`，追加隐式的自身组 |
 
-#### `delGroup(domainId: string, name: string): Promise<void>`
+#### `delGroup(domainId: string, name: string): Promise<DeleteResult>`
 
 按名称删除用户组。
 
@@ -254,8 +261,9 @@ await UserModel.ban(uid);
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `name` | `string` | — | 用户组名称 |
+| **返回值** | `Promise<DeleteResult>` | | MongoDB 删除结果 |
 
-#### `updateGroup(domainId: string, name: string, uids: number[]): Promise<void>`
+#### `updateGroup(domainId: string, name: string, uids: number[]): Promise<UpdateResult>`
 
 创建或更新包含指定成员 UID 的用户组。
 
@@ -264,6 +272,7 @@ await UserModel.ban(uid);
 | `domainId` | `string` | — | 域上下文 |
 | `name` | `string` | — | 用户组名称 |
 | `uids` | `number[]` | — | 成员 UID 数组 |
+| **返回值** | `Promise<UpdateResult>` | | MongoDB 更新结果 |
 
 ---
 

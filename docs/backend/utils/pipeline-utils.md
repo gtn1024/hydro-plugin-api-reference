@@ -103,10 +103,12 @@ interface PartialProblemDoc extends ProblemDoc {
 
 `ProblemDoc` 的宽松版本，在通过 `iterateAllProblemInDomain` / `iterateAllProblem` 投影特定字段时使用。
 
+> 注：该接口未加 `export` 声明（`pipelineUtils.ts:45`），也不在 `plugin-api` 的重导出范围内，仅供签名引用，不可直接导入。
+
 ---
 
 ## 备注
 
-- 所有函数在迭代前会将完整结果集加载到内存中（`iterateAllPsdoc` 和 `iterateAllRecord` 除外，它们使用游标）。对于非常大的集合，需注意内存使用。
+- 所有函数在迭代前会将完整结果集加载到内存中（`iterateAllPsdoc`、`iterateAllRecord` 和 `iterateAllProblemInDomain` 除外，它们使用游标）。对于非常大的集合，需注意内存使用。
 - `iterateAllProblemInDomain` 是唯一支持就地文档修改的函数 — 回调返回真值会触发自动 `problem.edit()` 调用。
 - `iterateAllContest`、`iterateAllPsdoc` 和 `iterateAllProblem` 是组合迭代器，以 `iterateAllDomain` 作为外层循环嵌套。

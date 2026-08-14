@@ -54,26 +54,26 @@ import: "import { SolutionModel } from 'hydrooj'"
 | `limit` | `number` | — | 每页数量 |
 | **返回值** | `Promise<Document[]>` | | |
 
-#### `edit(domainId: string, psid: ObjectId, content: string): Promise<void>`
+#### `edit(domainId: string, psid: ObjectId, content: string): Promise<Document>`
 
-更新已有题解的内容。
+更新已有题解的内容。返回更新后的题解文档（`document.set` 的 `findOneAndUpdate` 结果）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `psid` | `ObjectId` | — | 题解 ID |
 | `content` | `string` | — | 新内容 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<Document>` | | 更新后的题解文档 |
 
-#### `del(domainId: string, psid: ObjectId): Promise<[void, void]>`
+#### `del(domainId: string, psid: ObjectId): Promise<[[DeleteResult, DeleteResult], DeleteResult]>`
 
-并行删除题解及其所有关联的状态记录（投票）。
+并行删除题解及其所有关联的状态记录（投票）。返回两个并行删除的结果：第一个元素为 `document.deleteOne` 的结果（其内部又返回 `[删除文档, 删除状态]`），第二个元素为 `document.deleteMultiStatus` 的结果。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `psid` | `ObjectId` | — | 题解 ID |
-| **返回值** | `Promise<[void, void]>` | | |
+| **返回值** | `Promise<[[DeleteResult, DeleteResult], DeleteResult]>` | | 两个并行删除操作的结果 |
 
 #### `count(domainId: string, query: any): Promise<number>`
 
@@ -87,7 +87,7 @@ import: "import { SolutionModel } from 'hydrooj'"
 
 ### 列表
 
-#### `getMulti(domainId: string, pid: number, query?: any): Cursor<Document>`
+#### `getMulti(domainId: string, pid: number, query?: any): FindCursor<Document>`
 
 获取指定题目的所有题解。结果按 `vote` 降序排列（最高票优先）。可传入额外的查询过滤条件。
 
@@ -95,10 +95,10 @@ import: "import { SolutionModel } from 'hydrooj'"
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `pid` | `number` | — | 题目 ID |
-| `query` | `any` | — | 额外过滤条件 |
-| **返回值** | `Cursor<Document>` | | |
+| `query` | `any` | `{}` | 额外过滤条件 |
+| **返回值** | `FindCursor<Document>` | | |
 
-#### `getByUser(domainId: string, uid: number): Cursor<Document>`
+#### `getByUser(domainId: string, uid: number): FindCursor<Document>`
 
 获取指定用户的所有题解。结果按 `_id` 降序排列（最新优先）。
 
@@ -106,13 +106,13 @@ import: "import { SolutionModel } from 'hydrooj'"
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `uid` | `number` | — | 用户 UID |
-| **返回值** | `Cursor<Document>` | | |
+| **返回值** | `FindCursor<Document>` | | |
 
 ### 回复
 
-#### `reply(domainId: string, psid: ObjectId, owner: number, content: string): Promise<void>`
+#### `reply(domainId: string, psid: ObjectId, owner: number, content: string): Promise<[Document, ObjectId]>`
 
-为题解添加一条回复。追加到 `reply` 子文档数组中。
+为题解添加一条回复。追加到 `reply` 子文档数组中。返回 `[更新后的题解文档, 新回复 ID]`（`document.push` 的返回值）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -120,22 +120,22 @@ import: "import { SolutionModel } from 'hydrooj'"
 | `psid` | `ObjectId` | — | 题解 ID |
 | `owner` | `number` | — | 回复者 UID |
 | `content` | `string` | — | 回复内容 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<[Document, ObjectId]>` | | `[更新后的题解文档, 新回复 ID]` |
 
-#### `getReply(domainId: string, psid: ObjectId, psrid: ObjectId): Promise<Document>`
+#### `getReply(domainId: string, psid: ObjectId, psrid: ObjectId): Promise<[Document, Document]>`
 
-通过 ID 获取题解中的特定回复。
+通过 ID 获取题解中的特定回复。返回 `[题解文档, 回复子文档]`（`document.getSub` 的返回值）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `psid` | `ObjectId` | — | 题解 ID |
 | `psrid` | `ObjectId` | — | 回复 ID |
-| **返回值** | `Promise<Document>` | | |
+| **返回值** | `Promise<[Document, Document]>` | | `[题解文档, 回复子文档]` |
 
-#### `editReply(domainId: string, psid: ObjectId, psrid: ObjectId, content: string): Promise<void>`
+#### `editReply(domainId: string, psid: ObjectId, psrid: ObjectId, content: string): Promise<Document>`
 
-更新已有回复的内容。
+更新已有回复的内容。返回更新后的题解文档（`document.setSub` 的 `findOneAndUpdate` 结果）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -143,18 +143,18 @@ import: "import { SolutionModel } from 'hydrooj'"
 | `psid` | `ObjectId` | — | 题解 ID |
 | `psrid` | `ObjectId` | — | 回复 ID |
 | `content` | `string` | — | 新内容 |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<Document>` | | 更新后的题解文档 |
 
-#### `delReply(domainId: string, psid: ObjectId, psrid: ObjectId): Promise<void>`
+#### `delReply(domainId: string, psid: ObjectId, psrid: ObjectId): Promise<Document>`
 
-删除题解中的特定回复。
+删除题解中的特定回复。返回更新后的题解文档（`document.deleteSub` 的 `findOneAndUpdate` 结果）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `domainId` | `string` | — | 域上下文 |
 | `psid` | `ObjectId` | — | 题解 ID |
 | `psrid` | `ObjectId` | — | 回复 ID |
-| **返回值** | `Promise<void>` | | |
+| **返回值** | `Promise<Document>` | | 更新后的题解文档 |
 
 ### 投票
 
@@ -187,7 +187,7 @@ import: "import { SolutionModel } from 'hydrooj'"
 
 | 事件 | 参数 | 说明 |
 |------|------|------|
-| `problem/delete` | `domainId, pid` | 删除被删除题目的所有题解及其状态记录 |
+| `problem/delete` | `domainId, docId` | 删除被删除题目的所有题解及其状态记录 |
 
 ---
 

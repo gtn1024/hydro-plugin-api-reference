@@ -93,7 +93,7 @@ import: "import { BuiltinModel } from 'hydrooj'"
 |------|-----|------|
 | `PERM_ALL` | `-1n` | 所有权限（所有位设为 1） |
 | `PERM_BASIC` | 查看权限的并集 | 访客的基础查看权限 |
-| `PERM_DEFAULT` | 查看 + 创建/自己编辑/提交/投票/回复/参加的并集（不含 `PERM_VIEW_RECORD`） | 注册用户的默认权限 |
+| `PERM_DEFAULT` | 查看 + 创建/自己编辑/提交/投票/回复/参加的并集 | 注册用户的默认权限 |
 | `PERM_ADMIN` | `-1n` | `PERM_ALL` 的别名 |
 
 ### PRIV —— 系统级特权位标志
@@ -197,7 +197,7 @@ import: "import { BuiltinModel } from 'hydrooj'"
 
 ### PERMS_BY_FAMILY
 
-`Record<string, PermissionDescriptor[]>` —— 按自动生成的 `family` 索引分组的 `PERMS`。用于按类别渲染权限设置 UI。
+`Record<string, { family: string; key: bigint; desc: string }[]>` —— 按自动生成的 `family` 索引分组的 `PERMS`。用于按类别渲染权限设置 UI。
 
 ### LEVELS
 
@@ -231,16 +231,16 @@ import: "import { BuiltinModel } from 'hydrooj'"
 
 返回数值分数（0–100）对应的十六进制颜色字符串（`#rrggbb`），以 10 分为一档映射红到绿的渐变。非有限值返回 `#000000`。
 
-#### `Permission(family: string, key: bigint, desc: string): PermissionDescriptor`
+#### `Permission(family: string, key: bigint, desc: string): { family: string; key: bigint; desc: string }`
 
-工厂函数，创建权限描述符对象 `{ family, key, desc }`。内部用于构建 `PERMS` 数组。
+工厂函数，创建权限描述符对象 `{ family, key, desc }`。内部用于构建 `PERMS` 数组。返回类型由 TypeScript 推断（源码中未定义命名类型）。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `family` | `string` | — | 权限所属分类 |
 | `key` | `bigint` | — | 权限常量值（如 `PERM.PERM_VIEW`） |
 | `desc` | `string` | — | 权限描述 |
-| **返回值** | `PermissionDescriptor` | | `{ family, key, desc }` |
+| **返回值** | `{ family: string; key: bigint; desc: string }` | | `{ family, key, desc }` |
 
 ---
 

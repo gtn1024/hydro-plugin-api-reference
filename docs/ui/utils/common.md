@@ -55,7 +55,7 @@ import: "import { randomstring, formatDate, formatSeconds } from '@hydrooj/ui-de
 
 | API | 说明 |
 |-----|------|
-| `StringKeys<O>` | 工具类型，提取 `O` 中值类型扩展 `string` 的键。 |
+| `StringKeys<O>` | 工具类型，提取值类型为 `string` 或更宽类型的键。 |
 
 ## 全局原型扩展
 

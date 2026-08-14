@@ -1,11 +1,11 @@
 ---
-title: download / ZipDownloader
+title: download / downloadProblemSet
 description: 流式创建并传输 ZIP 压缩包到浏览器，支持并发文件下载和重试
 source: packages/ui-default/components/zipDownloader/index.ts
 source_url: https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/zipDownloader/index.ts
-import: "import { download, ZipDownloader } from '@hydrooj/ui-default'"
+import: "import { download, downloadProblemSet } from '@hydrooj/ui-default'"
 ---
-# download / ZipDownloader
+# download / downloadProblemSet
 
 源码: [`packages/ui-default/components/zipDownloader/index.ts`](https://github.com/hydro-dev/Hydro/blob/master/packages/ui-default/components/zipDownloader/index.ts)
 

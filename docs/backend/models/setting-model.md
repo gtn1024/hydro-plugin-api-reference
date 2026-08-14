@@ -84,51 +84,51 @@ type SettingType = "text" | "yaml" | "number" | "float" | "markdown" | "password
 
 ### 注册函数
 
-每个注册函数接受 `Setting[]` 或 schemastery `Schema` 对象，将其注册到相应集合中，并返回一个**销毁函数**（`() => void`）用于移除这些设置。
+每个注册函数接受 `Setting[]` 或 schemastery `Schema` 对象，将其注册到相应集合中，并返回一个**销毁函数**（`() => void`）用于移除这些设置。类型层面参数只能全为 `Setting` 或全为 `Schema`，混合传入仅在运行时可行（逐一通过 `flatMap` 转换）。
 
-#### `PreferenceSetting(...settings: (Setting | Schema)[]): () => void`
+#### `PreferenceSetting(...settings: Setting[] | Schema<any>[]): () => void`
 
 注册偏好级设置（每用户的显示/UI 偏好，如语言、时区）。添加到 `PREFERENCE_SETTINGS`、`SETTINGS` 和 `SETTINGS_BY_KEY`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `...settings` | `(Setting \| Schema)[]` | — | 设置描述符或 schemastery Schema |
+| `...settings` | `Setting[] \| Schema<any>[]` | — | 设置描述符或 schemastery Schema |
 | **返回值** | `() => void` | | 销毁函数，调用后移除已注册设置 |
 
-#### `AccountSetting(...settings: (Setting | Schema)[]): () => void`
+#### `AccountSetting(...settings: Setting[] | Schema<any>[]): () => void`
 
 注册账户级设置（用户资料信息，如头像、简介、手机）。添加到 `ACCOUNT_SETTINGS`、`SETTINGS` 和 `SETTINGS_BY_KEY`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `...settings` | `(Setting \| Schema)[]` | — | 设置描述符或 schemastery Schema |
+| `...settings` | `Setting[] \| Schema<any>[]` | — | 设置描述符或 schemastery Schema |
 | **返回值** | `() => void` | | 销毁函数，调用后移除已注册设置 |
 
-#### `DomainSetting(...settings: (Setting | Schema)[]): () => void`
+#### `DomainSetting(...settings: Setting[] | Schema<any>[]): () => void`
 
 注册域级设置（每域配置，如名称、公告）。添加到 `DOMAIN_SETTINGS` 和 `DOMAIN_SETTINGS_BY_KEY`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `...settings` | `(Setting \| Schema)[]` | — | 设置描述符或 schemastery Schema |
+| `...settings` | `Setting[] \| Schema<any>[]` | — | 设置描述符或 schemastery Schema |
 | **返回值** | `() => void` | | 销毁函数，调用后移除已注册设置 |
 
-#### `DomainUserSetting(...settings: (Setting | Schema)[]): () => void`
+#### `DomainUserSetting(...settings: Setting[] | Schema<any>[]): () => void`
 
 注册域用户级设置（每用户每域的数据，如显示名称、排名）。添加到 `DOMAIN_USER_SETTINGS` 和 `DOMAIN_USER_SETTINGS_BY_KEY`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `...settings` | `(Setting \| Schema)[]` | — | 设置描述符或 schemastery Schema |
+| `...settings` | `Setting[] \| Schema<any>[]` | — | 设置描述符或 schemastery Schema |
 | **返回值** | `() => void` | | 销毁函数，调用后移除已注册设置 |
 
-#### `SystemSetting(...settings: (Setting | Schema)[]): () => void`
+#### `SystemSetting(...settings: Setting[] | Schema<any>[]): () => void`
 
 注册系统级设置（全局服务器配置，如 SMTP、限制、分页）。添加到 `SYSTEM_SETTINGS` 和 `SYSTEM_SETTINGS_BY_KEY`。
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `...settings` | `(Setting \| Schema)[]` | — | 设置描述符或 schemastery Schema |
+| `...settings` | `Setting[] \| Schema<any>[]` | — | 设置描述符或 schemastery Schema |
 | **返回值** | `() => void` | | 销毁函数，调用后移除已注册设置 |
 
 ---
@@ -146,4 +146,4 @@ type SettingType = "text" | "yaml" | "number" | "float" | "markdown" | "password
 - 所有注册函数除 `Setting` 描述符外还接受 **schemastery `Schema` 对象**——会通过 `schemaToSettings()` 自动转换。
 - 每个注册函数返回一个销毁回调。调用它可从所有相关集合中移除设置，支持插件清理。
 - 重复的设置键会触发警告日志但不会被阻止。
-- `Setting` 接口（来自 `hydrooj/src/interface.ts`）定义了结构：`{ family, key, range, value, type, subType?, name, desc, flag, validation? }`。
+- `Setting` 接口（来自 `packages/hydrooj/src/interface.ts`）定义了结构：`{ family, key, range, value, type, subType?, name, desc, flag, validation? }`。
